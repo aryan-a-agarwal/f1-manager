@@ -1,0 +1,129 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { findTeam, teams, type Driver, type Team } from "@/lib/data/grid";
+import { getGameTime, resetGameClock } from "@/lib/gameClock";
+import { supabase } from "@/lib/supabaseClient";
+
+type Page = "home" | "team" | "race" | "drivers" | "calendar" | "finance" | "standings" | "market" | "database" | "settings";
+type Skin = "light" | "dark" | "retro" | "team";
+type Strategy = "Balanced" | "Aggressive" | "Tyre saving";
+const skins: readonly Skin[] = ["light", "dark", "retro", "team"];
+const nav: { id: Page; label: string; icon: string }[] = [
+  { id:"home", label:"Home", icon:"⌂" }, { id:"team", label:"Team", icon:"◆" },
+  { id:"race", label:"Race Centre", icon:"⚑" }, { id:"drivers", label:"Drivers", icon:"●" },
+  { id:"calendar", label:"Calendar", icon:"▦" }, { id:"finance", label:"Finance", icon:"$" },
+  { id:"standings", label:"Standings", icon:"▥" }, { id:"market", label:"Market", icon:"+" },
+  { id:"database", label:"Database", icon:"DB" }, { id:"settings", label:"Settings", icon:"⚙" },
+];
+const races = [
+  ["Australian Grand Prix","Melbourne","14 Mar"],["Chinese Grand Prix","Shanghai","21 Mar"],
+  ["Japanese Grand Prix","Suzuka","04 Apr"],["Bahrain Grand Prix","Sakhir","11 Apr"],
+  ["Saudi Arabian Grand Prix","Jeddah","18 Apr"],["Miami Grand Prix","Miami","02 May"],
+  ["Canadian Grand Prix","Montreal","23 May"],["Monaco Grand Prix","Monte Carlo","06 Jun"],
+  ["Spanish Grand Prix","Barcelona","13 Jun"],["Austrian Grand Prix","Spielberg","27 Jun"],
+  ["British Grand Prix","Silverstone","04 Jul"],["Belgian Grand Prix","Spa-Francorchamps","18 Jul"],
+  ["Hungarian Grand Prix","Budapest","01 Aug"],["Dutch Grand Prix","Zandvoort","29 Aug"],
+  ["Italian Grand Prix","Monza","05 Sep"],["Madrid Grand Prix","Madrid","12 Sep"],
+  ["Azerbaijan Grand Prix","Baku","26 Sep"],["Singapore Grand Prix","Singapore","10 Oct"],
+  ["United States Grand Prix","Austin","24 Oct"],["Mexico City Grand Prix","Mexico City","31 Oct"],
+  ["São Paulo Grand Prix","São Paulo","07 Nov"],["Las Vegas Grand Prix","Las Vegas","20 Nov"],
+  ["Qatar Grand Prix","Lusail","28 Nov"],["Abu Dhabi Grand Prix","Yas Marina","05 Dec"],
+] as const;
+const marketDrivers = [
+  ["Yuki Tsunoda","Japan",82,"Experienced"],["Jack Doohan","Australia",78,"Reserve"],
+  ["Paul Aron","Estonia",76,"Prospect"],["Jak Crawford","United States",75,"Prospect"],
+] as const;
+
+export default function GamePage() {
+  const router = useRouter();
+  const [team, setTeam] = useState<Team | null>(null);
+  const [page, setPage] = useState<Page>("home");
+  const [gameTime, setGameTime] = useState<number | null>(null);
+  const [skin, setSkin] = useState<Skin>("dark");
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [confirmRestart, setConfirmRestart] = useState(false);
+  const [strategies, setStrategies] = useState<Record<string, Strategy>>({});
+  const [shortlist, setShortlist] = useState<string[]>([]);
+  const [upgrades, setUpgrades] = useState<Record<string, number>>({ Factory:1, Simulator:1, "Wind tunnel":1 });
+
+  useEffect(() => {
+    const selected = findTeam(localStorage.getItem("f1-manager-team"));
+    if (!selected) router.replace("/setup"); else setTeam(selected);
+    const savedSkin = localStorage.getItem("f1-manager-skin");
+    const nextSkin = skins.includes(savedSkin as Skin) ? savedSkin as Skin : "dark";
+    setSkin(nextSkin); document.documentElement.dataset.skin = nextSkin;
+    const savedShortlist = localStorage.getItem("f1-manager-shortlist");
+    if (savedShortlist) setShortlist(JSON.parse(savedShortlist));
+  }, [router]);
+  useEffect(() => { setGameTime(getGameTime()); const timer = window.setInterval(() => setGameTime(getGameTime()),1000); return () => clearInterval(timer); }, []);
+
+  const allDrivers = useMemo(() => teams.flatMap((entry) => entry.drivers.map((driver) => ({ ...driver, team:entry.shortName }))), []);
+  function goTo(next: Page) { setPage(next); setSettingsOpen(false); }
+  function changeSkin(next: Skin) { setSkin(next); localStorage.setItem("f1-manager-skin",next); document.documentElement.dataset.skin = next; }
+  function restartGame() { localStorage.removeItem("f1-manager-team"); resetGameClock(); router.push("/setup"); }
+  function toggleShortlist(name: string) { setShortlist((current) => { const next = current.includes(name) ? current.filter((item) => item !== name) : [...current,name]; localStorage.setItem("f1-manager-shortlist",JSON.stringify(next)); return next; }); }
+  if (!team) return <main className="loading-screen">Loading headquarters…</main>;
+
+  const date = gameTime === null ? "—" : new Intl.DateTimeFormat("en-GB",{ weekday:"short",day:"2-digit",month:"short",year:"numeric" }).format(gameTime).toUpperCase();
+  const time = gameTime === null ? "--:--" : new Intl.DateTimeFormat("en-GB",{ hour:"2-digit",minute:"2-digit",hour12:false }).format(gameTime);
+
+  return <main className="dashboard" style={{ "--team":team.primary,"--team-secondary":team.secondary } as React.CSSProperties}>
+    <aside className="sidebar"><div className="dashboard-logo"><span>F1</span><strong>MANAGER</strong><small>2027</small></div><nav>{nav.map((item) => <button key={item.id} className={`${page===item.id?"active ":""}${item.id==="database"?"database-nav":""}`} onClick={() => goTo(item.id)}><i>{item.icon}</i>{item.label}</button>)}</nav></aside>
+    <section className="dashboard-main">
+      <header className="topbar"><div><small>TEAM PRINCIPAL</small><strong>{team.principal}</strong></div><div className="top-drivers"><small>DRIVER LINE-UP</small><strong><span>{team.drivers[0].name}</span><span>{team.drivers[1].name}</span></strong></div><div className="top-stat"><small>BUDGET</small><strong>$142.0M</strong></div><div className="game-clock"><small>PRE-SEASON</small><strong>{date}</strong><time>{time}</time></div><div className="settings-wrap"><button className="settings-button" onClick={() => { setSettingsOpen(!settingsOpen);setConfirmRestart(false); }} aria-label="Open settings">⚙</button>{settingsOpen&&<><button className="settings-dismiss" onClick={()=>setSettingsOpen(false)} aria-label="Close settings"/><SettingsPanel skin={skin} changeSkin={changeSkin} confirmRestart={confirmRestart} setConfirmRestart={setConfirmRestart} restartGame={restartGame}/></>}</div></header>
+      <div className="workspace">
+        {page!=="home"&&<button className="back-home" onClick={()=>goTo("home")}>← BACK TO HOME</button>}
+        {page==="home"&&<Home team={team} open={goTo}/>} {page==="team"&&<TeamPage team={team} upgrades={upgrades} setUpgrades={setUpgrades}/>} {page==="race"&&<RacePage team={team} strategies={strategies} setStrategies={setStrategies}/>} {page==="drivers"&&<DriversPage drivers={team.drivers}/>} {page==="calendar"&&<CalendarPage/>} {page==="finance"&&<FinancePage/>} {page==="standings"&&<StandingsPage drivers={allDrivers}/>} {page==="market"&&<MarketPage shortlist={shortlist} toggle={toggleShortlist}/>} {page==="database"&&<DatabasePage/>} {page==="settings"&&<SettingsPage skin={skin} changeSkin={changeSkin} restartGame={restartGame}/>} 
+      </div>
+    </section>
+  </main>;
+}
+
+function PageTitle({ eyebrow,title,children }:{ eyebrow:string;title:string;children?:React.ReactNode }) { return <header className="page-title"><div><small>{eyebrow}</small><h1>{title}</h1></div>{children}</header>; }
+function Home({ team,open }:{ team:Team;open:(page:Page)=>void }) { return <><PageTitle eyebrow="TEAM HEADQUARTERS" title={`Welcome to ${team.shortName}`}/><div className="home-grid"><Tile title="Next event" meta="Round 1 · 14 March" action={()=>open("race")} wide><h2>Australian Grand Prix</h2><p>Albert Park Circuit, Melbourne</p><div className="tile-stats"><span><small>SESSION</small><b>FP1 · 10:00</b></span><span><small>STATUS</small><b>PREPARATION</b></span></div></Tile><Tile title="Your team" meta={team.base} action={()=>open("team")}><div className="home-team-mark">{team.shortName.slice(0,3).toUpperCase()}</div><h2>{team.shortName}</h2><p>{team.powerUnit} power unit</p></Tile><Tile title="Driver line-up" meta="2027 contracts" action={()=>open("drivers")}>{team.drivers.map((driver)=><div className="mini-driver" key={driver.id}><b>{driver.number}</b><span>{driver.name}<small>{driver.abbreviation} · {driver.nationality}</small></span></div>)}</Tile><Tile title="Team finances" meta="Season opening balance" action={()=>open("finance")}><div className="money">$142.0M</div><p>Available operating budget</p><div className="budget-bar"><i/></div></Tile><Tile title="Season calendar" meta="24 rounds" action={()=>open("calendar")}><h2>18 days to Melbourne</h2><p>View the complete 2027 campaign</p></Tile><Tile title="Championship" meta="Pre-season" action={()=>open("standings")}><h2>No points awarded</h2><p>All eleven constructors begin level.</p></Tile></div></>; }
+function Tile({ title,meta,action,wide,children }:{ title:string;meta:string;action:()=>void;wide?:boolean;children:React.ReactNode }) { return <button className={`work-tile${wide?" wide":""}`} onClick={action}><div className="tile-head"><span>{title}</span><small>{meta}</small></div><div className="tile-body">{children}</div><b className="open-tile">OPEN →</b></button>; }
+
+function TeamPage({ team,upgrades,setUpgrades }:{ team:Team;upgrades:Record<string,number>;setUpgrades:React.Dispatch<React.SetStateAction<Record<string,number>>> }) { return <><PageTitle eyebrow="CONSTRUCTOR" title={team.name}/><div className="detail-grid"><section className="detail-card"><h2>Team identity</h2><dl><div><dt>Base</dt><dd>{team.base}</dd></div><div><dt>Team principal</dt><dd>{team.principal}</dd></div><div><dt>Power unit</dt><dd>{team.powerUnit}</dd></div></dl></section><section className="detail-card span-two"><h2>Facilities</h2><div className="facility-list">{Object.entries(upgrades).map(([name,level])=><div key={name}><span><b>{name}</b><small>LEVEL {level}</small></span><div className="level-dots">{[1,2,3,4,5].map(n=><i className={n<=level?"on":""} key={n}/>)}</div><button disabled={level>=5} onClick={()=>setUpgrades(v=>({...v,[name]:level+1}))}>{level>=5?"MAX LEVEL":"UPGRADE"}</button></div>)}</div></section></div></>; }
+function RacePage({ team,strategies,setStrategies }:{ team:Team;strategies:Record<string,Strategy>;setStrategies:React.Dispatch<React.SetStateAction<Record<string,Strategy>>> }) { return <><PageTitle eyebrow="ROUND 01" title="Australian Grand Prix"><span className="status-chip">PREPARATION</span></PageTitle><div className="detail-grid"><section className="detail-card"><h2>Event schedule</h2>{[["FP1","FRI 10:00"],["FP2","FRI 14:00"],["FP3","SAT 11:00"],["QUALIFYING","SAT 15:00"],["RACE","SUN 14:00"]].map(row=><div className="schedule-row" key={row[0]}><b>{row[0]}</b><span>{row[1]}</span></div>)}</section><section className="detail-card span-two"><h2>Race approach</h2>{team.drivers.map(driver=><div className="strategy-row" key={driver.id}><div><b>#{driver.number} {driver.name}</b><small>Opening strategy instruction</small></div><div>{(["Balanced","Aggressive","Tyre saving"] as Strategy[]).map(option=><button className={(strategies[driver.id]||"Balanced")===option?"selected":""} onClick={()=>setStrategies(v=>({...v,[driver.id]:option}))} key={option}>{option}</button>)}</div></div>)}</section></div></>; }
+function DriversPage({ drivers }:{ drivers:readonly [Driver,Driver] }) { return <><PageTitle eyebrow="TEAM" title="Driver line-up"/><div className="driver-cards">{drivers.map((driver,index)=><section className="driver-profile" key={driver.id}><div className="driver-number">{driver.number}</div><small>DRIVER {index+1} · {driver.abbreviation}</small><h2>{driver.name}</h2><p>{driver.nationality}</p><div className="rating-grid"><span><small>PACE</small><b>{index?84:88}</b></span><span><small>RACECRAFT</small><b>{index?82:90}</b></span><span><small>CONSISTENCY</small><b>{index?86:89}</b></span><span><small>MORALE</small><b>GOOD</b></span></div></section>)}</div></>; }
+function CalendarPage() { const [selected,setSelected]=useState(0); return <><PageTitle eyebrow="2027 SEASON" title="Race calendar"><span className="status-chip">24 ROUNDS</span></PageTitle><div className="calendar-layout"><div className="race-list">{races.map((race,index)=><button className={selected===index?"selected":""} onClick={()=>setSelected(index)} key={race[0]}><b>{String(index+1).padStart(2,"0")}</b><span>{race[0]}<small>{race[1]}</small></span><time>{race[2]}</time></button>)}</div><section className="calendar-detail"><small>ROUND {selected+1}</small><h2>{races[selected][0]}</h2><p>{races[selected][1]} · {races[selected][2]} 2027</p><dl><div><dt>Weekend status</dt><dd>{selected===0?"Next event":"Scheduled"}</dd></div><div><dt>Championship round</dt><dd>{selected+1} of {races.length}</dd></div></dl></section></div></>; }
+function FinancePage() { const rows=[["Opening operating budget","+$142.0M"],["Driver salaries","-$28.5M"],["Facility running costs","-$12.2M"],["Available development budget","$101.3M"]]; return <><PageTitle eyebrow="TEAM OPERATIONS" title="Finance"><span className="money">$142.0M</span></PageTitle><section className="detail-card finance-card"><h2>2027 budget summary</h2>{rows.map((row,index)=><div className={`finance-row${index===rows.length-1?" total":""}`} key={row[0]}><span>{row[0]}</span><b>{row[1]}</b></div>)}</section></>; }
+function StandingsPage({ drivers }:{ drivers:(Driver&{team:string})[] }) { const [tab,setTab]=useState<"teams"|"drivers">("teams"); return <><PageTitle eyebrow="CHAMPIONSHIP" title="Standings"><div className="tabs"><button className={tab==="teams"?"active":""} onClick={()=>setTab("teams")}>CONSTRUCTORS</button><button className={tab==="drivers"?"active":""} onClick={()=>setTab("drivers")}>DRIVERS</button></div></PageTitle><div className="standings-table"><div className="table-head"><span>POS</span><span>{tab==="teams"?"CONSTRUCTOR":"DRIVER"}</span><span>PTS</span></div>{(tab==="teams"?teams:drivers).map((item,index)=><div className="table-row" key={"id" in item?item.id:index}><b>{index+1}</b><span>{tab==="teams"?(item as Team).shortName:(item as Driver&{team:string}).name}<small>{tab==="drivers"&&(item as Driver&{team:string}).team}</small></span><strong>0</strong></div>)}</div></>; }
+function MarketPage({ shortlist,toggle }:{ shortlist:string[];toggle:(name:string)=>void }) { return <><PageTitle eyebrow="RECRUITMENT" title="Driver market"><span className="status-chip">{shortlist.length} SHORTLISTED</span></PageTitle><div className="market-list"><div className="table-head"><span>DRIVER</span><span>RATING</span><span>PROFILE</span><span>ACTION</span></div>{marketDrivers.map(driver=><div className="market-row" key={driver[0]}><span><b>{driver[0]}</b><small>{driver[1]}</small></span><strong>{driver[2]}</strong><span>{driver[3]}</span><button className={shortlist.includes(driver[0])?"selected":""} onClick={()=>toggle(driver[0])}>{shortlist.includes(driver[0])?"SHORTLISTED":"ADD TO SHORTLIST"}</button></div>)}</div></>; }
+type FactPerson = { id:number;display_name:string;date_of_birth:string|null;racing_nationality:string|null;place_of_birth:string|null;person_type:string;f1_debut_season:number|null;source_key:string;verified_on:string };
+type FactEntry = { person_id:number;series:string;season:number;entrant_name:string;car_number:number|null;entry_role:string };
+type FactTeam = { id:number;short_name:string;official_full_name:string;legal_name:string|null;base_city:string|null;base_country:string|null;team_chief:string|null;technical_chief:string|null;chassis:string|null;power_unit:string|null;first_team_entry:number|null };
+type FactStaff = { person_id:number;team_id:number;season:number;role_title:string };
+type FactTrack = { id:number;circuit_name:string;display_name:string;city:string|null;country:string;circuit_type:string|null;lap_length_km:number|null;race_laps:number|null;race_distance_km:number|null;first_f1_grand_prix_year:number|null;official_2026_calendar:boolean;confirmed_future_event:boolean };
+type SelectedFact = { kind:"driver"|"staff";person:FactPerson };
+
+function DatabasePage() {
+  const [tab,setTab]=useState<"drivers"|"staff"|"teams"|"tracks">("drivers");
+  const [people,setPeople]=useState<FactPerson[]>([]); const [entries,setEntries]=useState<FactEntry[]>([]);
+  const [staff,setStaff]=useState<FactStaff[]>([]); const [factTeams,setFactTeams]=useState<FactTeam[]>([]); const [tracks,setTracks]=useState<FactTrack[]>([]);
+  const [selected,setSelected]=useState<SelectedFact|null>(null); const [error,setError]=useState(""); const [loading,setLoading]=useState(true);
+  useEffect(()=>{ let live=true; (async()=>{ const [p,e,s,t,c]=await Promise.all([
+    supabase.from("people").select("id,display_name,date_of_birth,racing_nationality,place_of_birth,person_type,f1_debut_season,source_key,verified_on").order("display_name"),
+    supabase.from("series_entries").select("person_id,series,season,entrant_name,car_number,entry_role"),
+    supabase.from("f1_team_staff").select("person_id,team_id,season,role_title"),
+    supabase.from("f1_team_facts").select("id,short_name,official_full_name,legal_name,base_city,base_country,team_chief,technical_chief,chassis,power_unit,first_team_entry").order("short_name"),
+    supabase.from("track_facts").select("id,circuit_name,display_name,city,country,circuit_type,lap_length_km,race_laps,race_distance_km,first_f1_grand_prix_year,official_2026_calendar,confirmed_future_event").order("display_name")
+  ]); if(!live)return; const failed=[p,e,s,t,c].find(x=>x.error); if(failed?.error)setError(failed.error.message); else { setPeople((p.data||[]) as FactPerson[]);setEntries((e.data||[]) as FactEntry[]);setStaff((s.data||[]) as FactStaff[]);setFactTeams((t.data||[]) as FactTeam[]);setTracks((c.data||[]) as FactTrack[]); } setLoading(false); })(); return()=>{live=false}; },[]);
+  const drivers=people.filter(p=>p.person_type.includes("driver")); const staffPeople=people.filter(p=>staff.some(a=>a.person_id===p.id));
+  const teamName=(id:number)=>factTeams.find(t=>t.id===id)?.short_name||"Unknown team";
+  return <><PageTitle eyebrow="REFERENCE DATA" title="Database"><span className="status-chip">FACTS ONLY</span></PageTitle><div className="database-tabs">{(["drivers","staff","teams","tracks"] as const).map(x=><button key={x} className={tab===x?"active":""} onClick={()=>setTab(x)}>{x}</button>)}</div>
+    {loading?<section className="database-message">Loading verified records…</section>:error?<section className="database-message">Database unavailable: {error}</section>:<div className="database-list">
+      {tab==="drivers"&&drivers.map(person=>{const current=entries.find(e=>e.person_id===person.id&&e.entry_role==="race_driver");return <button key={person.id} onClick={()=>setSelected({kind:"driver",person})}><b>{person.display_name}</b><span>{current?`${current.series} · ${current.entrant_name}`:"Reserve driver"}</span><em>VIEW</em></button>})}
+      {tab==="staff"&&staffPeople.map(person=>{const roles=staff.filter(a=>a.person_id===person.id);return <button key={person.id} onClick={()=>setSelected({kind:"staff",person})}><b>{person.display_name}</b><span>{roles.map(a=>`${a.role_title} · ${teamName(a.team_id)}`).join(" / ")}</span><em>VIEW</em></button>})}
+      {tab==="teams"&&factTeams.map(x=><article key={x.id}><b>{x.short_name}</b><span>{x.official_full_name}</span><dl><Fact label="Base" value={[x.base_city,x.base_country].filter(Boolean).join(", ")}/><Fact label="Team chief" value={x.team_chief}/><Fact label="Technical chief" value={x.technical_chief}/><Fact label="Chassis" value={x.chassis}/><Fact label="Power unit" value={x.power_unit}/><Fact label="First entry" value={x.first_team_entry}/><Fact label="Legal name" value={x.legal_name}/></dl></article>)}
+      {tab==="tracks"&&tracks.map(x=><article key={x.id}><b>{x.display_name}</b><span>{x.circuit_name}</span><dl><Fact label="Location" value={[x.city,x.country].filter(Boolean).join(", ")}/><Fact label="Type" value={x.circuit_type}/><Fact label="Lap length" value={x.lap_length_km&&`${x.lap_length_km} km`}/><Fact label="Race laps" value={x.race_laps}/><Fact label="Race distance" value={x.race_distance_km&&`${x.race_distance_km} km`}/><Fact label="First F1 GP" value={x.first_f1_grand_prix_year}/></dl></article>)}
+    </div>}{selected&&<PersonFactModal selected={selected} entries={entries} assignments={staff} teams={factTeams} close={()=>setSelected(null)}/>}</>;
+}
+function Fact({label,value}:{label:string;value:string|number|null|undefined}) { return <div><dt>{label}</dt><dd>{value??"Not recorded"}</dd></div>; }
+function PersonFactModal({selected,entries,assignments,teams,close}:{selected:SelectedFact;entries:FactEntry[];assignments:FactStaff[];teams:FactTeam[];close:()=>void}) { const p=selected.person; const roles=assignments.filter(x=>x.person_id===p.id); const drives=entries.filter(x=>x.person_id===p.id); return <div className="fact-modal-backdrop" onMouseDown={e=>{if(e.target===e.currentTarget)close()}}><section className="fact-modal" role="dialog" aria-modal="true" aria-label={`${p.display_name} details`}><button className="fact-modal-close" onClick={close}>CLOSE ×</button><small>{selected.kind.toUpperCase()} RECORD</small><h2>{p.display_name}</h2><dl><Fact label="Date of birth" value={p.date_of_birth?new Intl.DateTimeFormat("en-GB",{day:"2-digit",month:"long",year:"numeric",timeZone:"UTC"}).format(new Date(`${p.date_of_birth}T00:00:00Z`)):null}/><Fact label="Nationality" value={p.racing_nationality}/><Fact label="Place of birth" value={p.place_of_birth}/><Fact label="F1 debut season" value={p.f1_debut_season}/><Fact label="Verified on" value={p.verified_on}/><Fact label="Source record" value={p.source_key}/></dl>{drives.length>0&&<div className="fact-history"><h3>Entries and roles</h3>{drives.map((x,i)=><p key={`${x.series}-${x.entrant_name}-${i}`}><b>{x.season} {x.series}</b><span>{x.entrant_name} · {x.entry_role.replace("_"," ")}{x.car_number?` · #${x.car_number}`:""}</span></p>)}</div>}{roles.length>0&&<div className="fact-history"><h3>Team roles</h3>{roles.map((x,i)=><p key={i}><b>{x.season}</b><span>{x.role_title} · {teams.find(t=>t.id===x.team_id)?.official_full_name||"Unknown team"}</span></p>)}</div>}</section></div>; }
+
+function SettingsPage({ skin,changeSkin,restartGame }:{ skin:Skin;changeSkin:(skin:Skin)=>void;restartGame:()=>void }) { const [confirm,setConfirm]=useState(false); return <><PageTitle eyebrow="GAME" title="Settings"/><section className="detail-card settings-page"><h2>Appearance</h2><p>Choose how the management interface is presented.</p><SkinButtons skin={skin} changeSkin={changeSkin}/><h2>Career</h2>{confirm?<div className="page-restart-confirm"><p>This removes the current team selection and starts a new career.</p><button onClick={()=>setConfirm(false)}>CANCEL</button><button onClick={restartGame}>CONFIRM RESTART</button></div>:<button className="page-restart" onClick={()=>setConfirm(true)}>RESTART GAME</button>}</section></>; }
+function SkinButtons({ skin,changeSkin }:{ skin:Skin;changeSkin:(skin:Skin)=>void }) { return <div className="skin-grid">{skins.map(option=><button key={option} className={skin===option?"selected":""} onClick={()=>changeSkin(option)}><i className={`skin-swatch ${option}`}/>{option}</button>)}</div>; }
+function SettingsPanel({ skin,changeSkin,confirmRestart,setConfirmRestart,restartGame }:{ skin:Skin;changeSkin:(skin:Skin)=>void;confirmRestart:boolean;setConfirmRestart:(value:boolean)=>void;restartGame:()=>void }) { return <section className="settings-menu"><span>GAME SETTINGS</span><label className="skin-label">APPEARANCE</label><SkinButtons skin={skin} changeSkin={changeSkin}/>{confirmRestart?<div className="restart-confirm"><p>Restart this career and choose a new team?</p><div><button onClick={()=>setConfirmRestart(false)}>CANCEL</button><button className="danger" onClick={restartGame}>RESTART</button></div></div>:<button className="restart-button" onClick={()=>setConfirmRestart(true)}><b>↻</b><span><strong>Restart game</strong><small>Return to team selection</small></span></button>}</section>; }
