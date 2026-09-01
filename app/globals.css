@@ -49,7 +49,8 @@ button { font:inherit; }
 
 html[data-skin="light"] { color-scheme:light; }
 html[data-skin="light"] body { color:#272326;background:#e5e1da; }
-html[data-skin="light"] .dashboard { background:radial-gradient(circle at 76% 35%,rgba(173,112,76,.13),transparent 35%),repeating-linear-gradient(125deg,rgba(0,0,0,.02) 0 1px,transparent 1px 5px),#e5e1da; }
+html[data-skin="light"] .dashboard,html[data-skin="light"] .setup-shell { background:radial-gradient(circle at 76% 35%,rgba(173,112,76,.13),transparent 35%),repeating-linear-gradient(125deg,rgba(0,0,0,.02) 0 1px,transparent 1px 5px),#e5e1da; }
+html[data-skin="light"] .setup-header { background:rgba(235,231,224,.92);border-color:#bdb5ae; }
 html[data-skin="light"] .sidebar { background:linear-gradient(90deg,#e6e1d8f5,#f2eee7f2);border-color:#bab2ab; }
 html[data-skin="light"] .topbar { background:#f0ece5ed;border-color:#bdb5ae; }
 html[data-skin="light"] .topbar>div,html[data-skin="light"] .dashboard-logo { border-color:#c9c0b9; }
@@ -60,7 +61,8 @@ html[data-skin="light"] .settings-button,html[data-skin="light"] .settings-menu 
 html[data-skin="light"] .skin-grid button,html[data-skin="light"] .restart-button { color:#514b4d;background:#e5dfd7; }
 
 html[data-skin="retro"] { color-scheme:dark; }
-html[data-skin="retro"] .dashboard { --copper:#c99634;background:radial-gradient(circle at 78% 40%,rgba(201,150,52,.14),transparent 38%),repeating-linear-gradient(0deg,#091d190d 0 2px,transparent 2px 5px),#d2cab0;color:#172019; }
+html[data-skin="retro"] .dashboard,html[data-skin="retro"] .setup-shell { --copper:#c99634;background:radial-gradient(circle at 78% 40%,rgba(201,150,52,.14),transparent 38%),repeating-linear-gradient(0deg,#091d190d 0 2px,transparent 2px 5px),#d2cab0;color:#172019; }
+html[data-skin="retro"] .setup-header { background:rgba(20,55,47,.95);border-color:#c99634;color:#f4ecd0; }
 html[data-skin="retro"] .sidebar { background:linear-gradient(180deg,#285244,#173d34 55%,#102e28);border-color:#c99634;color:#f4ecd0; }
 html[data-skin="retro"] .dashboard-logo span,html[data-skin="retro"] .sidebar nav div.active { color:#e3b65c; }
 html[data-skin="retro"] .sidebar nav div { color:#c4c5a9; }
@@ -71,7 +73,7 @@ html[data-skin="retro"] .panel-heading,html[data-skin="retro"] .news-panel p,htm
 html[data-skin="retro"] .hub-bottom strong,html[data-skin="retro"] .driver-row strong { color:#172019; }
 html[data-skin="retro"] .settings-button,html[data-skin="retro"] .settings-menu { color:#f4ecd0;background:#173d34;border-color:#c99634; }
 
-html[data-skin="team"] .dashboard { --copper:var(--team);background:radial-gradient(circle at 76% 35%,color-mix(in srgb,var(--team) 20%,transparent),transparent 38%),repeating-linear-gradient(125deg,rgba(255,255,255,.018) 0 1px,transparent 1px 5px),#090b0e; }
+html[data-skin="team"] .dashboard,html[data-skin="team"] .setup-shell { --copper:var(--team,#d08b62);background:radial-gradient(circle at 76% 35%,color-mix(in srgb,var(--team,#d08b62) 20%,transparent),transparent 38%),repeating-linear-gradient(125deg,rgba(255,255,255,.018) 0 1px,transparent 1px 5px),#090b0e; }
 html[data-skin="team"] .sidebar { background:linear-gradient(155deg,color-mix(in srgb,var(--team) 32%,#101116),#0d0e11 68%);border-color:var(--team); }
 html[data-skin="team"] .topbar { border-color:color-mix(in srgb,var(--team) 60%,#3b373b);background:linear-gradient(100deg,#101115ed,color-mix(in srgb,var(--team) 17%,#101115)); }
 html[data-skin="team"] .sidebar nav div.active,html[data-skin="team"] .game-clock time,html[data-skin="team"] .top-stat strong { color:var(--team); }

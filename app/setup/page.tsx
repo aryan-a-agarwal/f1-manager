@@ -1,17 +1,56 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { teams } from "@/lib/data/grid";
 import { startGameClock } from "@/lib/gameClock";
+
+type Skin = "light" | "dark" | "retro" | "team";
+const skins: readonly Skin[] = ["light", "dark", "retro", "team"];
 
 export default function SetupPage() {
   const router = useRouter();
   const [step, setStep] = useState<"team" | "confirm">("team");
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [skin, setSkin] = useState<Skin>("dark");
+  const [settingsOpen, setSettingsOpen] = useState(false);
+
+  useEffect(() => {
+    const savedSkin = localStorage.getItem("f1-manager-skin");
+    const nextSkin = skins.includes(savedSkin as Skin) ? (savedSkin as Skin) : "dark";
+    setSkin(nextSkin);
+    document.documentElement.dataset.skin = nextSkin;
+  }, []);
+
+  function changeSkin(next: Skin) {
+    setSkin(next);
+    localStorage.setItem("f1-manager-skin", next);
+    document.documentElement.dataset.skin = next;
+  }
+
   const selected = useMemo(() => teams.find((team) => team.id === selectedId), [selectedId]);
   function beginSeason() { if (selected) { localStorage.setItem("f1-manager-team", selected.id); startGameClock(); router.push("/game"); } }
-  return <main className="setup-shell">
-    <header className="setup-header"><div className="wordmark"><span>F1</span> MANAGER</div><div className="season-label">2027 SEASON · 11 TEAMS · 22 DRIVERS</div></header>
+  return <main className="setup-shell" style={selected ? { "--team": selected.primary, "--team-secondary": selected.secondary } as React.CSSProperties : undefined}>
+    <header className="setup-header">
+      <div className="wordmark"><span>F1</span> MANAGER</div>
+      <div className="season-label">2027 SEASON · 11 TEAMS · 22 DRIVERS</div>
+      <div className="settings-wrap">
+        <button className="settings-button" onClick={() => setSettingsOpen(!settingsOpen)} aria-label="Open settings">⚙</button>
+        {settingsOpen && <>
+          <button className="settings-dismiss" onClick={() => setSettingsOpen(false)} aria-label="Close settings" />
+          <section className="settings-menu">
+            <span>GAME SETTINGS</span>
+            <label className="skin-label">APPEARANCE</label>
+            <div className="skin-grid">
+              {skins.map((option) => (
+                <button key={option} className={skin === option ? "selected" : ""} onClick={() => changeSkin(option)}>
+                  <i className={`skin-swatch ${option}`} />{option}
+                </button>
+              ))}
+            </div>
+          </section>
+        </>}
+      </div>
+    </header>
     <section className="setup-content"><div className="eyebrow">STEP {step === "team" ? "1" : "2"} OF 2</div>
       {step === "team" ? <><h1>Choose your constructor</h1><p className="intro">Take control of one of the eleven teams on the 2027 grid. Each team begins with its 2026 driver pairing.</p>
         <div className="team-grid">{teams.map((team) => { const active = team.id === selectedId; return <button className={`team-card${active ? " selected" : ""}`} key={team.id} onClick={() => setSelectedId(team.id)} style={{ "--team": team.primary, "--team-secondary": team.secondary } as React.CSSProperties}>
