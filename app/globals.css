@@ -99,3 +99,102 @@ html[data-skin="retro"] .rating-grid span { background:#ddd4b9; } html[data-skin
 .team-title { position:relative;display:flex;gap:14px;align-items:center;margin:27px 0 26px; }.hub-mark { display:grid;place-items:center;width:65px;height:48px;color:var(--team-secondary);background:var(--team);font:800 21px 'Barlow Condensed';font-style:italic;transform:skew(-8deg); }.team-title h2 { margin:2px 0;font:700 27px 'Barlow Condensed';text-transform:uppercase; }.hub-bottom { position:relative;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #3c393d;padding-top:16px; }.hub-bottom strong { display:block;margin-top:5px;color:#ddd;font:600 13px 'Barlow Condensed'; }.drivers-panel { grid-column:span 1; }.driver-row { position:relative;display:flex;align-items:center;gap:13px;padding:20px 2px;border-bottom:1px solid #39373a; }.helmet { display:grid;place-items:center;width:43px;height:43px;border-radius:50%;border:2px solid var(--team);color:var(--team);font:800 17px 'Barlow Condensed'; }.driver-row strong { display:block;margin-top:3px;font:600 18px 'Barlow Condensed'; }.driver-row>b { margin-left:auto;color:#9c9699;font:500 11px 'Barlow Condensed'; }.news-panel { grid-column:span 2; }.news-panel>small { position:relative;margin-top:25px;color:#ba8569; }.news-panel h2 { position:relative;margin:7px 0;font:700 25px 'Barlow Condensed';text-transform:uppercase; }.news-panel p { position:relative;max-width:600px;color:#999499;font-size:12px;line-height:1.55; }.news-panel button { position:absolute;right:18px;bottom:18px;padding:10px 22px;border:1px solid #7e604f;border-radius:20px;color:#ddd;background:linear-gradient(#45352e,#201d1d);font:600 12px 'Barlow Condensed';letter-spacing:.08em; }
 @media(max-width:1050px){.team-grid{grid-template-columns:repeat(3,1fr)}.dashboard{grid-template-columns:190px 1fr}.dash-grid{grid-template-columns:1fr 1fr;overflow:auto;height:auto}.season-panel,.news-panel{grid-column:span 2}.sidebar nav div{font-size:14px}}
 @media(max-width:700px){.setup-header{padding:0 18px}.season-label{display:none}.setup-content{padding:30px 16px}.team-grid{grid-template-columns:1fr 1fr}.team-card{min-height:190px}.dashboard{display:block;overflow:auto}.sidebar{display:none}.topbar>div{min-width:auto;padding:0 10px}.dash-grid{display:block;padding:12px}.panel{min-height:230px;margin-bottom:12px}.confirm-drivers,.confirm-details{grid-template-columns:1fr}.confirm-drivers>div+div,.confirm-details div+div{border-left:0;border-top:1px solid #35343a}}
+
+/* Management shell — responsive layout and interaction pass */
+.dashboard-main { height:100vh; overflow:hidden; }
+.topbar { min-height:76px; height:auto; padding-right:72px; }
+.topbar .settings-wrap { top:22px; right:22px; }
+.settings-button { width:36px; height:32px; font:800 0/1 'Barlow Condensed',sans-serif; }
+.settings-button::after { content:"SET"; font-size:9px; letter-spacing:.08em; }
+.workspace { height:calc(100vh - 76px); min-height:0; }
+.sidebar nav button i { flex:0 0 24px; width:24px; overflow:hidden; font-size:9px; font-weight:800; }
+.sidebar nav button.active { color:#f0c1a5; }
+html[data-skin="retro"] .sidebar nav button.active { color:#e3b65c; }
+html[data-skin="retro"] .sidebar nav button { color:#c4c5a9; }
+html[data-skin="team"] .sidebar nav button.active { color:var(--team); border-left-color:var(--team); background:linear-gradient(90deg,color-mix(in srgb,var(--team) 25%,transparent),transparent); }
+
+.detail-grid { grid-template-columns:minmax(280px,.8fr) minmax(420px,1.4fr); align-items:start; }
+.detail-card.span-two { grid-column:auto; }
+.detail-card > p { color:#979297; font-size:12px; line-height:1.6; }
+.detail-card .page-restart:not(.settings-page *) { margin-top:18px; border-color:color-mix(in srgb,var(--team) 70%,#6e665f); color:var(--team-secondary); background:var(--team); box-shadow:0 8px 22px color-mix(in srgb,var(--team) 20%,transparent); }
+.detail-card .page-restart:not(.settings-page *):hover { filter:brightness(1.1); }
+.detail-card .page-restart:disabled { opacity:.45; cursor:wait; box-shadow:none; }
+.schedule-row { align-items:center; gap:20px; min-height:48px; }
+.schedule-row b { flex:0 0 auto; }
+.schedule-row span { text-align:right; line-height:1.35; overflow-wrap:anywhere; }
+
+.driver-profile { min-height:300px; }
+.driver-profile .rating-grid { position:static; margin-top:38px; }
+.calendar-detail .schedule-row { font-size:11px; }
+.race-list button { min-height:56px; }
+.work-tile { min-height:190px; }
+
+@media(max-width:1180px) {
+  .dashboard { grid-template-columns:190px minmax(0,1fr); }
+  .sidebar { padding-inline:14px; }
+  .sidebar nav button { gap:9px; font-size:14px; }
+  .topbar { padding-left:20px; }
+  .topbar>div:first-child { min-width:130px; }
+  .topbar .top-drivers { min-width:155px; }
+  .topbar .top-stat { display:none; }
+  .topbar .game-clock { min-width:190px; }
+  .home-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+
+@media(max-width:860px) {
+  .dashboard { display:block; height:auto; min-height:100vh; overflow:visible; }
+  .dashboard-main { height:auto; min-height:100vh; overflow:visible; padding-bottom:66px; }
+  .sidebar { display:block; position:fixed; z-index:45; inset:auto 0 0; height:64px; padding:0 8px; border:1px solid #3e3a3e; border-width:1px 0 0; background:#111217f5; backdrop-filter:blur(14px); }
+  .dashboard-logo { display:none; }
+  .sidebar nav { height:64px; margin:0; flex-direction:row; align-items:stretch; overflow-x:auto; scrollbar-width:none; }
+  .sidebar nav::-webkit-scrollbar { display:none; }
+  .sidebar nav button { flex:0 0 72px; min-width:72px; height:64px; padding:6px 3px; gap:4px; flex-direction:column; justify-content:center; border:0; border-top:2px solid transparent; text-align:center; font-size:10px; line-height:1; }
+  .sidebar nav button.active { border-top-color:var(--team); border-left:0; background:linear-gradient(0deg,color-mix(in srgb,var(--team) 20%,transparent),transparent); }
+  .sidebar nav button i { flex:0 0 auto; width:auto; }
+  .sidebar nav .database-nav { margin:0; }
+  .topbar { position:sticky; z-index:35; top:0; min-height:82px; padding:10px 62px 10px 14px; align-items:center; }
+  .topbar>div { min-width:0; padding:0 11px; }
+  .topbar>div:first-child { min-width:120px; padding-left:0; }
+  .topbar .top-drivers { min-width:0; flex:1; }
+  .top-drivers strong { white-space:normal; }
+  .topbar .game-clock { min-width:145px; margin:0; padding-right:0; }
+  .game-clock strong { font-size:12px; }
+  .game-clock time { font-size:17px; }
+  .topbar .settings-wrap { position:fixed; top:24px; right:14px; }
+  .workspace { height:auto; min-height:calc(100vh - 146px); padding:20px 18px 30px; overflow:visible; }
+  .detail-grid,.calendar-layout { grid-template-columns:1fr; }
+  .calendar-detail { position:static; }
+  .race-list { max-height:420px; }
+}
+
+@media(max-width:600px) {
+  .topbar { min-height:72px; padding-block:8px; }
+  .topbar>div:first-child { min-width:0; flex:1; }
+  .topbar>div:first-child strong { font-size:14px; }
+  .topbar .top-drivers { display:none; }
+  .topbar .game-clock { flex:0 0 auto; min-width:132px; grid-template-columns:1fr auto; }
+  .game-clock small { display:none; }
+  .game-clock strong { margin:0; font-size:10px; white-space:normal; line-height:1.2; }
+  .game-clock time { margin-left:8px; }
+  .workspace { padding:17px 12px 26px; }
+  .page-title { align-items:flex-start; gap:12px; }
+  .page-title h1 { font-size:28px; }
+  .status-chip { padding:7px 8px; white-space:nowrap; }
+  .home-grid,.driver-cards,.database-list { grid-template-columns:1fr; }
+  .work-tile.wide { grid-column:auto; }
+  .work-tile { min-height:170px; }
+  .tile-stats { justify-content:space-between; gap:15px; }
+  .facility-list>div { grid-template-columns:1fr auto; }
+  .facility-list .level-dots { grid-column:1/-1; }
+  .race-list button { grid-template-columns:34px minmax(0,1fr); }
+  .race-list time { grid-column:2; margin-top:4px; }
+  .schedule-row { align-items:flex-start; flex-direction:column; gap:5px; }
+  .schedule-row span { text-align:left; }
+  .table-head,.table-row { grid-template-columns:42px minmax(0,1fr) 58px; padding-inline:10px; }
+  .market-list { overflow-x:auto; }
+  .market-list .table-head,.market-row { min-width:620px; }
+  .settings-page .skin-grid { grid-template-columns:1fr 1fr; }
+  .database-tabs { overflow-x:auto; }
+  .database-tabs button { flex:0 0 auto; }
+  .database-list article dl,.fact-modal dl { grid-template-columns:1fr; }
+}

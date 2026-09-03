@@ -1,0 +1,28 @@
+export type CircuitRaceFacts = { lapLengthKm:number; raceLaps:number|null; raceDistanceKm:number|null };
+
+export const circuitRaceFacts: Readonly<Record<string,CircuitRaceFacts>> = {
+  "albert-park":{lapLengthKm:5.278,raceLaps:58,raceDistanceKm:306.124},
+  shanghai:{lapLengthKm:5.451,raceLaps:56,raceDistanceKm:305.066},
+  suzuka:{lapLengthKm:5.807,raceLaps:53,raceDistanceKm:307.471},
+  bahrain:{lapLengthKm:5.412,raceLaps:57,raceDistanceKm:308.238},
+  jeddah:{lapLengthKm:6.174,raceLaps:50,raceDistanceKm:308.45},
+  miami:{lapLengthKm:5.412,raceLaps:57,raceDistanceKm:308.326},
+  montreal:{lapLengthKm:4.361,raceLaps:70,raceDistanceKm:305.27},
+  monaco:{lapLengthKm:3.337,raceLaps:78,raceDistanceKm:260.286},
+  "barcelona-catalunya":{lapLengthKm:4.657,raceLaps:66,raceDistanceKm:307.236},
+  spielberg:{lapLengthKm:4.318,raceLaps:71,raceDistanceKm:306.452},
+  silverstone:{lapLengthKm:5.891,raceLaps:52,raceDistanceKm:306.198},
+  "spa-francorchamps":{lapLengthKm:7.004,raceLaps:44,raceDistanceKm:308.052},
+  hungaroring:{lapLengthKm:4.381,raceLaps:70,raceDistanceKm:306.63},
+  zandvoort:{lapLengthKm:4.259,raceLaps:72,raceDistanceKm:306.587},
+  monza:{lapLengthKm:5.793,raceLaps:53,raceDistanceKm:306.72},
+  "madrid-ifema":{lapLengthKm:5.474,raceLaps:null,raceDistanceKm:null},
+  baku:{lapLengthKm:6.003,raceLaps:51,raceDistanceKm:306.049},
+  "marina-bay":{lapLengthKm:4.94,raceLaps:62,raceDistanceKm:306.143},
+  "circuit-of-the-americas":{lapLengthKm:5.513,raceLaps:56,raceDistanceKm:308.405},
+  "hermanos-rodriguez":{lapLengthKm:4.304,raceLaps:71,raceDistanceKm:305.354},
+  interlagos:{lapLengthKm:4.309,raceLaps:71,raceDistanceKm:305.879},
+  "las-vegas":{lapLengthKm:6.201,raceLaps:50,raceDistanceKm:310.05},
+  lusail:{lapLengthKm:5.419,raceLaps:57,raceDistanceKm:308.611},
+  "yas-marina":{lapLengthKm:5.281,raceLaps:58,raceDistanceKm:306.183},
+};

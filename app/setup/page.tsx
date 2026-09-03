@@ -2,14 +2,14 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { teams } from "@/lib/data/grid";
-import { startGameClock } from "@/lib/gameClock";
+import { createCareer, saveCareer } from "@/lib/career";
 
 export default function SetupPage() {
   const router = useRouter();
   const [step, setStep] = useState<"team" | "confirm">("team");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selected = useMemo(() => teams.find((team) => team.id === selectedId), [selectedId]);
-  function beginSeason() { if (selected) { localStorage.setItem("f1-manager-team", selected.id); startGameClock(); router.push("/game"); } }
+  function beginSeason() { if (selected) { saveCareer(createCareer(selected.id)); router.push("/game"); } }
   return <main className="setup-shell">
     <header className="setup-header"><div className="wordmark"><span>F1</span> MANAGER</div><div className="season-label">2027 SEASON · 11 TEAMS · 22 DRIVERS</div></header>
     <section className="setup-content"><div className="eyebrow">STEP {step === "team" ? "1" : "2"} OF 2</div>

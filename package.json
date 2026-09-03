@@ -2,7 +2,7 @@
   "name": "f1-manager",
   "version": "0.1.0",
   "private": true,
-  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
+  "scripts": { "dev": "next dev", "build": "next build", "start": "next start", "test:career-save": "tsx calibration/careerSave.test.ts", "test:game-time": "tsx calibration/gameTime.test.ts", "test:season-calendar": "tsx calibration/seasonCalendar.test.ts", "test:weekend-orchestration": "tsx calibration/weekendOrchestration.test.ts", "test:championship-scoring": "tsx calibration/championshipScoring.test.ts", "test:season-lifecycle": "tsx calibration/seasonLifecycleWorkforce.test.ts" },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",
     "next": "^14.2.35",
@@ -13,6 +13,7 @@
     "@types/node": "^20.17.30",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.6",
+    "tsx": "^4.20.5",
     "typescript": "^5.8.2"
   }
 }
