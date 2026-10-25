@@ -29,9 +29,12 @@ class MemoryStorage implements CareerStorage {
   removeItem(key:string){this.values.delete(key);}
 }
 
+function isolateSessions(career:ReturnType<typeof createCareer>){return {...career,events:[],projects:[],comms:{...career.comms!,emails:[]}};}
+
 async function main(){
 const preparationStorage=new MemoryStorage();
 let preparationCareer=saveCareer(createCareer("mclaren",{careerId:"preparation-test"}),preparationStorage);
+preparationCareer=isolateSessions(preparationCareer);
 const preparationAdvance=advanceCareerWeekend(preparationCareer,preparationStorage);
 preparationCareer=preparationAdvance.career;
 assert.equal(preparationCareer.clock.date,"2027-03-05");
@@ -43,6 +46,7 @@ assert.equal(sessionAdvance.reachedEvent?.id,"2027-round-01-practice_1");
 
 const storage=new MemoryStorage();
 let career=saveCareer(createCareer("ferrari",{careerId:"weekend-test",now:new Date("2026-09-01T12:00:00Z")}),storage);
+career=isolateSessions(career);
 assert.equal(isPreparationAvailable(career,"2027-round-01"),false);
 
 let advance=continueCareerToNextSession(career,storage);
@@ -115,7 +119,8 @@ assert.equal(career.weekendOperations.outbox.filter((entry)=>entry.type==="Grand
 assert.ok(career.season.calendar.rounds.every((round)=>round.status==="archived"));
 assert.ok(career.season.calendar.rounds.every((round)=>weekendIntegrityReport(career,round.id).valid));
 career=processChampionshipEvents(career,storage);
-assert.ok(career.weekendOperations.outbox.every((entry)=>entry.status==="processed"));
+assert.ok(career.weekendOperations.outbox.filter(entry=>entry.type==="SessionCompleted").every((entry)=>entry.status==="processed"));
+assert.ok(career.weekendOperations.outbox.filter(entry=>entry.type!=="SessionCompleted").some(entry=>entry.status==="pending"),"Scoring must leave lifecycle notices for their owner");
 assert.ok(career.championship.drivers.every((entry)=>entry.points===0));
 career=completeCurrentSeason(career,storage);
 career=startNextSeason(career,storage);

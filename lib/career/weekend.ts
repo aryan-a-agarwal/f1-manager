@@ -1,9 +1,12 @@
+import { advanceCareerSchedule } from "./scheduler";
 import { teams } from "@/lib/data/grid";
 import { circuitRaceFacts } from "@/lib/data/circuitFacts";
 import { saveCareer, type CareerStorage } from "./storage";
 import type { CalendarRound, CareerState, DomainEvent, SessionAttempt, SessionInput, SessionOutput, WeekendSnapshot, WeekendStatus } from "./types";
 import { advanceCareerTime, fromGameMinute, toGameMinute, type ScheduledGameEvent } from "./gameTime";
-import { administrativeSessionEngine, type SessionEngine, validateSessionOutput } from "./sessionEngine";
+import { administrativeSessionEngine, simulatedSessionEngine, type SessionEngine, validateSessionOutput } from "./sessionEngine";
+import { processChampionshipEventsState, processWeekendLifecycleEventsState } from "./scoring";
+import { nextCalendarSession } from "./calendar";
 
 function findSession(career:CareerState, sessionId:string) {
   for (const round of career.season.calendar.rounds) {
@@ -106,7 +109,7 @@ export async function finishSessionAttempt(career:CareerState, sessionId:string,
   let changed=replaceSession(processing,sessionId,{status:"completed",resultId:output.id},finalRoundStatus(round,sessionId));
   const outbox=[...changed.weekendOperations.outbox,event(`${output.id}-completed`,"SessionCompleted",round.id,sessionId,output.id,now)];
   if(session.kind==="race") outbox.push(event(`${output.id}-grand-prix`,"GrandPrixCompleted",round.id,sessionId,output.id,now));
-  changed={...changed,clock:{...changed.clock,status:"paused",blockingEventId:null},weekendOperations:{...changed.weekendOperations,activeSessionId:null,attempts,outputs:[...changed.weekendOperations.outputs,output],outbox}};
+  changed={...changed,scheduler:{...changed.scheduler,pendingEvent:null},clock:{...changed.clock,status:"paused",blockingEventId:null},weekendOperations:{...changed.weekendOperations,activeSessionId:null,attempts,outputs:[...changed.weekendOperations.outputs,output],outbox}};
   return saveCareer(changed,storage,now);
 }
 
@@ -135,23 +138,32 @@ export function archiveWeekend(career:CareerState,roundId:string,storage?:Career
 export function cancelCalendarSession(career:CareerState,sessionId:string,storage?:CareerStorage,now=new Date()) {
   const {round,session}=findSession(career,sessionId);
   if(session.kind==="race") throw new Error("Race cancellation requires the future sporting-results system.");
+  if(["running","processing","locked"].includes(session.status))throw new Error("An active session cannot be cancelled.");
   if(session.status==="completed"||session.status==="cancelled") return career;
   if(!priorSessionsResolved(career,sessionId)) throw new Error("Earlier sessions must be resolved first.");
   let changed=replaceSession(career,sessionId,{status:"cancelled"},"weekend_active");
-  if(changed.clock.blockingEventId===sessionId) changed={...changed,clock:{...changed.clock,status:"paused",blockingEventId:null},weekendOperations:{...changed.weekendOperations,activeSessionId:null}};
+  if(changed.clock.blockingEventId===sessionId) changed={...changed,scheduler:{...changed.scheduler,pendingEvent:null},clock:{...changed.clock,status:"paused",blockingEventId:null},weekendOperations:{...changed.weekendOperations,activeSessionId:null}};
   return saveCareer(changed,storage,now);
 }
 
 export function postponeCalendarSession(career:CareerState,sessionId:string,target:{date:string;minuteOfDay:number},storage?:CareerStorage,now=new Date()) {
   const {round,session,index}=findSession(career,sessionId);
   if(session.status==="completed"||session.status==="cancelled") throw new Error("A resolved session cannot be postponed.");
+  if(["running","processing","locked"].includes(session.status))throw new Error("An active session cannot be postponed.");
+  if(!target.date.startsWith(`${career.season.year}-`))throw new Error("Postponed sessions must remain in the same season.");
   const targetValue=toGameMinute(target);
   const current=toGameMinute({date:career.clock.date,minuteOfDay:career.clock.minuteOfDay});
   if(targetValue<=current) throw new Error("A postponed session must be in the future.");
-  const following=round.sessions[index+1];
+  const ordered=career.season.calendar.rounds.flatMap(item=>item.sessions);
+  const position=ordered.findIndex(item=>item.id===sessionId);
+  const previous=ordered[position-1];
+  if(previous&&targetValue<=toGameMinute(previous))throw new Error("A postponed session must follow the previous session.");
+  const following=ordered[position+1];
   if(following&&targetValue>=toGameMinute({date:following.date,minuteOfDay:following.minuteOfDay})) throw new Error("A postponed session cannot overlap the next session.");
   let changed=replaceSession(career,sessionId,{status:"scheduled",date:target.date,minuteOfDay:target.minuteOfDay});
-  if(changed.clock.blockingEventId===sessionId) changed={...changed,clock:{...changed.clock,status:"paused",blockingEventId:null},weekendOperations:{...changed.weekendOperations,activeSessionId:null}};
+  const moved=changed.season.calendar.rounds.find(item=>item.id===round.id)!;
+  changed=replaceRound(changed,{...moved,weekendStartDate:moved.sessions[0].date,weekendEndDate:moved.sessions.at(-1)!.date});
+  if(changed.clock.blockingEventId===sessionId) changed={...changed,scheduler:{...changed.scheduler,pendingEvent:null},clock:{...changed.clock,status:"paused",blockingEventId:null},weekendOperations:{...changed.weekendOperations,activeSessionId:null}};
   return saveCareer(changed,storage,now);
 }
 
@@ -205,11 +217,92 @@ export function weekendMilestones(career:CareerState):ScheduledGameEvent[] {
 
 export function advanceCareerWeekend(career:CareerState,storage?:CareerStorage) {
   if(career.weekendOperations.activeWeekendId){const active=career.season.calendar.rounds.find((round)=>round.id===career.weekendOperations.activeWeekendId);if(active?.status==="race_completed")throw new Error("Archive the completed weekend before continuing.");}
-  const result=advanceCareerTime(career,{type:"next_event"},weekendMilestones(career),storage);
-  if(!result.reachedEvent?.id.endsWith("-preparation")) return result;
-  const roundId=result.reachedEvent.id.slice(0,-"-preparation".length);
-  const round=result.career.season.calendar.rounds.find((entry)=>entry.id===roundId);
-  if(!round) throw new Error("Preparation milestone round not found.");
-  const changed=saveCareer(replaceRound(result.career,{...round,status:"preparation"}),storage);
-  return {...result,career:changed};
+  return advanceCareerSchedule(career,{type:"next_event"},storage,{preparationStop:true});
+}
+
+export async function simulateNextSession(
+  career: CareerState,
+  engine: SessionEngine = simulatedSessionEngine,
+  storage?: CareerStorage,
+  now = new Date()
+): Promise<CareerState> {
+  let state = career;
+  const next = nextCalendarSession(state.season.calendar);
+  if (!next) throw new Error("No upcoming session found.");
+
+  const session = next.session;
+  const round = next.round;
+
+  if (round.status === "race_completed") {
+    state = archiveWeekend(state, round.id, storage, now);
+    state = processWeekendLifecycleEventsState(processChampionshipEventsState(state));
+    return saveCareer(state, storage, now);
+  }
+
+  while (state.clock.status !== "blocked" || state.clock.blockingEventId !== session.id) {
+    const adv = advanceCareerWeekend(state, storage);
+    state = adv.career;
+    if(state.clock.status==="blocked"&&state.clock.blockingEventId!==session.id)return state;
+    if(!adv.changed)throw new Error("Session progression made no progress.");
+  }
+
+  const updatedSession = state.season.calendar.rounds.flatMap((r) => r.sessions).find((s) => s.id === session.id);
+  if (!updatedSession) throw new Error("Target session not found.");
+
+  if (updatedSession.status === "scheduled" || updatedSession.status === "available") {
+    state = prepareWeekendSession(state, updatedSession.id, storage, now);
+  }
+
+  state = startSessionAttempt(state, updatedSession.id, engine, storage, now);
+  state = await finishSessionAttempt(state, updatedSession.id, engine, storage, now);
+  state = processWeekendLifecycleEventsState(processChampionshipEventsState(state));
+
+  return saveCareer(state, storage, now);
+}
+
+export async function simulateEntireWeekend(
+  career: CareerState,
+  roundId: string,
+  engine: SessionEngine = simulatedSessionEngine,
+  storage?: CareerStorage,
+  now = new Date()
+): Promise<CareerState> {
+  let state = career;
+  const round = state.season.calendar.rounds.find((r) => r.id === roundId);
+  if (!round) throw new Error("Round not found.");
+
+  for (const sess of round.sessions) {
+    const currentRound = state.season.calendar.rounds.find((r) => r.id === roundId);
+    if (!currentRound) break;
+    const currentSess = currentRound.sessions.find((s) => s.id === sess.id);
+    if (!currentSess || currentSess.status === "completed" || currentSess.status === "cancelled") {
+      continue;
+    }
+
+    while (state.clock.status !== "blocked" || state.clock.blockingEventId !== currentSess.id) {
+      const adv = advanceCareerWeekend(state, storage);
+      state = adv.career;
+      if(state.clock.status==="blocked"&&state.clock.blockingEventId!==currentSess.id)return state;
+      if(!adv.changed)throw new Error("Weekend progression made no progress.");
+    }
+
+    const reloadedRound = state.season.calendar.rounds.find((r) => r.id === roundId)!;
+    const reloadedSess = reloadedRound.sessions.find((s) => s.id === sess.id)!;
+
+    if (reloadedSess.status === "scheduled" || reloadedSess.status === "available") {
+      state = prepareWeekendSession(state, reloadedSess.id, storage, now);
+    }
+
+    state = startSessionAttempt(state, reloadedSess.id, engine, storage, now);
+    state = await finishSessionAttempt(state, reloadedSess.id, engine, storage, now);
+    state = processWeekendLifecycleEventsState(processChampionshipEventsState(state));
+  }
+
+  const finalRound = state.season.calendar.rounds.find((r) => r.id === roundId);
+  if (finalRound && finalRound.status === "race_completed") {
+    state = archiveWeekend(state, roundId, storage, now);
+    state = processWeekendLifecycleEventsState(processChampionshipEventsState(state));
+  }
+
+  return saveCareer(state, storage, now);
 }

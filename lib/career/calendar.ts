@@ -1,3 +1,5 @@
+import { circuitRaceFacts } from "@/lib/data/circuitFacts";
+import { STANDARD_SESSIONS, SPRINT_SESSIONS, VENUE_TIME_ZONES, type SeasonProfile } from "./seasonProfiles";
 import type {
   CalendarRound,
   CalendarSession,
@@ -64,36 +66,33 @@ function session(id: string, kind: SessionKind, date: string, minuteOfDay: numbe
   return { id:`${id}-${kind}`, kind, date, minuteOfDay, status:"scheduled", resultId:null };
 }
 
-function buildSessions(id: string, year: number, week: number, sprint: boolean) {
-  const friday = dateForIsoWeek(year, week, 5);
-  const saturday = dateForIsoWeek(year, week, 6);
-  const sunday = dateForIsoWeek(year, week, 7);
-  return sprint
-    ? [session(id,"practice_1",friday,10*60),session(id,"sprint_qualifying",friday,14*60),session(id,"sprint",saturday,10*60),session(id,"qualifying",saturday,15*60),session(id,"race",sunday,14*60)]
-    : [session(id,"practice_1",friday,10*60),session(id,"practice_2",friday,14*60),session(id,"practice_3",saturday,11*60),session(id,"qualifying",saturday,15*60),session(id,"race",sunday,14*60)];
-}
-
-export function generateSeasonCalendar(year: number): SeasonCalendar {
+export function generateSeasonCalendar(year: number, profile: SeasonProfile = {id:"generated-2026-order",version:1,label:"Generated career calendar",rounds:seasonCalendarTemplate}): SeasonCalendar {
   if (!Number.isInteger(year) || year < 2027) throw new Error("Career calendars begin in 2027.");
-  const rounds = seasonCalendarTemplate.map((template, index): CalendarRound => {
-    const roundNumber = index + 1;
-    const id = `${year}-round-${String(roundNumber).padStart(2,"0")}`;
-    return {
-      id,
-      roundNumber,
-      weekendNumber:template.weekendNumber,
-      weekendId:`${year}-W${String(template.weekendNumber).padStart(2,"0")}`,
-      trackId:template.trackId,
-      grandPrixName:template.grandPrixName,
-      location:template.location,
-      sprint:Boolean(template.sprint),
-      weekendStartDate:dateForIsoWeek(year,template.weekendNumber,5),
-      weekendEndDate:dateForIsoWeek(year,template.weekendNumber,7),
-      status:"scheduled",
-      sessions:buildSessions(id,year,template.weekendNumber,Boolean(template.sprint)),
-    };
+  const rounds = profile.rounds.map((template, index): CalendarRound => {
+    const id = `${year}-round-${String(index + 1).padStart(2,"0")}`;
+    const startDate = template.startDate ?? dateForIsoWeek(year,template.weekendNumber,5);
+    const templates = template.sessions ?? (template.sprint ? SPRINT_SESSIONS : STANDARD_SESSIONS);
+    const sessions = templates.map(entry => {
+      const date = new Date(`${startDate}T00:00:00Z`);
+      date.setUTCDate(date.getUTCDate() + entry.dayOffset);
+      return session(id,entry.kind,date.toISOString().slice(0,10),entry.minuteOfDay);
+    });
+    return {id,roundNumber:index+1,weekendNumber:template.weekendNumber,weekendId:`${year}-W${String(template.weekendNumber).padStart(2,"0")}`,
+      trackId:template.trackId,grandPrixName:template.grandPrixName,location:template.location,sprint:Boolean(template.sprint),
+      venueTimeZone:template.venueTimeZone ?? VENUE_TIME_ZONES[template.trackId] ?? "UTC",
+      weekendStartDate:sessions[0]?.date ?? startDate,weekendEndDate:sessions.at(-1)?.date ?? startDate,status:"scheduled",sessions};
   });
-  return { year, generated:true, sourceTemplate:"official-2026-order", sourceUrl:CALENDAR_TEMPLATE_SOURCE, rounds };
+  const periods: NonNullable<SeasonCalendar["periods"]> = [];
+  if(rounds.length) {
+    const previousDate=(date:string)=>new Date(Date.parse(`${date}T00:00:00Z`)-86400000).toISOString().slice(0,10);
+    const followingDate=(date:string)=>new Date(Date.parse(`${date}T00:00:00Z`)+86400000).toISOString().slice(0,10);
+    periods.push({kind:"preseason",label:"Pre-season",startDate:`${year}-01-01`,endDate:previousDate(rounds[0].weekendStartDate)});
+    rounds.slice(1).forEach((round,index)=>{const prev=rounds[index];if(Date.parse(round.weekendStartDate)-Date.parse(prev.weekendEndDate)>14*86400000) periods.push({kind:"break",label:"Championship break",startDate:followingDate(prev.weekendEndDate),endDate:previousDate(round.weekendStartDate)});});
+    periods.push({kind:"offseason",label:"Off-season",startDate:followingDate(rounds.at(-1)!.weekendEndDate),endDate:`${year}-12-31`});
+  }
+  const calendar:SeasonCalendar={year,generated:true,sourceTemplate:"official-2026-order",sourceUrl:CALENDAR_TEMPLATE_SOURCE,profileId:profile.id,profileVersion:profile.version,timeBasis:"UTC",periods,rounds};
+  if(!isSeasonCalendar(calendar))throw new Error("The season profile contains an invalid or overlapping schedule.");
+  return calendar;
 }
 
 export function calendarScheduledEvents(calendar: SeasonCalendar): ScheduledGameEvent[] {
@@ -133,6 +132,7 @@ function updateSession(career: CareerState, sessionId: string, status: "availabl
   });
   return {
     ...career,
+    scheduler:status==="completed"?{...career.scheduler,pendingEvent:null}:career.scheduler,
     clock: status === "completed" ? { ...career.clock, status:"paused" as const, blockingEventId:null } : career.clock,
     season: { ...career.season, currentEventId:sessionId, calendar:{...career.season.calendar,rounds} },
   };
@@ -146,10 +146,12 @@ export function completeCalendarSessionState(career: CareerState, sessionId: str
   return updateSession(career,sessionId,"completed");
 }
 
+const validatedTimeZones=new Set<string>();
+
 export function isSeasonCalendar(value: unknown): value is SeasonCalendar {
   if (typeof value !== "object" || value === null) return false;
   const calendar = value as Partial<SeasonCalendar>;
-  if (!Number.isInteger(calendar.year) || calendar.generated !== true || calendar.sourceTemplate !== "official-2026-order" || typeof calendar.sourceUrl !== "string" || !Array.isArray(calendar.rounds) || calendar.rounds.length !== 24) return false;
+  if (!Number.isInteger(calendar.year) || calendar.generated !== true || typeof calendar.sourceTemplate !== "string" || typeof calendar.sourceUrl !== "string" || !Array.isArray(calendar.rounds) || calendar.rounds.length < 1) return false;
   const weekendStatuses: readonly WeekendStatus[] = ["scheduled","preparation","entered","weekend_active","practice_completed","qualifying_completed","race_ready","race_completed","archived"];
   const sessionKinds: readonly SessionKind[] = ["practice_1","practice_2","practice_3","sprint_qualifying","sprint","qualifying","race"];
   const sessionStatuses: readonly import("./types").SessionStatus[] = ["scheduled","available","preparing","locked","running","processing","completed","cancelled","postponed"];
@@ -171,7 +173,7 @@ export function isSeasonCalendar(value: unknown): value is SeasonCalendar {
     && validDate(round.weekendEndDate)
     && weekendStatuses.includes(round.status)
     && Array.isArray(round.sessions)
-    && round.sessions.length === 5
+    && round.sessions.length >= 2
     && round.sessions.every((entry) => typeof entry.id === "string"
       && sessionKinds.includes(entry.kind)
       && validDate(entry.date)
@@ -181,7 +183,21 @@ export function isSeasonCalendar(value: unknown): value is SeasonCalendar {
       && sessionStatuses.includes(entry.status)
       && (entry.resultId === null || typeof entry.resultId === "string")));
   if (!valid) return false;
-  return new Set(calendar.rounds.map((round) => round.weekendNumber)).size === calendar.rounds.length
+  if(calendar.timeBasis !== undefined && calendar.timeBasis !== "UTC")return false;
+  if(calendar.profileVersion !== undefined && (!Number.isInteger(calendar.profileVersion)||calendar.profileVersion<1))return false;
+  if(calendar.periods && !calendar.periods.every(period=>["preseason","break","offseason"].includes(period.kind)&&validDate(period.startDate)&&validDate(period.endDate)&&period.startDate<=period.endDate))return false;
+  let previous=-Infinity;
+  for(const round of calendar.rounds){
+    if(!circuitRaceFacts[round.trackId])return false;
+    if(round.venueTimeZone&&!validatedTimeZones.has(round.venueTimeZone)){try{new Intl.DateTimeFormat("en-GB",{timeZone:round.venueTimeZone});validatedTimeZones.add(round.venueTimeZone);}catch{return false;}}
+    const expected=round.sprint?["practice_1","sprint_qualifying","sprint","qualifying","race"]:["practice_1","practice_2","practice_3","qualifying","race"];
+    // Cancelled sessions keep their original slots so saved result identities remain stable.
+    if(round.sessions.length!==expected.length||round.sessions.some((entry,index)=>entry.kind!==expected[index]))return false;
+    if(round.weekendStartDate!==round.sessions[0].date||round.weekendEndDate!==round.sessions.at(-1)!.date)return false;
+    for(const entry of round.sessions){const minute=Date.parse(`${entry.date}T00:00:00Z`)/60000+entry.minuteOfDay;if(minute<=previous||entry.date.slice(0,4)!==String(calendar.year))return false;previous=minute;}
+  }
+  return new Set(calendar.rounds.map((round) => round.id)).size === calendar.rounds.length
+    && new Set(calendar.rounds.map((round) => round.weekendNumber)).size === calendar.rounds.length
     && new Set(calendar.rounds.map((round) => round.trackId)).size === calendar.rounds.length
-    && new Set(calendar.rounds.flatMap((round) => round.sessions.map((entry) => entry.id))).size === calendar.rounds.length*5;
+    && new Set(calendar.rounds.flatMap((round) => round.sessions.map((entry) => entry.id))).size === calendar.rounds.flatMap(round=>round.sessions).length;
 }

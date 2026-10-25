@@ -1,9 +1,18 @@
+import {stripUnbuiltManagement} from "./stripUnbuiltManagement";
+import {removeDemoContent} from "./removeDemoContent";
 import { CAREER_SCHEMA_VERSION, type CareerAdvanceReason, type CareerPhase, type CareerState } from "./types";
 import { generateSeasonCalendar, isSeasonCalendar } from "./calendar";
 import { createChampionship, createInitialWorkforce } from "./careerDefaults";
+import { createInitialEvents, createInitialProjects, DEFAULT_STOP_SETTINGS } from "./timeline";
+import { createInitialComms } from "./comms";
+import { createInitialCommercial } from "./commercial";
+import { createInitialFinance } from "./finance";
+import { createInitialCarDevelopment } from "./carDev";
+import { createInitialFacilities } from "./facilities";
+import { createInitialMarket } from "./paddockMarket";
 
 const phases: readonly CareerPhase[] = ["preseason", "season", "offseason"];
-const advanceReasons: readonly CareerAdvanceReason[] = ["hour", "day", "target", "next_event"];
+const advanceReasons: readonly CareerAdvanceReason[] = ["hour", "day", "week", "target", "next_event", "next_race_weekend"];
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -42,6 +51,7 @@ export function isCareerState(value: unknown): value is CareerState {
     && (clock.status === "paused" || clock.status === "blocked")
     && (clock.blockingEventId === null || typeof clock.blockingEventId === "string")
     && isLastAdvance(clock.lastAdvance)
+    && isScheduler(value.scheduler)
     && Number.isInteger(season.year)
     && (season.year as number) >= 1950
     && phases.includes(season.phase as CareerPhase)
@@ -51,6 +61,13 @@ export function isCareerState(value: unknown): value is CareerState {
     && isChampionship(value.championship)
     && isWorkforce(value.workforce)
     && Array.isArray(value.seasonHistory);
+}
+
+function isScheduler(value:unknown){
+  if(!isRecord(value)||!Array.isArray(value.processedEventIds)||!Array.isArray(value.acknowledgedEventIds))return false;
+  if(![value.processedEventIds,value.acknowledgedEventIds].every(ids=>ids.every(id=>typeof id==="string")&&new Set(ids).size===ids.length))return false;
+  const event=value.pendingEvent;
+  return event===null||(isRecord(event)&&typeof event.id==="string"&&typeof event.title==="string"&&isCalendarDate(event.date)&&Number.isInteger(event.minuteOfDay)&&(event.minuteOfDay as number)>=0&&(event.minuteOfDay as number)<1440&&typeof event.category==="string"&&["mandatory","important","informational"].includes(event.severity as string));
 }
 
 function isChampionship(value:unknown){return isRecord(value)&&Number.isInteger(value.year)&&value.ruleset==="fia-2026-points-v1"&&typeof value.sourceUrl==="string"&&Array.isArray(value.drivers)&&Array.isArray(value.teams)&&Array.isArray(value.processedResultIds);}
@@ -109,6 +126,33 @@ function migrateCareer(value: unknown): unknown {
   if(migrated.schemaVersion===4&&isRecord(migrated.season)&&Number.isInteger(migrated.season.year)){
     const workforce=createInitialWorkforce(migrated.season.year as number);
     migrated={...migrated,schemaVersion:5,championship:createChampionship(migrated.season.year as number,workforce.lineups,workforce),workforce,seasonHistory:[]};
+  }
+  if (migrated.schemaVersion === 5) {
+    const teamId = isRecord(migrated.player) && typeof migrated.player.teamId === "string" ? migrated.player.teamId : "ferrari";
+    const date = isRecord(migrated.clock) && typeof migrated.clock.date === "string" ? migrated.clock.date : "2027-01-04";
+    const year = isRecord(migrated.season) && Number.isInteger(migrated.season.year) ? (migrated.season.year as number) : 2027;
+    migrated = {
+      ...migrated,
+      events: Array.isArray((migrated as any).events) ? (migrated as any).events : createInitialEvents(year, teamId),
+      projects: Array.isArray((migrated as any).projects) ? (migrated as any).projects : createInitialProjects(date),
+      stopSettings: isRecord((migrated as any).stopSettings) ? (migrated as any).stopSettings : { ...DEFAULT_STOP_SETTINGS },
+      comms: isRecord((migrated as any).comms) ? (migrated as any).comms : createInitialComms(teamId, date, year),
+      commercial: isRecord((migrated as any).commercial) ? (migrated as any).commercial : createInitialCommercial(teamId, year),
+      finance: isRecord((migrated as any).finance) ? (migrated as any).finance : createInitialFinance(teamId, year),
+      carDev: isRecord((migrated as any).carDev) ? (migrated as any).carDev : createInitialCarDevelopment(teamId, year),
+      facilities: isRecord((migrated as any).facilities) ? (migrated as any).facilities : createInitialFacilities(teamId),
+      market: isRecord((migrated as any).market) ? (migrated as any).market : createInitialMarket(year),
+    };
+  }
+  if(migrated.schemaVersion===5&&isRecord(migrated.season)&&isRecord(migrated.season.calendar)){
+    const calendar=migrated.season.calendar;
+    migrated={...migrated,schemaVersion:6,season:{...migrated.season,calendar:{...calendar,profileId:"legacy-generated-2026-order",profileVersion:1,timeBasis:"UTC"}},scheduler:{processedEventIds:[],acknowledgedEventIds:[],pendingEvent:null}};
+  }
+  if(migrated.schemaVersion===6){
+    migrated=removeDemoContent({...migrated,schemaVersion:7} as unknown as CareerState);
+  }
+  if(migrated.schemaVersion===7){
+    migrated=stripUnbuiltManagement({...migrated,schemaVersion:8} as unknown as CareerState);
   }
   return migrated;
 }

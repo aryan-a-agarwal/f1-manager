@@ -28,7 +28,7 @@ assert.equal(monthBoundary.career.clock.minuteOfDay, 30);
 
 const leapDay = calculateTimeAdvance(at("2028-02-28", 16 * 60), { type: "day" });
 assert.equal(leapDay.career.clock.date, "2028-02-29");
-assert.equal(leapDay.career.clock.minuteOfDay, 9 * 60);
+assert.equal(leapDay.career.clock.minuteOfDay, 16 * 60, "A day preserves the time of day (24 hours)");
 assert.throws(() => calculateTimeAdvance(at("2027-01-04", 9 * 60), {
   type: "target",
   target: { date: "2027-01-04", minuteOfDay: 8 * 60 },

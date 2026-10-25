@@ -44,9 +44,14 @@ export function processChampionshipEventsState(career:CareerState):CareerState {
       }
       championship={...championship,processedResultIds:[...championship.processedResultIds,event.resultId]};
     }
-    outbox=outbox.map((entry)=>entry.id===event.id?{...entry,status:"processed"}:entry);
+    if(event.type==="SessionCompleted")outbox=outbox.map((entry)=>entry.id===event.id?{...entry,status:"processed",receipts:[...new Set([...(entry.receipts??[]),"scoring"])]}:entry);
   }
   return {...career,championship,weekendOperations:{...career.weekendOperations,outbox}};
+}
+
+/** Lifecycle notices have their own owner; scoring never consumes these. */
+export function processWeekendLifecycleEventsState(career:CareerState):CareerState {
+  return {...career,weekendOperations:{...career.weekendOperations,outbox:career.weekendOperations.outbox.map(event=>event.type!=="SessionCompleted"?{...event,status:"processed",receipts:[...new Set([...(event.receipts??[]),"weekend-lifecycle"])]}:event)}};
 }
 
 export function processChampionshipEvents(career:CareerState,storage?:CareerStorage){

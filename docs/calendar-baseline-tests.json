@@ -1,0 +1,74 @@
+[
+  {
+    "name": "test:career-save",
+    "status": 0,
+    "stdout": "Career save calibration passed.\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:game-time",
+    "status": 0,
+    "stdout": "Controlled game-time calibration passed.\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:season-calendar",
+    "status": 0,
+    "stdout": "Season calendar calibration passed.\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:weekend-orchestration",
+    "status": 0,
+    "stdout": "Weekend orchestration calibration passed.\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:championship-scoring",
+    "status": 0,
+    "stdout": "Championship scoring calibration passed.\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:season-lifecycle",
+    "status": 0,
+    "stdout": "Season lifecycle and workforce calibration passed.\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:timeline",
+    "status": 0,
+    "stdout": "Timeline and time advance calibration passed.\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:comms",
+    "status": 0,
+    "stdout": "TAP version 13\n# Subtest: COMMS-01: Initial comms state initializes with emails, allocation, briefings, board confidence, news, and social\nok 1 - COMMS-01: Initial comms state initializes with emails, allocation, briefings, board confidence, news, and social\n  ---\n  duration_ms: 1.4616\n  ...\n# Subtest: COMMS-02: Email read status and unread count tracking\nok 2 - COMMS-02: Email read status and unread count tracking\n  ---\n  duration_ms: 4.5105\n  ...\n# Subtest: COMMS-03: Email decisions apply trade-offs to car projects and board confidence\nok 3 - COMMS-03: Email decisions apply trade-offs to car projects and board confidence\n  ---\n  duration_ms: 0.8872\n  ...\n# Subtest: COMMS-04: Engineering allocation validation enforces exact 100-point total\nok 4 - COMMS-04: Engineering allocation validation enforces exact 100-point total\n  ---\n  duration_ms: 1.1761\n  ...\n# Subtest: COMMS-05: Driver briefing priorities shift morale and confidence\nok 5 - COMMS-05: Driver briefing priorities shift morale and confidence\n  ---\n  duration_ms: 0.8073\n  ...\n# Subtest: COMMS-06: Pre-race strategy changes persist into career comms\nok 6 - COMMS-06: Pre-race strategy changes persist into career comms\n  ---\n  duration_ms: 0.6355\n  ...\n1..6\n# tests 6\n# suites 0\n# pass 6\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 21.1591\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:commercial",
+    "status": 0,
+    "stdout": "TAP version 13\n# Subtest: COMM-01: Commercial initializes with 7 slots, driver marketability, prestige, and WCC projection\nok 1 - COMM-01: Commercial initializes with 7 slots, driver marketability, prestige, and WCC projection\n  ---\n  duration_ms: 0.7355\n  ...\n# Subtest: COMM-02: Concorde WCC prize money calculation computes 11-tier distribution & deltas\nok 2 - COMM-02: Concorde WCC prize money calculation computes 11-tier distribution & deltas\n  ---\n  duration_ms: 22.0593\n  ...\n# Subtest: COMM-03: Driver PR event awards cash bonus and applies driver fatigue/sim trade-off\nok 3 - COMM-03: Driver PR event awards cash bonus and applies driver fatigue/sim trade-off\n  ---\n  duration_ms: 1.1186\n  ...\n# Subtest: COMM-04: Signing a sponsor replacement updates active contract and removes offer\nok 4 - COMM-04: Signing a sponsor replacement updates active contract and removes offer\n  ---\n  duration_ms: 0.8327\n  ...\n# Subtest: FIN-01: Finance initializes with cash reserves, £135M cost cap, and transaction ledger\nok 5 - FIN-01: Finance initializes with cash reserves, £135M cost cap, and transaction ledger\n  ---\n  duration_ms: 0.1448\n  ...\n# Subtest: FIN-02: Transaction recording strictly segregates Cap-Exempt vs Cap-Counted expenses\nok 6 - FIN-02: Transaction recording strictly segregates Cap-Exempt vs Cap-Counted expenses\n  ---\n  duration_ms: 0.5922\n  ...\n# Subtest: FIN-03: Cost cap status calculates headroom and flags warning/breach thresholds\nok 7 - FIN-03: Cost cap status calculates headroom and flags warning/breach thresholds\n  ---\n  duration_ms: 0.7097\n  ...\n1..7\n# tests 7\n# suites 0\n# pass 7\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 33.3959\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:cardev",
+    "status": 0,
+    "stdout": "TAP version 13\n# Subtest: CARDEV-01: Car attributes initialize across 12 channels and compute overall rating\nok 1 - CARDEV-01: Car attributes initialize across 12 channels and compute overall rating\n  ---\n  duration_ms: 4.5186\n  ...\n# Subtest: CARDEV-02: Grid comparative ranking accurately sorts 11 teams across all channels\nok 2 - CARDEV-02: Grid comparative ranking accurately sorts 11 teams across all channels\n  ---\n  duration_ms: 1.228\n  ...\n# Subtest: CARDEV-03: Starting project allocates ATR compute, burns cost cap, and creates project\nok 3 - CARDEV-03: Starting project allocates ATR compute, burns cost cap, and creates project\n  ---\n  duration_ms: 0.9101\n  ...\n# Subtest: CARDEV-04: Rush build applies -30% time reduction and +50% cost penalty\nok 4 - CARDEV-04: Rush build applies -30% time reduction and +50% cost penalty\n  ---\n  duration_ms: 0.5907\n  ...\n# Subtest: CARDEV-05: Completing project manufactures inventory and installing updates attributes\nok 5 - CARDEV-05: Completing project manufactures inventory and installing updates attributes\n  ---\n  duration_ms: 0.9191\n  ...\n# Subtest: CARDEV-06: Facilities campus upgrades, condition degradation, and refurbishment\nok 6 - CARDEV-06: Facilities campus upgrades, condition degradation, and refurbishment\n  ---\n  duration_ms: 0.8082\n  ...\n1..6\n# tests 6\n# suites 0\n# pass 6\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 15.6791\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:workforce",
+    "status": 0,
+    "stdout": "TAP version 13\n# Subtest: WORKFORCE-01: Driver skills initialize across 8 granular vectors and calculate overall rating\nok 1 - WORKFORCE-01: Driver skills initialize across 8 granular vectors and calculate overall rating\n  ---\n  duration_ms: 4.6985\n  ...\n# Subtest: WORKFORCE-02: Paddock market pool contains free agents and young prospects\nok 2 - WORKFORCE-02: Paddock market pool contains free agents and young prospects\n  ---\n  duration_ms: 0.6728\n  ...\n# Subtest: WORKFORCE-03: Driver rejects lowball salary and returns counter-offer\nok 3 - WORKFORCE-03: Driver rejects lowball salary and returns counter-offer\n  ---\n  duration_ms: 0.8168\n  ...\n# Subtest: WORKFORCE-04: Championship caliber drivers refuse subordinate contract status\nok 4 - WORKFORCE-04: Championship caliber drivers refuse subordinate contract status\n  ---\n  duration_ms: 0.5496\n  ...\n# Subtest: WORKFORCE-05: Successful driver signing deducts buyout clause and updates lineup\nok 5 - WORKFORCE-05: Successful driver signing deducts buyout clause and updates lineup\n  ---\n  duration_ms: 1.8047\n  ...\n# Subtest: WORKFORCE-06: Poaching contracted rival driver triggers Cap-Exempt buyout clause\nok 6 - WORKFORCE-06: Poaching contracted rival driver triggers Cap-Exempt buyout clause\n  ---\n  duration_ms: 0.8478\n  ...\n# Subtest: WORKFORCE-07: Staff hiring and poaching counts buyout against Cost Cap\nok 7 - WORKFORCE-07: Staff hiring and poaching counts buyout against Cost Cap\n  ---\n  duration_ms: 0.8176\n  ...\n1..7\n# tests 7\n# suites 0\n# pass 7\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 18.4885\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:season-runner",
+    "status": 0,
+    "stdout": "TAP version 13\n# Subtest: SEASON-01: Simulated session engine produces 22 valid driver results with realistic gaps\nok 1 - SEASON-01: Simulated session engine produces 22 valid driver results with realistic gaps\n  ---\n  duration_ms: 5.0225\n  ...\n# Subtest: SEASON-02: Simulate entire weekend resolves all sessions, awards FIA points, and archives weekend\nok 2 - SEASON-02: Simulate entire weekend resolves all sessions, awards FIA points, and archives weekend\n  ---\n  duration_ms: 54.6157\n  ...\n# Subtest: SEASON-03: Multiple consecutive race weekends accumulate points across the season\nok 3 - SEASON-03: Multiple consecutive race weekends accumulate points across the season\n  ---\n  duration_ms: 90.2418\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 160.1353\n",
+    "stderr": ""
+  }
+]

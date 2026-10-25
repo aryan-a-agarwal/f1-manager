@@ -56,8 +56,15 @@ export function saveCareer(career: CareerState, storage?: CareerStorage, now = n
       revision: career.metadata.revision + 1,
     },
   };
-  target.setItem(CAREER_STORAGE_KEY, JSON.stringify(saved));
+  try { target.setItem(CAREER_STORAGE_KEY, JSON.stringify(saved)); } catch { throw new CareerSaveError("The career could not be saved. Your previous save is intact. Export a backup or free browser storage and retry."); }
   return saved;
+}
+
+export function persistCareer(career: CareerState, storage?: CareerStorage): CareerState {
+  if (storage || (typeof window !== "undefined" && window.localStorage)) {
+    return saveCareer(career, storage);
+  }
+  return career;
 }
 
 export function loadCareer(storage?: CareerStorage): CareerState | null {
@@ -76,6 +83,8 @@ export function loadCareer(storage?: CareerStorage): CareerState | null {
     target.setItem(CAREER_STORAGE_KEY, backup.raw);
     return backup.career;
   }
+
+  if(current?.raw || backup?.raw)throw new CareerSaveError("This career could not be validated. Your saved data has been retained; restore a valid export or download it for recovery.");
 
   const legacyTeamId = target.getItem(LEGACY_TEAM_KEY);
   if (legacyTeamId) {

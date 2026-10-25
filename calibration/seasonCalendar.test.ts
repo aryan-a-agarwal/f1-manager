@@ -42,6 +42,8 @@ assert.equal(calendarScheduledEvents(calendar).length, 120);
 
 const storage = new MemoryStorage();
 let career = saveCareer(createCareer("ferrari", { careerId:"calendar-test", now:new Date("2026-09-01T12:00:00Z") }), storage);
+// This suite isolates session ordering; calendarIntegration tests management interruptions.
+career={...career,events:[],projects:[],comms:{...career.comms!,emails:[]}};
 const originalCalendar = JSON.stringify(career.season.calendar);
 
 const firstAdvance = continueCareerToNextSession(career, storage);

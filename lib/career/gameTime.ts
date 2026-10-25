@@ -53,14 +53,14 @@ export function addGameMinutes(value: GameDateTime, minutes: number): GameDateTi
   return fromGameMinute(toGameMinute(value) + minutes);
 }
 
-function nextDayAtNine(value: GameDateTime): GameDateTime {
-  return { date: dayToDate(dateToDay(value.date) + 1), minuteOfDay: DAY_START_MINUTE };
+function nextDayAtSameTime(value: GameDateTime): GameDateTime {
+  return { date: dayToDate(dateToDay(value.date) + 1), minuteOfDay: value.minuteOfDay };
 }
 
 function upcomingEvents(events: readonly ScheduledGameEvent[], current: number) {
   return events
-    .filter((event) => !event.resolved && toGameMinute(event.startsAt) > current)
-    .sort((a, b) => toGameMinute(a.startsAt) - toGameMinute(b.startsAt));
+    .filter((event) => !event.resolved && toGameMinute(event.startsAt) >= current)
+    .sort((a, b) => toGameMinute(a.startsAt) - toGameMinute(b.startsAt) || a.id.localeCompare(b.id));
 }
 
 export function calculateTimeAdvance(
@@ -82,7 +82,7 @@ export function calculateTimeAdvance(
     requestedTarget = addGameMinutes(current, 60);
     reason = "hour";
   } else if (request.type === "day") {
-    requestedTarget = nextDayAtNine(current);
+    requestedTarget = nextDayAtSameTime(current);
     reason = "day";
   } else if (request.type === "target") {
     requestedTarget = request.target;
@@ -95,7 +95,7 @@ export function calculateTimeAdvance(
   }
 
   const requestedValue = toGameMinute(requestedTarget);
-  if (requestedValue <= currentValue) throw new Error("Game time can only move forwards.");
+  if (requestedValue < currentValue) throw new Error("Game time can only move forwards.");
 
   const reachedEvent = upcoming.find((event) => event.blocking && toGameMinute(event.startsAt) <= requestedValue)
     ?? (request.type === "next_event" ? upcoming[0] : null);
@@ -140,6 +140,8 @@ export function advanceCareerTime(
 }
 
 export function resolveBlockingEvent(career: CareerState, eventId: string, storage?: CareerStorage): CareerState {
+  if(career.season.calendar.rounds.some(round=>round.sessions.some(session=>session.id===eventId&&!["completed","cancelled"].includes(session.status))))throw new Error("Complete the session in the race centre.");
+  if(career.comms?.emails.some(email=>email.id===eventId&&email.requiresDecision&&!email.chosenDecisionId))throw new Error("Make the required decision first.");
   if (career.clock.status !== "blocked" || career.clock.blockingEventId !== eventId) {
     throw new Error("That event is not currently blocking game time.");
   }

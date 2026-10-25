@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import {
+  CAREER_SCHEMA_VERSION,
   CAREER_BACKUP_KEY,
   CAREER_STORAGE_KEY,
   CareerSaveError,
@@ -62,11 +63,11 @@ versionOneStorage.setItem(CAREER_STORAGE_KEY, JSON.stringify({
   clock: { date: "2027-01-04", minuteOfDay: 540 },
 }));
 const migrated = loadCareer(versionOneStorage);
-assert.equal(migrated?.schemaVersion, 5);
+assert.equal(migrated?.schemaVersion, CAREER_SCHEMA_VERSION);
 assert.equal(migrated?.clock.status, "paused");
 assert.equal(migrated?.season.calendar.rounds.length, 24);
 assert.equal(migrated?.championship.drivers.length,22);
 assert.equal(migrated?.workforce.lineups.length,11);
-assert.equal(JSON.parse(versionOneStorage.getItem(CAREER_STORAGE_KEY) ?? "null").schemaVersion, 5);
+assert.equal(JSON.parse(versionOneStorage.getItem(CAREER_STORAGE_KEY) ?? "null").schemaVersion, CAREER_SCHEMA_VERSION);
 
 console.log("Career save calibration passed.");

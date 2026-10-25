@@ -1,3 +1,4 @@
+import { advanceCareerSchedule } from "./scheduler";
 import { calendarScheduledEvents, completeCalendarSessionState, openCalendarSessionState } from "./calendar";
 import { advanceCareerTime } from "./gameTime";
 import { saveCareer, type CareerStorage } from "./storage";
@@ -16,5 +17,5 @@ export function continueCareerToNextSession(career: CareerState, storage?: Caree
     const active = career.season.calendar.rounds.find((round) => round.id === career.weekendOperations.activeWeekendId);
     if (active?.status === "race_completed") throw new Error("Archive the completed weekend before continuing.");
   }
-  return advanceCareerTime(career, { type:"next_event" }, calendarScheduledEvents(career.season.calendar), storage);
+  return advanceCareerSchedule(career, { type:"next_event" }, storage);
 }

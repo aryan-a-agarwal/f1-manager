@@ -5,6 +5,6 @@ import { loadCareer } from "@/lib/career";
 
 export default function RootPage() {
   const router = useRouter();
-  useEffect(() => router.replace(loadCareer() ? "/game" : "/setup"), [router]);
+  useEffect(() => { try { router.replace(loadCareer() ? "/game" : "/setup"); } catch { router.replace("/game"); } }, [router]);
   return <main className="loading-screen">Preparing the 2027 paddock…</main>;
 }

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./management.css";
+import "./calendar.css";
 
 export const metadata: Metadata = { title: "F1 Manager 2027", description: "Lead an F1 constructor through the 2027 season." };
 

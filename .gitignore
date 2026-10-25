@@ -7,3 +7,12 @@ out/
 
 # Local environment credentials
 .env.local
+
+# Local credentials and generated caches
+.env*
+!.env.example
+!.env.sample
+*.tsbuildinfo
+
+# Local recovery snapshots
+docs/checkpoints/

@@ -1,0 +1,179 @@
+/* IPL-inspired management interface. Every screen override is scoped so the
+   original F1 layout and its four skins remain available unchanged. */
+.management-shell {
+  --mg-bg: #f4f1ea;
+  --mg-surface: #fffdf8;
+  --mg-raised: #efece3;
+  --mg-text: #16130f;
+  --mg-muted: #756f65;
+  --mg-line: #d9d4c8;
+  --mg-accent: #1d55c4;
+  --mg-tint: #e9eefb;
+  --mg-success: #26734c;
+  --mg-danger: #ab3b31;
+  --mg-mono: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  color-scheme: light;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  min-height: 420px;
+  overflow: hidden;
+  color: var(--mg-text);
+  background: var(--mg-bg);
+  font: 13px/1.5 Inter, Arial, sans-serif;
+}
+html[data-skin="dark"] .management-shell { --mg-bg:#0f111a; --mg-surface:#171a25; --mg-raised:#202534; --mg-text:#e5e7eb; --mg-muted:#a1aaba; --mg-line:#343c50; --mg-accent:#8baaff; --mg-tint:#222f4d; --mg-success:#73d9a0; --mg-danger:#ff9c8f; color-scheme:dark; }
+html[data-skin="retro"] .management-shell { --mg-bg:#d8d0b6; --mg-surface:#f2ecd5; --mg-raised:#e3dcc3; --mg-text:#172019; --mg-muted:#5f604f; --mg-line:#a49a7d; --mg-accent:#75501b; --mg-tint:#e3d3a9; --mg-success:#286144; }
+html[data-skin="team"] .management-shell { --mg-bg:#10151d; --mg-surface:#1b2430; --mg-raised:#243243; --mg-text:#f4f6fb; --mg-muted:#b2c0cf; --mg-line:#405168; --mg-accent:color-mix(in srgb,var(--team) 50%,white); --mg-tint:color-mix(in srgb,var(--team) 18%,#17212d); --mg-success:#83e0b3; --mg-danger:#ff9c8f; color-scheme:dark; }
+.management-shell button { cursor:pointer; }
+.management-shell button:disabled { cursor:not-allowed; opacity:.45; }
+.management-shell button:focus-visible,.management-shell summary:focus-visible,.interface-layout-picker button:focus-visible { outline:3px solid var(--mg-accent,#5685ef); outline-offset:3px; }
+.management-navbar { display:flex; align-items:center; gap:14px; flex-shrink:0; min-height:62px; padding:0 24px; background:var(--mg-surface); border-bottom:2px solid var(--mg-text); }
+.management-identity { display:flex; align-items:center; gap:10px; padding:0; flex-shrink:0; background:none; border:0; color:var(--mg-text); text-align:left; }
+.management-team-badge { display:grid; place-items:center; height:34px; min-width:40px; padding:0 6px; border-radius:50%; background:var(--team); color:var(--team-secondary); font:800 16px 'Barlow Condensed',sans-serif; }
+.management-identity strong { display:block; font:800 16px 'Barlow Condensed',sans-serif; letter-spacing:.03em; }
+.management-identity small { display:block; color:var(--mg-muted); font:9px var(--mg-mono); }
+.management-mainnav { display:flex; align-self:stretch; min-width:0; flex:1; overflow-x:auto; scrollbar-width:thin; }
+.management-mainnav button { display:flex; align-items:center; justify-content:center; gap:6px; flex-shrink:0; padding:0 clamp(7px,1vw,16px); background:none; color:var(--mg-muted); border:0; border-bottom:3px solid transparent; font:700 10px var(--mg-mono); text-transform:uppercase; letter-spacing:.025em; white-space:nowrap; }
+.management-mainnav button[aria-current="page"] { color:var(--mg-text); background:var(--mg-raised); border-bottom-color:var(--mg-accent); }
+.management-mainnav button:hover { background:var(--mg-raised); color:var(--mg-text); }
+.management-count { display:inline-grid; place-items:center; min-width:17px; height:17px; padding:0 4px; border-radius:4px; background:var(--mg-accent); color:var(--mg-surface); font:700 9px var(--mg-mono); }
+.management-settings { display:grid; place-items:center; flex-shrink:0; width:32px; height:32px; background:var(--mg-surface); color:var(--mg-text); border:1px solid var(--mg-line); border-radius:4px; }
+.management-settings[aria-current] { border-color:var(--mg-accent); background:var(--mg-tint); }
+.management-statusbar { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-shrink:0; min-height:32px; padding:5px 28px; background:var(--mg-raised); border-bottom:1px solid var(--mg-line); font:9px var(--mg-mono); letter-spacing:.05em; text-transform:uppercase; }
+.management-statusbar>span { display:flex; align-items:center; gap:9px; }
+.management-statusbar i { width:6px; height:6px; background:var(--team); border-radius:50%; }
+.management-statusbar b { color:var(--mg-muted); }
+.management-subnav { position:relative; z-index:12; display:flex; align-items:center; gap:18px; flex-shrink:0; min-height:58px; padding:8px 28px; border-bottom:1px solid var(--mg-line); background:var(--mg-surface); }
+.management-subnav>nav { display:flex; gap:5px; min-width:0; flex:1; overflow-x:auto; padding:4px 0; }
+.management-subnav>nav>button { display:flex; align-items:center; gap:7px; flex-shrink:0; padding:8px 13px; border:1px solid transparent; border-radius:3px; color:var(--mg-muted); background:none; white-space:nowrap; font:700 10px var(--mg-mono); text-transform:uppercase; letter-spacing:.04em; }
+.management-subnav>nav>button[aria-current] { background:var(--mg-text); color:var(--mg-surface); border-color:var(--mg-text); }
+.management-subnav>nav>button:not([aria-current]):hover { background:var(--mg-raised); color:var(--mg-text); }
+.management-time-controls { display:flex; flex-shrink:0; gap:1px; }
+.management-continue { min-width:117px; border:1px solid #246b48; border-radius:3px 0 0 3px; background:#26734c; padding:10px 14px; color:#fff; font:700 10px var(--mg-mono); text-transform:uppercase; letter-spacing:.04em; }
+.management-continue.is-blocked { background:#a84c1e; border-color:#a84c1e; }
+.management-advance-menu { position:relative; }
+.management-advance-menu>summary { display:grid; place-items:center; width:30px; height:100%; padding:4px; border:1px solid #246b48; border-radius:0 3px 3px 0; background:#26734c; color:#fff; cursor:pointer; list-style:none; }
+.management-advance-menu>summary::-webkit-details-marker { display:none; }
+.management-advance-menu>div { position:absolute; right:0; top:calc(100% + 8px); display:grid; width:210px; padding:6px; border:1px solid var(--mg-line); border-radius:4px; background:var(--mg-surface); box-shadow:0 12px 28px #0002; }
+.management-advance-menu button { padding:11px; border:0; border-radius:3px; background:transparent; color:var(--mg-text); text-align:left; font:11px var(--mg-mono); }
+.management-advance-menu button:hover { background:var(--mg-raised); }
+.management-shell .management-content { flex:1; min-height:0; overflow:auto; padding:28px clamp(18px,2.5vw,40px) 36px; background-image:radial-gradient(var(--mg-line) .65px,transparent .65px); background-size:16px 16px; }
+.management-shell .management-content>* { max-width:1600px; margin-left:auto; margin-right:auto; }
+.management-footer { display:flex; justify-content:space-between; gap:12px; flex-shrink:0; padding:8px 28px; border-top:1px solid var(--mg-line); background:var(--mg-surface); color:var(--mg-muted); font:9px var(--mg-mono); text-transform:uppercase; }
+.management-footer b { padding:0 8px; font-weight:400; }
+.management-error { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 16px; margin-bottom:18px; color:var(--mg-danger); background:var(--mg-surface); border:1px solid var(--mg-danger); }
+.management-error button { color:inherit; background:none; border:0; }
+.management-page-heading { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:24px; }
+.management-page-heading small,.management-card-label,.management-kicker { font:700 9px var(--mg-mono); letter-spacing:.13em; text-transform:uppercase; }
+.management-page-heading small { color:var(--mg-accent); }
+.management-page-heading h1 { margin:4px 0 2px; font:800 44px/1.05 'Barlow Condensed',sans-serif; text-transform:uppercase; }
+.management-page-heading p { color:var(--mg-muted); margin:8px 0 0; font-size:12px; }
+.management-season-pill { padding:8px 12px; border:1px solid var(--mg-line); border-radius:3px; background:var(--mg-surface); font:10px var(--mg-mono); text-transform:uppercase; }
+.management-summary-grid { display:grid; grid-template-columns:1.05fr 1.1fr .85fr; gap:18px; }
+.management-card { min-width:0; padding:22px; background:var(--mg-surface); border:1px solid var(--mg-line); border-radius:5px; box-shadow:0 3px 0 color-mix(in srgb,var(--mg-line) 45%,transparent); }
+.management-card-label { display:flex; justify-content:space-between; align-items:center; gap:10px; padding-bottom:14px; border-bottom:1px solid var(--mg-line); }
+.management-card-label>span { font-size:8px; font-weight:400; color:var(--mg-muted); letter-spacing:.04em; white-space:nowrap; }
+.management-club-identity { display:flex; align-items:center; flex-direction:column; padding:22px 0 16px; text-align:center; }
+.management-club-identity>span { display:grid; place-items:center; width:58px; height:58px; border:4px solid color-mix(in srgb,var(--team) 35%,var(--mg-surface)); border-radius:50%; background:var(--team); color:var(--team-secondary); font:800 23px 'Barlow Condensed',sans-serif; }
+.management-club-identity h2 { margin:12px 0 4px; font:800 27px/1.05 'Barlow Condensed',sans-serif; text-transform:uppercase; }
+.management-club-identity p { margin:0; font:8px var(--mg-mono); color:var(--mg-muted); text-transform:uppercase; }
+.management-profile-facts { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0 0 8px; padding-top:12px; border-top:1px solid var(--mg-line); }
+.management-profile-facts dt { font:8px var(--mg-mono); color:var(--mg-muted); text-transform:uppercase; }
+.management-profile-facts dd { margin:5px 0 0; font-size:11px; font-weight:600; }
+.management-text-action { display:flex; justify-content:space-between; align-items:center; gap:10px; width:100%; margin-top:15px; padding:12px 0 0; color:var(--mg-accent); background:none; border:0; border-top:1px solid var(--mg-line); font:700 9px var(--mg-mono); letter-spacing:.03em; text-transform:uppercase; text-align:left; }
+.management-next-race { display:flex; flex-direction:column; border-top:3px solid var(--mg-accent); padding-top:20px; }
+.management-kicker { display:block; margin-top:28px; color:var(--mg-accent); }
+.management-next-race h2 { margin:9px 0; font:800 clamp(30px,3vw,43px)/1.02 'Barlow Condensed',sans-serif; text-transform:uppercase; }
+.management-next-race p { color:var(--mg-muted); font-size:11px; }
+.management-race-session { display:flex; justify-content:space-between; gap:12px; margin-top:auto; padding:20px 0; font:9px var(--mg-mono); text-transform:uppercase; }
+.management-race-session span { color:var(--mg-muted); }
+.management-primary { display:flex; align-items:center; justify-content:space-between; width:100%; padding:12px 14px; background:var(--mg-accent); color:var(--mg-surface); border:0; border-radius:3px; font:700 10px var(--mg-mono); text-transform:uppercase; }
+.management-big-number { margin:25px 0 0; font:800 60px/1 'Barlow Condensed',sans-serif; }
+.management-big-number span { margin-left:4px; color:var(--mg-muted); font-size:24px; }
+.management-big-number+p { margin:6px 0 14px; color:var(--mg-muted); font-size:11px; }
+.management-meter { height:6px; margin-bottom:23px; background:var(--mg-raised); border-radius:3px; overflow:hidden; }
+.management-meter i { display:block; height:100%; background:var(--mg-success); }
+.management-office-row { display:flex; justify-content:space-between; margin-top:12px; font-size:11px; }
+.management-office-row span { color:var(--mg-muted); }
+.management-metrics { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin:22px 0; }
+.management-metrics>button { min-width:0; padding:18px 20px; background:var(--mg-surface); color:var(--mg-text); border:1px solid var(--mg-line); border-radius:4px; text-align:left; transition:border-color .15s; }
+.management-metrics>button:hover { border-color:var(--mg-accent); }
+.management-metrics small { display:block; font:8px var(--mg-mono); letter-spacing:.03em; text-transform:uppercase; color:var(--mg-muted); }
+.management-metrics strong { display:flex; align-items:baseline; flex-wrap:wrap; gap:8px; margin:10px 0 8px; font:800 31px/1 'Barlow Condensed',sans-serif; }
+.management-metrics em { font:10px Inter,sans-serif; color:var(--mg-muted); }
+.management-metrics>button>span { font:8px var(--mg-mono); color:var(--mg-accent); text-transform:uppercase; }
+.management-bottom-grid { display:grid; grid-template-columns:1fr 1.4fr; gap:18px; }
+.management-driver-row,.management-fixture-row { display:flex; align-items:center; gap:15px; padding:17px 0; width:100%; background:none; border:0; border-bottom:1px solid var(--mg-line); text-align:left; color:var(--mg-text); }
+.management-driver-row>span { min-width:38px; color:var(--mg-accent); font:800 30px 'Barlow Condensed',sans-serif; }
+.management-driver-row>div,.management-fixture-row>div { min-width:0; flex:1; }
+.management-driver-row small,.management-fixture-row small { display:block; color:var(--mg-muted); font:8px var(--mg-mono); text-transform:uppercase; }
+.management-driver-row strong { display:block; margin-top:4px; font:700 20px 'Barlow Condensed',sans-serif; }
+.management-driver-row>b,.management-fixture-row>b { color:var(--mg-muted); }
+.management-fixture-row { padding:12px 0; }
+.management-fixture-row>span { padding:6px; border:1px solid var(--mg-line); background:var(--mg-raised); font:10px var(--mg-mono); }
+.management-fixture-row strong { display:block; font-size:11px; }
+.management-fixture-row small { margin-top:5px; }
+
+/* Share the existing functioning F1 screens; their local tabs are supplied by
+   the outer subsection navigation only while this layout is active. */
+.management-shell .management-content :is(.team-subtabs,.calendar-tabs-bar,.finance-tabs-bar,.comms-tabs-bar,.database-tabs,.page-title>.tabs) { display:none; }
+.management-shell .management-content .market-nav-bar { justify-content:flex-end; padding:0; border:0; background:transparent; }
+.management-shell .management-content .page-title { border-bottom:1px solid var(--mg-line); padding-bottom:18px; margin-bottom:24px; gap:16px; flex-wrap:wrap; }
+.management-shell .management-content .page-title h1 { color:var(--mg-text); font-size:36px; }
+.management-shell .management-content .page-title small { color:var(--mg-accent); font:700 9px var(--mg-mono); }
+.management-shell .management-content :is(.detail-card,.driver-cockpit-card,.fin-hero-card,.telemetry-section-box,.chassis-summary-card,.fitted-part-card,.facility-card,.facilities-summary-banner,.pu-supplier-box,.atr-regulations-box,.atr-meter-card,.kanban-column,.kanban-project-card,.market-driver-card,.board-hud-panel,.capacity-allocation-card,.driver-briefing-box,.paddock-card,.sponsor-slot-card,.cost-cap-panel,.prize-ladder-container,.calendar-detail,.project-timeline-card,.agenda-list,.inbox-list-pane,.inbox-reading-pane,.database-list>article,.database-list>button,.standings-table,.ledger-table-box) { background:var(--mg-surface); color:var(--mg-text); border-color:var(--mg-line); box-shadow:none; }
+.management-shell .management-content :is(h2,h3,h4) { color:var(--mg-text); }
+.management-shell .management-content :is(.memo-title,.memo-body,.email-item-subject,.email-item-sender,.news-headline,.social-content-text,.mandate-title-col,.driver-cockpit-head h2,.gauge-val,.driver-ovr-val,.market-card-title-group h3,.market-value-text,.facility-card h3,.chassis-stat-item strong,.mental-stat-card strong,.contract-stat strong,.fin-hero-card strong,.sponsor-fee-display,.prize-amount-val,.slider-val-box,.telemetry-head strong,.pu-head h2,.pu-rating-item strong) { color:var(--mg-text) !important; }
+.management-shell .management-content :is(.driver-contract-bar,.driver-skills-box,.driver-mental-box,.inbox-filter-bar,.board-pillars-grid,.pillar-stat-card,.mental-stat-card,.telemetry-bar-card,.market-contract-summary,.market-skills-summary,.pu-ratings-grid,.atr-track,.pr-commitment-box,.prize-callout-banner,.fac-effect-callout,.fac-wear-box,.facilities-global-stats,.kanban-column-head,.project-card-footer,.table-head,.race-list>button,.schedule-row,.results-table thead,.market-search-box input) { background:var(--mg-raised); color:var(--mg-text); border-color:var(--mg-line); }
+.management-shell .management-content :is(.table-row,.ledger-row,.race-list>button,.schedule-row,.market-card-top,.part-card-head,.fac-card-head,.memo-header,.email-scroll-list,.email-item,.driver-cockpit-head,.driver-contract-bar,.fin-hero-card,.prize-ladder-list>div) { border-color:var(--mg-line); }
+.management-shell .management-content :is(.table-row strong,.table-row b,.table-row>span,.results-table td,.results-table th,.driver-car-num,.market-car-num,.skill-label-row,.mental-stat-card small,.contract-stat small,.memo-meta-grid,.bonus-tag,.fac-level-text,.part-slot-name,.telemetry-label) { color:var(--mg-text); }
+.management-shell .management-content :is(.status-chip,.atr-badge,.car-rating-badge,.team-chip,.pipeline-stat-tag,.pu-cost-badge,.driver-role-chip,.market-team-badge,.skill-track,.mental-bar,.cond-track,.telemetry-meter-track,.part-condition-bar,.fac-wear-track) { background:var(--mg-raised); color:var(--mg-accent); border-color:var(--mg-line); }
+.management-shell .management-content :is(.fin-hero-card p,.fac-desc,.fac-upkeep-line,.driver-nat-line,.driver-trait-badge,.telemetry-foot,.part-card-head small,.memo-meta-grid small,.market-contract-summary small,.market-card-title-group small,.project-meta-line,.social-user-details small,.news-snippet,.chassis-summary-left p) { color:var(--mg-muted); }
+.management-shell .management-content :is(input,select,textarea) { color:var(--mg-text); background:var(--mg-surface); border-color:var(--mg-line); accent-color:var(--mg-accent); }
+.management-shell .management-content :is(.btn-primary,.primary-action-btn,.negotiate-btn,.fac-upgrade-btn,.decision-execute-btn) { color:var(--mg-surface); background:var(--mg-accent); border-color:var(--mg-accent); }
+.management-shell .management-content :is(.btn-secondary,.secondary-btn,.fac-refurb-btn,.page-restart,.pr-schedule-btn,.prioritise-driver-btn) { color:var(--mg-text); background:var(--mg-raised); border-color:var(--mg-line); }
+.management-shell .management-content .inbox-reading-pane .memo-body { line-height:1.8; }
+.management-shell .management-content .comms-inbox-layout { height:auto; min-height:520px; }
+.management-shell .management-content .inbox-list-pane { min-height:400px; }
+.management-shell .management-content .skin-grid button { color:var(--mg-text); background:var(--mg-raised); border-color:var(--mg-line); }
+.management-shell .management-content .skin-grid button.selected { border-color:var(--mg-accent); box-shadow:none; background:var(--mg-tint); }
+.management-shell .management-content .database-message { color:var(--mg-muted); background:var(--mg-surface); border:1px solid var(--mg-line); }
+.management-shell .management-content :is(.pipeline-action-bar,.fitted-components-section,.social-post-card,.decision-dilemma-box,.decision-choice-card,.driver-quote-text,.race-action-banner,.podium-card,.agenda-item,.prize-ladder-row,.mandate-item-row,.skill-meter-item,.cost-preview-callout,.pu-rating-item) { background:var(--mg-surface); color:var(--mg-text); border-color:var(--mg-line); }
+.management-shell .management-content :is(.rating-circular-gauge,.driver-ovr-gauge,.market-ovr-pill,.kanban-col-count,.part-version-tag,.atr-handicap-pill,.session-status-badge,.pos-pill) { background:var(--mg-tint); color:var(--mg-text); border-color:var(--mg-accent); }
+.management-shell .management-content :is(strong,b,h5,.pipeline-stats-row,.choice-title,.choice-desc,.driver-quote-text,.email-item-snippet,.pu-bar,.kanban-col-title) { color:var(--mg-text); }
+.management-shell .management-content :is(.telemetry-foot b,.pipeline-stat-tag strong,.mini-skill b,.market-ovr-pill strong,.gauge-val) { color:var(--mg-text) !important; }
+.management-shell .management-content :is(.rank-gold,.rank-silver,.rank-bronze) { background:var(--mg-tint); color:var(--mg-accent); border-color:var(--mg-line); }
+.management-shell .management-content :is(.preset-btn,.fitment-btn,.shortlist-toggle-btn,.inbox-filter-chip,.secondary-adv-btn,.stop-toggle-row,.decision-choice-card) { color:var(--mg-text); border-color:var(--mg-line); background:var(--mg-raised); }
+.management-shell .management-content :is(.preset-btn.active,.fitment-btn.active,.inbox-filter-chip.active,.decision-choice-card.selected,.email-item.selected,.race-list button.selected) { color:var(--mg-accent); background:var(--mg-tint); border-color:var(--mg-accent); }
+.management-shell .management-content :is(.telemetry-meter-fill,.skill-fill) { background:var(--mg-accent); }
+.management-shell .commission-modal-card :is(select,input,.preset-btn) { color:var(--mg-text); background:var(--mg-raised); border-color:var(--mg-line); }
+.management-shell .commission-modal-head { border-color:var(--mg-line); }
+.management-shell .commission-modal-head h2 { color:var(--mg-text); }
+.management-shell :is(.modal-box,.fact-modal,.commission-modal-card) { background:var(--mg-surface); color:var(--mg-text); border-color:var(--mg-line); }
+.management-shell :is(.modal-desc,.modal-date,.stop-toggle-row,.fact-modal dd) { color:var(--mg-text); }
+.management-shell .stop-toggle-row { background:var(--mg-raised); border-color:var(--mg-line); }
+
+/* This picker is also available within the preserved original interface. */
+.interface-layout-picker { margin-bottom:28px; padding:24px; border:1px solid var(--mg-line,#5b5151); border-radius:5px; background:var(--mg-surface,#17181d); color:var(--mg-text,#e5e7eb); }
+.interface-layout-picker>div>small { font:700 9px ui-monospace,monospace; letter-spacing:.12em; color:var(--mg-muted,#a68a7b); }
+.interface-layout-picker h2 { margin:6px 0; font:700 27px 'Barlow Condensed',sans-serif; }
+.interface-layout-picker p { color:var(--mg-muted,#aaa); font-size:12px; }
+.interface-layout-options { display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:22px; }
+.interface-layout-options button { padding:16px; text-align:left; color:inherit; background:var(--mg-raised,#202126); border:1px solid var(--mg-line,#51464b); border-radius:4px; cursor:pointer; }
+.interface-layout-options button[aria-pressed="true"] { border-color:var(--mg-accent,#d08b62); box-shadow:0 0 0 1px var(--mg-accent,#d08b62); }
+.interface-layout-options strong { display:block; margin:12px 0 5px; font-size:13px; }
+.interface-layout-options small { color:var(--mg-muted,#aaa); font-size:10px; }
+.layout-preview { display:block; position:relative; height:65px; background:var(--mg-surface,#111216); border:1px solid var(--mg-line,#555); border-radius:3px; }
+.layout-preview i { display:block; position:absolute; background:var(--mg-line,#454048); }
+.layout-preview-management i:nth-child(1) { top:0; left:0; right:0; height:10px; background:var(--mg-accent,#d08b62); }
+.layout-preview-management i:nth-child(2) { top:14px; left:5px; width:50%; height:5px; }
+.layout-preview-management i:nth-child(3) { top:25px; left:5px; right:5px; bottom:5px; }
+.layout-preview-original i:nth-child(1) { inset:0 auto 0 0; width:23%; background:var(--mg-accent,#d08b62); }
+.layout-preview-original i:nth-child(2) { top:0; left:27%; right:0; height:10px; }
+.layout-preview-original i:nth-child(3) { top:16px; left:27%; right:5px; bottom:5px; }
+
+@media(min-width:1600px) { .management-mainnav button { padding:0 22px; } }
+@media(max-width:1100px) { .management-navbar { padding:0 16px; gap:8px; } .management-mainnav button { font-size:9px; padding:0 9px; } .management-mainnav svg { display:none; } .management-summary-grid { grid-template-columns:1fr 1fr; } .management-summary-grid>.management-card:last-child { grid-column:1/-1; display:grid; grid-template-columns:1fr 1fr; column-gap:24px; } .management-summary-grid>.management-card:last-child .management-card-label { grid-column:1/-1; } .management-summary-grid>.management-card:last-child .management-big-number { margin-top:18px; } .management-metrics { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:760px) { .management-navbar { flex-wrap:wrap; gap:0; padding:12px 16px 0; } .management-identity { order:0; } .management-settings { margin-left:auto; order:1; } .management-mainnav { order:2; width:100%; flex-basis:100%; min-height:46px; margin-top:8px; } .management-mainnav button { font-size:10px; padding:0 14px; } .management-mainnav svg { display:block; } .management-statusbar { padding:7px 16px; font-size:8px; } .management-statusbar>span:first-child { display:none; } .management-statusbar>span:last-child { width:100%; justify-content:center; } .management-subnav { padding:7px 16px; gap:8px; } .management-subnav>nav>button { font-size:9px; padding:8px 10px; } .management-continue { min-width:90px; padding:10px; font-size:9px; } .management-shell .management-content { padding:22px 16px; } .management-summary-grid,.management-bottom-grid { grid-template-columns:1fr; } .management-summary-grid>.management-card:last-child { display:block; } .management-page-heading h1 { font-size:37px; } .management-season-pill { display:none; } .management-metrics { gap:10px; } .management-metrics>button { padding:14px; } .management-metrics strong { font-size:27px; } .management-footer { padding:8px 16px; font-size:8px; } .management-shell .management-content :is(.financial-hero-grid,.facilities-cards-grid,.driver-profiles-container,.market-cards-grid,.calendar-layout,.comms-inbox-layout,.telemetry-bars-grid,.fitted-parts-grid,.kanban-board-grid,.meetings-grid-layout,.board-pillars-grid) { grid-template-columns:1fr; } .management-shell .management-content :is(.classification-table-wrap,.standings-table,.results-table,.ledger-table-box) { overflow-x:auto; } .management-shell .management-content .page-title h1 { font-size:30px; } .interface-layout-picker { padding:18px; } .interface-layout-options { gap:10px; } }
+@media(prefers-reduced-motion:reduce) { .management-shell * { scroll-behavior:auto !important; transition:none !important; animation:none !important; } }

@@ -7,6 +7,7 @@ import {
 } from "./types";
 import { generateSeasonCalendar } from "./calendar";
 import { createChampionship, createInitialWorkforce } from "./careerDefaults";
+import { createInitialEvents, createInitialProjects, DEFAULT_STOP_SETTINGS } from "./timeline";
 
 function makeCareerId() {
   if (typeof globalThis.crypto?.randomUUID === "function") return globalThis.crypto.randomUUID();
@@ -19,6 +20,7 @@ export function createCareer(teamId: string, options: { now?: Date; careerId?: s
   const workforce=createInitialWorkforce(CAREER_START_SEASON);
   return {
     schemaVersion: CAREER_SCHEMA_VERSION,
+    scheduler: { processedEventIds: [], acknowledgedEventIds: [], pendingEvent: null },
     metadata: {
       careerId: options.careerId ?? makeCareerId(),
       createdAt: timestamp,
@@ -38,5 +40,9 @@ export function createCareer(teamId: string, options: { now?: Date; careerId?: s
     championship:createChampionship(CAREER_START_SEASON,workforce.lineups,workforce),
     workforce,
     seasonHistory:[],
+    events: createInitialEvents(CAREER_START_SEASON, teamId),
+    projects: createInitialProjects(CAREER_START_DATE),
+    stopSettings: { ...DEFAULT_STOP_SETTINGS },
+
   };
 }
