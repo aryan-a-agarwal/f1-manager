@@ -1,0 +1,23 @@
+.day-progress-controls{display:flex;align-items:stretch;flex-shrink:0;gap:1px}
+.day-progress-controls button{cursor:pointer;font:700 10px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.04em}
+.day-progress-controls button:disabled{opacity:.45;cursor:default}
+.day-continue,.day-calendar-toggle{border:1px solid #28734f;color:#fff;background:#28734f;padding:10px 18px;min-height:34px;border-radius:3px 0 0 3px}
+.day-calendar-toggle{border-radius:0 3px 3px 0;padding-inline:12px;border-left-color:#ffffff55}
+.day-continue.is-blocked{background:#a15b22;border-color:#a15b22}
+.day-progress-controls .day-calendar-drop{--day-surface:var(--mg-surface,#202126);--day-ink:var(--mg-text,#ede9e1);--day-line:var(--mg-line,#514b48);position:fixed;inset:0 0 auto;z-index:150;padding:15px 24px;background:var(--day-surface);color:var(--day-ink);border-bottom:2px solid var(--day-line);box-shadow:0 12px 32px #0003;transform:translateY(calc(-100% - 30px));opacity:0;visibility:hidden;pointer-events:none;transition:transform .65s cubic-bezier(.25,.8,.25,1),opacity .5s ease,visibility 0s .65s !important;will-change:transform;max-height:85vh;overflow:auto}
+.day-calendar-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:12px}
+.day-calendar-heading strong{font-size:15px}.day-calendar-heading p{font:11px ui-monospace,monospace;margin:5px 0 0}
+.day-calendar-actions{display:flex;gap:8px}.day-calendar-actions button,.day-calendar-drop footer button{padding:9px 12px;background:transparent;color:inherit;border:1px solid var(--day-line);border-radius:3px}.day-calendar-actions button:first-child{background:#a43d35;border-color:#a43d35;color:white}
+.day-calendar-strip{display:flex;gap:10px;position:relative;overflow:hidden;padding:4px 2px 10px}
+.day-calendar-tile{flex:0 0 calc((100% - 60px)/7);min-width:110px;box-sizing:border-box;min-height:124px;border:1px solid var(--day-line);padding:10px;border-radius:5px;display:flex;flex-direction:column;gap:7px}
+.day-calendar-tile.current{border:2px solid #d78635;background:#d7863510;box-shadow:0 0 0 2px #d7863525}.day-calendar-tile.past{opacity:.5}
+.day-calendar-tile time{font:700 12px ui-monospace,monospace}.day-calendar-tile small{font:9px ui-monospace,monospace;text-transform:uppercase;min-height:10px}.day-calendar-tile>div{margin-top:auto;display:grid;gap:5px}
+.day-calendar-tile span{font-size:10px;line-height:1.4;padding:4px 5px;background:#80808013;border-radius:2px}.day-calendar-tile span.mandatory{background:#28734f;color:#fff}
+.day-calendar-drop footer{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:5px;font-size:11px;line-height:1.5}.day-calendar-drop footer button{flex-shrink:0}
+.topbar>.day-progress-controls{padding:0 12px;min-width:0;border:0;margin-left:auto}
+.day-calendar-drop.is-open{transform:translateY(0);opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s !important}
+.day-event-notice{position:fixed;right:24px;bottom:28px;z-index:160;display:flex;align-items:flex-start;gap:12px;max-width:min(410px,calc(100vw - 32px));padding:16px 18px;background:var(--mg-surface,#24252b);color:var(--mg-text,#f3eee5);border:1px solid var(--mg-line,#514b48);border-left:3px solid #d78635;border-radius:6px;box-shadow:0 8px 28px #0003;animation:day-notice-in .3s ease-out}
+.day-event-notice>span{color:#d78635;font-size:18px;line-height:1}.day-event-notice strong{display:block;font-size:12px;line-height:1.5}.day-event-notice p{font-size:11px;line-height:1.4;opacity:.7;margin:5px 0 0}.day-event-notice button{border:0;background:transparent;color:inherit;padding:0 0 0 8px;font-size:18px}
+@keyframes day-notice-in{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
+/* Explicit calendar motion requested by the player; other reduced-motion rules remain unchanged. */
+@media(max-width:700px){.day-calendar-drop{padding:12px}.day-calendar-tile{flex-basis:110px}.day-calendar-heading strong{font-size:13px}.day-calendar-drop footer{align-items:flex-start}.day-continue{padding-inline:10px}}

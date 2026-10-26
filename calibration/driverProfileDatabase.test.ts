@@ -1,0 +1,27 @@
+import assert from "node:assert/strict";
+import {matchingDriverRecords,linkedDriverRows,databaseFields,databaseValueText,DRIVER_ATTRIBUTE_GROUPS,driverAttributeDisplay,UNALLOCATED_DRIVER_RATINGS} from "../lib/driverProfileData";
+
+const people=[{id:5,"driver-name":"Someone Else",date_of_birth:"1999-11-13"},{id:90,first_name:"Lando",last_name:"Norris",date_of_birth:"1999-11-13",pace:0},{id:91,"driver-name":"Lando Norris",date_of_birth:"2001-01-01"}];
+const matched=matchingDriverRecords(people,{name:"Lando Norris",dob:"1999-11-13"});
+assert.deepEqual(matched.map(r=>r.id),[90],"Never equate legacy driver ID with people ID, or silently merge conflicting birth dates");
+assert.deepEqual(linkedDriverRows([{driver_id:5,salary:999},{driver_id:90,salary:123}],matched),[{driver_id:90,salary:123}]);
+assert.equal(matchingDriverRecords([{id:1,"driver-name":"Nico Hülkenberg"}],{name:"Nico Hulkenberg"}).length,1);
+assert.deepEqual(matchingDriverRecords(people,{name:"New Reserve"}),[],"No fabricated attributes for reserve-only identities");
+const row={zero:0,flag:false,unknown:null,blank:"",new_column:{note:"preserved"},annual_salary_usd_cents:75000000};
+const fields=databaseFields(row);
+assert.deepEqual(fields.map(f=>f.key),Object.keys(row),"Every stored field remains inspectable, including future columns");
+assert.equal(fields.find(f=>f.key==="zero")?.value,"0");
+assert.equal(fields.find(f=>f.key==="flag")?.value,"No");
+assert.equal(fields.find(f=>f.key==="unknown")?.value,"Not recorded");
+assert.equal(fields.find(f=>f.key==="new_column")?.value,JSON.stringify(row.new_column,null,2));
+assert.equal(databaseValueText("annual_salary_usd_cents",75000000),"$750,000.00");
+const groups=DRIVER_ATTRIBUTE_GROUPS.flatMap(g=>[...g.fields]);
+assert.equal(new Set(groups).size,groups.length);
+assert.ok(groups.includes("pit_stop_precision")&&groups.includes("personal_sponsorship_backing"));
+assert.equal(driverAttributeDisplay("braking",98).text,"98","Calibrated technique ratings display their numerical rating");
+assert.equal(driverAttributeDisplay("development_rate",78).text,"78","Calibrated development ratings display their numerical rating");
+assert.deepEqual(driverAttributeDisplay("pace",50),{text:"50",unrated:false,rating:50},"A deliberately assigned 50 remains a rating");
+assert.deepEqual(driverAttributeDisplay("pace",null),{text:"Unrated",unrated:true,rating:null});
+assert.equal(driverAttributeDisplay("injury_status","healthy").text,"healthy");
+assert.equal(databaseFields({morale:70})[0].value,"70","Non-driver records keep their own values");
+console.log("Driver profile database tests passed: identity joins, related records, all-field preservation, unknown values and salary units.");

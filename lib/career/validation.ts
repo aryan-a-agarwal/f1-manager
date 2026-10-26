@@ -1,3 +1,4 @@
+import {isContractDeskState} from "./contracts";
 import {stripUnbuiltManagement} from "./stripUnbuiltManagement";
 import {removeDemoContent} from "./removeDemoContent";
 import { CAREER_SCHEMA_VERSION, type CareerAdvanceReason, type CareerPhase, type CareerState } from "./types";
@@ -60,6 +61,7 @@ export function isCareerState(value: unknown): value is CareerState {
     && isWeekendOperations(value.weekendOperations)
     && isChampionship(value.championship)
     && isWorkforce(value.workforce)
+    && (value.contractDesk===undefined||isContractDeskState(value.contractDesk))
     && Array.isArray(value.seasonHistory);
 }
 

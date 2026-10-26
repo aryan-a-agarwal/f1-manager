@@ -4,9 +4,11 @@ import { appointDriver, appointTeamPrincipal, completeCurrentSeason, createCaree
 class MemoryStorage implements CareerStorage {private values=new Map<string,string>();getItem(key:string){return this.values.get(key)??null;}setItem(key:string,value:string){this.values.set(key,value);}removeItem(key:string){this.values.delete(key);}}
 const storage=new MemoryStorage();
 let career=createCareer("ferrari",{careerId:"lifecycle-test",now:new Date("2026-09-01T12:00:00Z")});
-assert.equal(career.workforce.people.filter((entry)=>entry.kind==="driver").length,22);
+assert.equal(career.workforce.people.filter((entry)=>entry.kind==="driver").length,43);
 assert.equal(career.workforce.people.filter((entry)=>entry.kind==="staff").length,11);
 assert.equal(seasonLineups(career).length,11);
+assert.equal(new Set(seasonLineups(career).flatMap(l=>l.driverIds)).size,22);
+assert.equal(seasonLineups(career).flatMap(l=>l.reserveDriverIds??[]).filter(Boolean).length,22);
 career=appointDriver(career,"ferrari",2,{id:"future-driver",name:"Future Driver",kind:"driver",carNumber:99},2028,storage);
 career=appointTeamPrincipal(career,"ferrari",{id:"future-principal",name:"Future Principal",kind:"staff"},2028,storage);
 const future=seasonLineups(career,2028).find((entry)=>entry.teamId==="ferrari")!;

@@ -1,3 +1,4 @@
+import startingGrid from "@/supabase/seed-data/2027-starting-grid.json";
 import { teams } from "@/lib/data/grid";
 import type { ChampionshipState, SeasonLineup, WorkforceState } from "./types";
 
@@ -14,7 +15,13 @@ export function createInitialWorkforce(season:number):WorkforceState {
     {id:`${season}-${lineup.teamId}-driver-2`,personId:lineup.driverIds[1],teamId:lineup.teamId,role:"driver_2" as const,startSeason:season,endSeason:null,salary:null,termKnown:false as const,provenance:"official_fact" as const},
     {id:`${season}-${lineup.teamId}-principal`,personId:lineup.teamPrincipalId,teamId:lineup.teamId,role:"team_principal" as const,startSeason:season,endSeason:null,salary:null,termKnown:false as const,provenance:"official_fact" as const},
   ]);
-  return {people:[...drivers,...principals],agreements,lineups};
+  const startingAgreements=agreements.map(agreement=>{
+    if(agreement.role==="team_principal")return agreement;
+    const row=startingGrid.contracts.find(row=>row.driver_id===agreement.personId&&row.team_id===agreement.teamId&&row.role==="race_driver");
+    return row?{...agreement,endSeason:row.end_season,salary:row.annual_salary_usd_cents,termKnown:true,salaryBasis:"game_estimate" as const,termBasis:row.term_basis as "published_exact"|"game_assumption",provenance:"career_generated" as const}:agreement;
+  });
+  const startingLineups=lineups.map(lineup=>({...lineup,provenance:startingGrid.contracts.some(r=>r.team_id===lineup.teamId&&r.role==="race_driver"&&r.seat_basis==="game_assumption")?"career_generated" as const:lineup.provenance}));
+  return {people:[...drivers,...principals],agreements:startingAgreements,lineups:startingLineups};
 }
 
 export function createChampionship(year:number,lineups:SeasonLineup[],workforce:WorkforceState):ChampionshipState {

@@ -21,7 +21,15 @@
     "test:calendar-integration": "tsx calibration/calendarIntegration.test.ts",
     "test:calendar-soak": "tsx calibration/calendarSoak.test.ts",
     "test": "node scripts/run-tests.cjs",
-    "test:plain-career": "tsx calibration/plainCareer.test.ts"
+    "test:plain-career": "tsx calibration/plainCareer.test.ts",
+    "test:profiles": "tsx calibration/profileNavigation.test.ts",
+    "test:day-progression": "tsx calibration/dayProgression.test.ts",
+    "test:contract-desk": "tsx calibration/contractDesk.test.ts",
+    "test:starting-grid": "tsx calibration/startingGrid.test.ts",
+    "test:reserves": "tsx calibration/reserves.test.ts",
+    "test:driver-profile-database": "tsx calibration/driverProfileDatabase.test.ts",
+    "test:team-profile-ratings": "tsx calibration/teamProfileRatings.test.ts",
+    "test:driver-database": "tsx calibration/driverDatabase.test.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",

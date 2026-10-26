@@ -1,0 +1,15 @@
+import assert from "node:assert/strict";
+import {buildDriverDatabaseRows,compareDriverDatabaseRows,DRIVER_DATABASE_GROUPS} from "../lib/driverDatabase";
+const people=[{id:99,person_type:"driver",display_name:"Rated Driver",date_of_birth:"2000-11-01"},{id:5,person_type:"driver",display_name:"New Reserve"},{id:7,person_type:"staff",display_name:"Chief"}];
+const drivers=[{id:5,"driver-name":"Rated Driver",date_of_birth:"2000-11-01",pace:92,adaptability:80,morale:70,current_overall_rating:91},{id:8,"driver-name":"Legacy Only",pace:0}];
+const contracts=[{person_id:5,dataset_id:"v1",team_name:"Old Team",role:"reserve_driver"},{person_id:5,dataset_id:"v2",team_name:"Team A",role:"reserve_driver"},{person_id:5,dataset_id:"v2",team_name:"Team B",role:"reserve_driver"}];
+const rows=buildDriverDatabaseRows({people,drivers,contracts,entries:[{person_id:5,series:"F2"}],stats:[{driver_id:5,season:2025,starts:50,wins:1,world_championships:0},{driver_id:5,season:2026,starts:60,wins:2,world_championships:0}],today:"2027-01-04"});
+assert.equal(rows.length,3);const rated=rows.find(r=>r.name==="Rated Driver")!,reserve=rows.find(r=>r.name==="New Reserve")!,legacy=rows.find(r=>r.name==="Legacy Only")!;
+assert.equal(rated.values.age,26);assert.equal(rated.values.pace,92);assert.equal(rated.values.adaptability,80);assert.equal(rated.values.morale,70);
+assert.equal(rated.values.starts,60,"Choose latest totals snapshot instead of summing snapshots");assert.equal(reserve.values.starts,null,"Separate numeric ID spaces must not cross-link stats");
+assert.equal(reserve.values.team,"Team A; Team B");assert.equal(reserve.values.series,"F2");assert.equal(reserve.values.pace,null);assert.equal(legacy.values.pace,0);assert.equal(legacy.id,"legacy:8");
+assert.deepEqual([...rows].sort((a,b)=>compareDriverDatabaseRows(a,b,"pace","asc")).map(r=>r.name),["Legacy Only","Rated Driver","New Reserve"]);
+assert.deepEqual([...rows].sort((a,b)=>compareDriverDatabaseRows(a,b,"pace","desc")).map(r=>r.name),["Rated Driver","Legacy Only","New Reserve"]);
+assert.ok(compareDriverDatabaseRows(rated,legacy,"name","asc")>0);
+const columns=DRIVER_DATABASE_GROUPS.flatMap(g=>g.columns);assert.equal(new Set(columns.map(c=>c.key)).size,columns.length);
+console.log("Driver database tests passed: complete identities, shared appointments, default masking, snapshot choice, numeric/zero sorting and unknown-last ordering.");

@@ -1,0 +1,16 @@
+{
+  "dataset": "f1-2027-starting-grid-2026-10-26-v1",
+  "verified_at": "2026-10-26T00:07:49.701Z",
+  "public_read": true,
+  "race_seats": 22,
+  "confirmed_race_seats": 19,
+  "assumed_race_seats": [
+    "arvid-lindblad",
+    "liam-lawson",
+    "oliver-bearman"
+  ],
+  "reserve_agreements": 1,
+  "salaried_agreements": 23,
+  "total_slots": 44,
+  "seed_matches_live": true
+}

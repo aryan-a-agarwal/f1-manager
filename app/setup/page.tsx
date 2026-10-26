@@ -13,7 +13,7 @@ export default function SetupPage() {
   return <main className="setup-shell">
     <header className="setup-header"><div className="wordmark"><span>F1</span> MANAGER</div><div className="season-label">2027 SEASON · 11 TEAMS · 22 DRIVERS</div></header>
     <section className="setup-content"><div className="eyebrow">STEP {step === "team" ? "1" : "2"} OF 2</div>
-      {step === "team" ? <><h1>Choose your constructor</h1><p className="intro">Take control of one of the eleven teams on the 2027 grid. Each team begins with its 2026 driver pairing.</p>
+      {step === "team" ? <><h1>Choose your constructor</h1><p className="intro">Start with the 2027 grid: 19 confirmed seats, with Bearman, Lawson and Lindblad retained as game assumptions.</p>
         <div className="team-grid">{teams.map((team) => { const active = team.id === selectedId; return <button className={`team-card${active ? " selected" : ""}`} key={team.id} onClick={() => setSelectedId(team.id)} style={{ "--team": team.primary, "--team-secondary": team.secondary } as React.CSSProperties}>
           <div className="team-stripe"/><div className="team-card-top"><span className="team-monogram">{team.shortName.slice(0, 3).toUpperCase()}</span>{active && <span className="check">✓</span>}</div><h2>{team.shortName}</h2><div className="driver-pair">{team.drivers.map((driver) => <span key={driver.id}><b>{driver.number}</b> {driver.name}</span>)}</div><small>{team.base}</small>
         </button>})}</div><div className="setup-actions"><button className="primary-action" disabled={!selected} onClick={() => setStep("confirm")}>NEXT: CONFIRM <span>→</span></button></div></>

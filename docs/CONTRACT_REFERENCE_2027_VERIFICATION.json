@@ -1,0 +1,23 @@
+{
+  "applied_on": "2026-10-25",
+  "project": "F1-manager",
+  "verified_over_public_rest": true,
+  "contract_reference_count": 23,
+  "reference_status_counts": {
+    "confirmed": 15,
+    "reported": 6,
+    "unconfirmed": 2
+  },
+  "race_reference_count": 22,
+  "reserve_reference_count": 1,
+  "roster_slot_count": 44,
+  "reserve_slots_total": 22,
+  "filled_confirmed_reserve_slots": 1,
+  "reserve_candidates": 11,
+  "all_imported_salaries_unknown": true,
+  "all_seeded_terms_match_live_rows": true,
+  "isolated_postgres_migration_test": "PASS",
+  "historical_contract_terms_preserved": true,
+  "legacy_quality_labels_added": 22,
+  "legacy_updated_at_changed_by_database_trigger": 22
+}

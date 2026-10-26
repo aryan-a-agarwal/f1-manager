@@ -1,3 +1,6 @@
+import {ensureCareerReserves} from "./reserves";
+import {initializeContractDesk} from "./contracts";
+import {startingContractBaseline} from "./startingGrid";
 import {
   CAREER_SCHEMA_VERSION,
   CAREER_START_DATE,
@@ -18,7 +21,7 @@ export function createCareer(teamId: string, options: { now?: Date; careerId?: s
   if (!teamId.trim()) throw new Error("A team is required to create a career.");
   const timestamp = (options.now ?? new Date()).toISOString();
   const workforce=createInitialWorkforce(CAREER_START_SEASON);
-  return {
+  const career:CareerState={
     schemaVersion: CAREER_SCHEMA_VERSION,
     scheduler: { processedEventIds: [], acknowledgedEventIds: [], pendingEvent: null },
     metadata: {
@@ -45,4 +48,5 @@ export function createCareer(teamId: string, options: { now?: Date; careerId?: s
     stopSettings: { ...DEFAULT_STOP_SETTINGS },
 
   };
+  return ensureCareerReserves(initializeContractDesk(career,startingContractBaseline(career)));
 }

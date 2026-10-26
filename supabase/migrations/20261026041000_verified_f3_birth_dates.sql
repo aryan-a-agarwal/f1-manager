@@ -1,0 +1,53 @@
+-- Source: individual FIA Formula 3 driver profiles.
+begin;
+update public.drivers d set date_of_birth=v.dob::date from (values
+('Freddie Slater','2008-08-09','https://www.fiaformula3.com/en/drivers/freddie-slater'),
+('Matteo De Palo','2007-11-08','https://www.fiaformula3.com/en/drivers/matteo-de-palo'),
+('Mattia Colnaghi','2008-07-26','https://www.fiaformula3.com/en/drivers/mattia-colnaghi'),
+('Tuukka Taponen','2006-10-26','https://www.fiaformula3.com/en/drivers/tuukka-taponen'),
+('Alessandro Giusti','2006-09-10','https://www.fiaformula3.com/en/drivers/alessandro-giusti'),
+('Hiyu Yamakoshi','2006-10-13','https://www.fiaformula3.com/en/drivers/hiyu-yamakoshi'),
+('Enzo Deligny','2008-04-17','https://www.fiaformula3.com/en/drivers/enzo-deligny'),
+('Bruno del Pino','2006-06-20','https://www.fiaformula3.com/en/drivers/bruno-del-pino'),
+('Pedro Clerot','2007-01-22','https://www.fiaformula3.com/en/drivers/pedro-clerot'),
+('Brando Badoer','2006-09-15','https://www.fiaformula3.com/en/drivers/brando-badoer'),
+('Christian Ho','2006-10-31','https://www.fiaformula3.com/en/drivers/christian-ho'),
+('Louis Sharp','2007-05-11','https://www.fiaformula3.com/en/drivers/louis-sharp'),
+('James Wharton','2006-07-08','https://www.fiaformula3.com/en/drivers/james-wharton'),
+('Jose Garfias','2004-10-26','https://www.fiaformula3.com/en/drivers/jose-garfias'),
+('Fionn McLaughlin','2007-10-29','https://www.fiaformula3.com/en/drivers/fionn-mclaughlin'),
+('Jin Nakamura','2006-02-01','https://www.fiaformula3.com/en/drivers/jin-nakamura'),
+('Brad Benavides','2001-07-20','https://www.fiaformula3.com/en/drivers/brad-benavides'),
+('Yevan David','2007-07-11','https://www.fiaformula3.com/en/drivers/yevan-david'),
+('Fernando Barrichello','2005-09-12','https://www.fiaformula3.com/en/drivers/fernando-barrichello'),
+('Nicola Lacorte','2007-06-01','https://www.fiaformula3.com/en/drivers/nicola-lacorte'),
+('Gerrard Xie','2006-09-24','https://www.fiaformula3.com/en/drivers/gerrard-xie'),
+('Ernesto Rivera','2008-12-01','https://www.fiaformula3.com/en/drivers/ernesto-rivera'),
+('Noah Stromsted','2007-07-29','https://www.fiaformula3.com/en/drivers/noah-stromsted')
+) v(name,dob,source_url) where d."driver-name"=v.name and d.date_of_birth is null;
+update public.people d set date_of_birth=v.dob::date from (values
+('Freddie Slater','2008-08-09','https://www.fiaformula3.com/en/drivers/freddie-slater'),
+('Matteo De Palo','2007-11-08','https://www.fiaformula3.com/en/drivers/matteo-de-palo'),
+('Mattia Colnaghi','2008-07-26','https://www.fiaformula3.com/en/drivers/mattia-colnaghi'),
+('Tuukka Taponen','2006-10-26','https://www.fiaformula3.com/en/drivers/tuukka-taponen'),
+('Alessandro Giusti','2006-09-10','https://www.fiaformula3.com/en/drivers/alessandro-giusti'),
+('Hiyu Yamakoshi','2006-10-13','https://www.fiaformula3.com/en/drivers/hiyu-yamakoshi'),
+('Enzo Deligny','2008-04-17','https://www.fiaformula3.com/en/drivers/enzo-deligny'),
+('Bruno del Pino','2006-06-20','https://www.fiaformula3.com/en/drivers/bruno-del-pino'),
+('Pedro Clerot','2007-01-22','https://www.fiaformula3.com/en/drivers/pedro-clerot'),
+('Brando Badoer','2006-09-15','https://www.fiaformula3.com/en/drivers/brando-badoer'),
+('Christian Ho','2006-10-31','https://www.fiaformula3.com/en/drivers/christian-ho'),
+('Louis Sharp','2007-05-11','https://www.fiaformula3.com/en/drivers/louis-sharp'),
+('James Wharton','2006-07-08','https://www.fiaformula3.com/en/drivers/james-wharton'),
+('Jose Garfias','2004-10-26','https://www.fiaformula3.com/en/drivers/jose-garfias'),
+('Fionn McLaughlin','2007-10-29','https://www.fiaformula3.com/en/drivers/fionn-mclaughlin'),
+('Jin Nakamura','2006-02-01','https://www.fiaformula3.com/en/drivers/jin-nakamura'),
+('Brad Benavides','2001-07-20','https://www.fiaformula3.com/en/drivers/brad-benavides'),
+('Yevan David','2007-07-11','https://www.fiaformula3.com/en/drivers/yevan-david'),
+('Fernando Barrichello','2005-09-12','https://www.fiaformula3.com/en/drivers/fernando-barrichello'),
+('Nicola Lacorte','2007-06-01','https://www.fiaformula3.com/en/drivers/nicola-lacorte'),
+('Gerrard Xie','2006-09-24','https://www.fiaformula3.com/en/drivers/gerrard-xie'),
+('Ernesto Rivera','2008-12-01','https://www.fiaformula3.com/en/drivers/ernesto-rivera'),
+('Noah Stromsted','2007-07-29','https://www.fiaformula3.com/en/drivers/noah-stromsted')
+) v(name,dob,source_url) where d.display_name=v.name and d.date_of_birth is null;
+commit;

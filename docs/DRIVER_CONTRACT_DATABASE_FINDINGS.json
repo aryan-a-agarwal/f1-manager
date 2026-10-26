@@ -1,0 +1,319 @@
+{
+  "checkedAt": "2026-10-25T18:37:09.655Z",
+  "access": "public REST reads only; schema discovery returned HTTP 401",
+  "counts": {
+    "people": 109,
+    "series_entries": 86,
+    "f1_team_staff": 25,
+    "f1_team_facts": 11,
+    "drivers": 22,
+    "teams": 11,
+    "driver_contracts": 22,
+    "driver_career_stats": 22,
+    "driver_rating_history": 22
+  },
+  "entry_seasons": {
+    "2026": 86
+  },
+  "f1_race_entries": 22,
+  "f1_reserve_assignments": 12,
+  "unique_driver_people_in_entries": 84,
+  "contracts_per_driver": {
+    "1": 22
+  },
+  "contracts_per_team": {
+    "Red Bull Racing": 2,
+    "Ferrari": 2,
+    "Mercedes": 2,
+    "McLaren": 2,
+    "Aston Martin": 2,
+    "Alpine": 2,
+    "Williams": 2,
+    "Racing Bulls": 2,
+    "Haas F1 Team": 2,
+    "Audi": 2,
+    "Cadillac": 2
+  },
+  "driver_orphans": [],
+  "contract_team_orphans": [],
+  "contract_vs_driver_team_mismatch": [],
+  "invalid_year_intervals": [],
+  "negative_salaries": [],
+  "contracts_ended_before_2027": [
+    "Fernando Alonso",
+    "Liam Lawson",
+    "Esteban Ocon",
+    "Oliver Bearman"
+  ],
+  "name_identity_mismatches": [],
+  "contract_start_equals_f1_debut": 8,
+  "contract_columns": [
+    "id",
+    "driver_id",
+    "team_id",
+    "start_year",
+    "end_year",
+    "base_salary_usd_millions",
+    "bonus_clause_strength",
+    "status",
+    "created_at",
+    "updated_at",
+    "salary_tier_code"
+  ],
+  "contract_null_counts": {
+    "id": 0,
+    "driver_id": 0,
+    "team_id": 0,
+    "start_year": 0,
+    "end_year": 0,
+    "base_salary_usd_millions": 0,
+    "bonus_clause_strength": 0,
+    "status": 0,
+    "created_at": 0,
+    "updated_at": 0,
+    "salary_tier_code": 0
+  },
+  "contract_status_counts": {
+    "active": 22
+  },
+  "contract_end_year_counts": {
+    "2030": 3,
+    "2027": 12,
+    "2028": 3,
+    "2026": 4
+  },
+  "unique_contract_import_timestamps": [
+    "2026-09-10T22:40:39.612517+00:00"
+  ],
+  "driver_person_id_column_present": false,
+  "driver_missing_dob": 0,
+  "facts_verification_dates": [
+    "2026-08-31"
+  ],
+  "contract_rows": [
+    {
+      "driver": "Max Verstappen",
+      "driver_id": 7,
+      "team": "Red Bull Racing",
+      "team_id": 4,
+      "start_year": 2015,
+      "end_year": 2030,
+      "annual_salary_usd_millions_imported_unverified": 70,
+      "bonus_clause_strength_score": 95
+    },
+    {
+      "driver": "Isack Hadjar",
+      "driver_id": 8,
+      "team": "Red Bull Racing",
+      "team_id": 4,
+      "start_year": 2026,
+      "end_year": 2027,
+      "annual_salary_usd_millions_imported_unverified": 5,
+      "bonus_clause_strength_score": 45
+    },
+    {
+      "driver": "Charles Leclerc",
+      "driver_id": 3,
+      "team": "Ferrari",
+      "team_id": 2,
+      "start_year": 2019,
+      "end_year": 2030,
+      "annual_salary_usd_millions_imported_unverified": 34,
+      "bonus_clause_strength_score": 80
+    },
+    {
+      "driver": "Lewis Hamilton",
+      "driver_id": 4,
+      "team": "Ferrari",
+      "team_id": 2,
+      "start_year": 2025,
+      "end_year": 2027,
+      "annual_salary_usd_millions_imported_unverified": 60,
+      "bonus_clause_strength_score": 90
+    },
+    {
+      "driver": "George Russell",
+      "driver_id": 1,
+      "team": "Mercedes",
+      "team_id": 1,
+      "start_year": 2022,
+      "end_year": 2027,
+      "annual_salary_usd_millions_imported_unverified": 34,
+      "bonus_clause_strength_score": 75
+    },
+    {
+      "driver": "Kimi Antonelli",
+      "driver_id": 2,
+      "team": "Mercedes",
+      "team_id": 1,
+      "start_year": 2025,
+      "end_year": 2027,
+      "annual_salary_usd_millions_imported_unverified": 2,
+      "bonus_clause_strength_score": 50
+    },
+    {
+      "driver": "Lando Norris",
+      "driver_id": 5,
+      "team": "McLaren",
+      "team_id": 3,
+      "start_year": 2019,
+      "end_year": 2030,
+      "annual_salary_usd_millions_imported_unverified": 30,
+      "bonus_clause_strength_score": 88
+    },
+    {
+      "driver": "Oscar Piastri",
+      "driver_id": 6,
+      "team": "McLaren",
+      "team_id": 3,
+      "start_year": 2023,
+      "end_year": 2028,
+      "annual_salary_usd_millions_imported_unverified": 13,
+      "bonus_clause_strength_score": 70
+    },
+    {
+      "driver": "Fernando Alonso",
+      "driver_id": 19,
+      "team": "Aston Martin",
+      "team_id": 10,
+      "start_year": 2023,
+      "end_year": 2026,
+      "annual_salary_usd_millions_imported_unverified": 20,
+      "bonus_clause_strength_score": 75
+    },
+    {
+      "driver": "Lance Stroll",
+      "driver_id": 20,
+      "team": "Aston Martin",
+      "team_id": 10,
+      "start_year": 2017,
+      "end_year": 2027,
+      "annual_salary_usd_millions_imported_unverified": 12,
+      "bonus_clause_strength_score": 40
+    },
+    {
+      "driver": "Pierre Gasly",
+      "driver_id": 11,
+      "team": "Alpine",
+      "team_id": 6,
+      "start_year": 2023,
+      "end_year": 2028,
+      "annual_salary_usd_millions_imported_unverified": 12,
+      "bonus_clause_strength_score": 60
+    },
+    {
+      "driver": "Franco Colapinto",
+      "driver_id": 12,
+      "team": "Alpine",
+      "team_id": 6,
+      "start_year": 2024,
+      "end_year": 2027,
+      "annual_salary_usd_millions_imported_unverified": 1,
+      "bonus_clause_strength_score": 40
+    },
+    {
+      "driver": "Carlos Sainz",
+      "driver_id": 17,
+      "team": "Williams",
+      "team_id": 9,
+      "start_year": 2025,
+      "end_year": 2028,
+      "annual_salary_usd_millions_imported_unverified": 30,
+      "bonus_clause_strength_score": 70
+    },
+    {
+      "driver": "Alexander Albon",
+      "driver_id": 18,
+      "team": "Williams",
+      "team_id": 9,
+      "start_year": 2022,
+      "end_year": 2027,
+      "annual_salary_usd_millions_imported_unverified": 15,
+      "bonus_clause_strength_score": 55
+    },
+    {
+      "driver": "Liam Lawson",
+      "driver_id": 9,
+      "team": "Racing Bulls",
+      "team_id": 5,
+      "start_year": 2026,
+      "end_year": 2026,
+      "annual_salary_usd_millions_imported_unverified": 1,
+      "bonus_clause_strength_score": 45
+    },
+    {
+      "driver": "Arvid Lindblad",
+      "driver_id": 10,
+      "team": "Racing Bulls",
+      "team_id": 5,
+      "start_year": 2026,
+      "end_year": 2027,
+      "annual_salary_usd_millions_imported_unverified": 1,
+      "bonus_clause_strength_score": 40
+    },
+    {
+      "driver": "Esteban Ocon",
+      "driver_id": 13,
+      "team": "Haas F1 Team",
+      "team_id": 7,
+      "start_year": 2025,
+      "end_year": 2026,
+      "annual_salary_usd_millions_imported_unverified": 7,
+      "bonus_clause_strength_score": 55
+    },
+    {
+      "driver": "Oliver Bearman",
+      "driver_id": 14,
+      "team": "Haas F1 Team",
+      "team_id": 7,
+      "start_year": 2025,
+      "end_year": 2026,
+      "annual_salary_usd_millions_imported_unverified": 1,
+      "bonus_clause_strength_score": 45
+    },
+    {
+      "driver": "Nico HÃ¼lkenberg",
+      "driver_id": 15,
+      "team": "Audi",
+      "team_id": 8,
+      "start_year": 2025,
+      "end_year": 2027,
+      "annual_salary_usd_millions_imported_unverified": 7,
+      "bonus_clause_strength_score": 50
+    },
+    {
+      "driver": "Gabriel Bortoleto",
+      "driver_id": 16,
+      "team": "Audi",
+      "team_id": 8,
+      "start_year": 2025,
+      "end_year": 2027,
+      "annual_salary_usd_millions_imported_unverified": 2,
+      "bonus_clause_strength_score": 45
+    },
+    {
+      "driver": "Sergio PÃ©rez",
+      "driver_id": 21,
+      "team": "Cadillac",
+      "team_id": 11,
+      "start_year": 2026,
+      "end_year": 2027,
+      "annual_salary_usd_millions_imported_unverified": 8,
+      "bonus_clause_strength_score": 55
+    },
+    {
+      "driver": "Valtteri Bottas",
+      "driver_id": 22,
+      "team": "Cadillac",
+      "team_id": 11,
+      "start_year": 2026,
+      "end_year": 2027,
+      "annual_salary_usd_millions_imported_unverified": 5,
+      "bonus_clause_strength_score": 50
+    }
+  ],
+  "relationship_probe": {
+    "status": 200,
+    "result": "driver_contracts embeds drivers(id) and teams(id) successfully"
+  }
+}

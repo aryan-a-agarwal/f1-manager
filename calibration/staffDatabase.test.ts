@@ -1,0 +1,13 @@
+import assert from "node:assert/strict";
+import {buildStaffRows,compareStaffRows,staffMatches} from "../lib/staffDatabase";
+const people=[{id:1,display_name:"René Test",person_type:"staff",date_of_birth:"1980-02-02",racing_nationality:"French"},{id:2,display_name:"Alex Test",person_type:"staff",date_of_birth:null}];
+const appointments=[{person_id:1,team_id:2,role_title:"Engineer",season:2025},{person_id:1,team_id:3,role_title:"Director",season:2026},{person_id:1,team_id:2,role_title:"Advisor",season:2026}];
+const rows=buildStaffRows(people,appointments,[{id:2,short_name:"Alpha"},{id:3,short_name:"Beta"}],"2027-01-04");
+assert.equal(rows.length,2);
+assert.equal(rows[0].values.age,46);
+assert.equal(rows[0].values.team,"Beta; Alpha");
+assert.equal(rows[0].values.role,"Director; Advisor");
+assert.equal(rows[0].values.front_wing_expertise,null);
+assert.ok(staffMatches(rows[0],"rene"));
+assert.equal([rows[0],rows[1]].sort((a,b)=>compareStaffRows(a,b,"age","desc"))[1].name,"Alex Test");
+console.log("Staff database tests passed");

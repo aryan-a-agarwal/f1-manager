@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import type { CareerState } from "@/lib/career";
 import { compareStandings, getPendingDecisionCount, getUnreadEmailCount, nextCalendarSession } from "@/lib/career";
+import {DriverLink,TeamLink} from "./Profiles";
 import type { Team } from "@/lib/data/grid";
 
 export type GamePageId = "home" | "comms" | "team" | "race" | "drivers" | "calendar" | "finance" | "standings" | "market" | "database" | "settings";
@@ -19,7 +20,8 @@ export const MANAGEMENT_SECTIONS: Section[] = [
     { id: "paddock", label: "Paddock news", page: "comms", tab: "paddock" },
   ] },
   { id: "team", label: "Team", icon: "team", views: [
-    { id: "drivers", label: "Driver line-up", page: "drivers" },
+    { id: "drivers", label: "Driver line-up", page: "drivers", tab:"lineup" },
+    { id: "contracts", label: "Contracts", page: "drivers", tab:"contracts" },
   ] },
   { id: "car", label: "Car", icon: "car", views: [
     { id: "performance", label: "Performance", page: "team", tab: "performance" },
@@ -104,28 +106,29 @@ function Icon({ name }: { name: string }) {
   return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name] ?? paths.home}</svg>;
 }
 
-export function ManagementShell({ team, career, location, onNavigate, controls, children }: {
+export function ManagementShell({ team, career, location, onNavigate, controls, children, historyControls, profileKey }: {
   team: Team; career: CareerState; location: ManagementLocation;
-  onNavigate: (location: ManagementLocation) => void; controls: ReactNode; children: ReactNode;
+  onNavigate: (location: ManagementLocation) => void; controls: ReactNode; children: ReactNode; historyControls?:ReactNode;profileKey?:string;
 }) {
   const { section, view } = resolveManagementLocation(location);
   const unread = getUnreadEmailCount(career);
   const contentRef = useRef<HTMLElement>(null);
-  useEffect(() => { contentRef.current?.scrollTo(0, 0); }, [section.id, view.id]);
+  useEffect(() => { contentRef.current?.scrollTo(0, 0); }, [section.id, view.id, profileKey]);
   return <main className="management-shell" style={{ "--team": team.primary, "--team-secondary": team.secondary } as React.CSSProperties}>
     <header className="management-navbar">
-      <button className="management-identity" onClick={() => onNavigate({ section: "home", view: "overview" })} aria-label="Open headquarters"><span className="management-team-badge">{team.shortName.slice(0, 3).toUpperCase()}</span><span><strong>F1 MANAGER</strong><small>{career.season.year} · {team.shortName}</small></span></button>
+      {historyControls}
+      <div className="management-identity"><TeamLink id={team.id} name={team.shortName} className="management-team-badge">{team.shortName.slice(0,3).toUpperCase()}</TeamLink><span><button className="management-brand" onClick={()=>onNavigate({section:"home",view:"overview"})} aria-label="Open headquarters"><strong>F1 MANAGER</strong></button><small>{career.season.year} · <TeamLink id={team.id} name={team.shortName}/></small></span></div>
       <nav className="management-mainnav" aria-label="Main navigation">
         {MANAGEMENT_SECTIONS.filter((item) => item.id !== "settings").map((item) => <button key={item.id} aria-current={section.id === item.id ? "page" : undefined} onClick={() => onNavigate({ section: item.id, view: item.views[0].id })}><Icon name={item.icon}/><span>{item.label}</span>{item.id === "home" && unread > 0 && <span className="management-count">{unread}</span>}</button>)}
       </nav>
       <button className="management-settings" aria-label="Open settings" aria-current={section.id === "settings" ? "page" : undefined} onClick={() => onNavigate({ section: "settings", view: "appearance" })}><Icon name="settings"/></button>
     </header>
-    <div className="management-statusbar"><span><i/>{team.name}</span><span>{career.season.phase.replace("preseason", "Pre-season").replace("offseason", "Off-season")}<b>·</b><time dateTime={career.clock.date}>{formatDate(career.clock.date)}</time><b>·</b>{String(Math.floor(career.clock.minuteOfDay / 60)).padStart(2, "0")}:{String(career.clock.minuteOfDay % 60).padStart(2, "0")}</span></div>
+    <div className="management-statusbar"><span><i/><TeamLink id={team.id} name={team.name}/></span><span>{career.season.phase.replace("preseason", "Pre-season").replace("offseason", "Off-season")}<b>·</b><time dateTime={career.clock.date}>{formatDate(career.clock.date)}</time><b>·</b>{String(Math.floor(career.clock.minuteOfDay / 60)).padStart(2, "0")}:{String(career.clock.minuteOfDay % 60).padStart(2, "0")}</span></div>
     <div className="management-subnav">
       <nav aria-label={`${section.label} subsections`}>{section.views.map((item) => <button key={item.id} aria-current={view.id === item.id ? "page" : undefined} onClick={() => onNavigate({ section: section.id, view: item.id })}>{item.label}{item.id === "inbox" && unread > 0 && <span className="management-count">{unread}</span>}</button>)}</nav>
       {controls}
     </div>
-    <section ref={contentRef} className="management-content" aria-label={`${section.label}: ${view.label}`}>{children}</section>
+    <section ref={contentRef} className="management-content" aria-label={profileKey?"Full profile":`${section.label}: ${view.label}`}>{children}</section>
     <footer className="management-footer"><span>{section.label} <b>/</b> {view.label}</span><span>{career.clock.status === "blocked" ? "● Decision required" : "● Career active"}<b>·</b>{career.season.year} season</span></footer>
   </main>;
 }
@@ -147,7 +150,7 @@ export function ManagementOverview({ team, career, onNavigate }: { team: Team; c
   return <div className="management-overview">
     <div className="management-page-heading"><div><small>TEAM PRINCIPAL'S OFFICE</small><h1>Headquarters</h1><p>Your team, your decisions, your season.</p></div><span className="management-season-pill">{career.season.year} championship</span></div>
     <div className="management-summary-grid">
-      <article className="management-card management-club-card"><div className="management-card-label">Constructor profile <span>01</span></div><div className="management-club-identity"><span>{team.shortName.slice(0, 3).toUpperCase()}</span><h2>{team.name}</h2><p>{team.base}</p></div><dl className="management-profile-facts"><div><dt>Power unit</dt><dd>{team.powerUnit}</dd></div><div><dt>Team principal</dt><dd>{career.workforce.people.find((person) => person.id === lineup?.teamPrincipalId)?.name ?? team.principal}</dd></div></dl><button className="management-text-action" onClick={() => onNavigate({ section: "team", view: "drivers" })}>View your team <span>↗</span></button></article>
+      <article className="management-card management-club-card"><div className="management-card-label">Constructor profile <span>01</span></div><div className="management-club-identity"><span>{team.shortName.slice(0, 3).toUpperCase()}</span><h2><TeamLink id={team.id} name={team.name}/></h2><p>{team.base}</p></div><dl className="management-profile-facts"><div><dt>Power unit</dt><dd>{team.powerUnit}</dd></div><div><dt>Team principal</dt><dd>{career.workforce.people.find((person) => person.id === lineup?.teamPrincipalId)?.name ?? team.principal}</dd></div></dl><button className="management-text-action" onClick={() => onNavigate({ section: "team", view: "drivers" })}>View your team <span>↗</span></button></article>
       <article className="management-card management-next-race"><div className="management-card-label">Next race weekend <span>{next ? `R${String(next.round.roundNumber).padStart(2, "0")}` : "—"}</span></div><small className="management-kicker">{next?.round.location ?? "CHAMPIONSHIP"}</small><h2>{next?.round.grandPrixName ?? "Season complete"}</h2><p>{next ? `${next.round.location} · ${formatDate(next.round.weekendEndDate)}` : "Review the season in the race centre."}</p><div className="management-race-session"><span>Next session</span><strong>{next?.session.kind.replaceAll("_", " ") ?? "Season review"}</strong></div><button className="management-primary" onClick={() => onNavigate({ section: "season", view: "weekend" })}>Open race centre <span>→</span></button></article>
       <article className="management-card"><div className="management-card-label">Office summary <span>03</span></div><div className="management-big-number">{getUnreadEmailCount(career)}</div><p>Unread messages</p><div className="management-office-row"><span>Unread messages</span><b>{getUnreadEmailCount(career)}</b></div><div className="management-office-row"><span>Decisions waiting</span><b>{getPendingDecisionCount(career)}</b></div><button className="management-text-action" onClick={() => onNavigate({ section: "home", view: "inbox" })}>Open inbox <span>↗</span></button></article>
     </div>
@@ -157,6 +160,6 @@ export function ManagementOverview({ team, career, onNavigate }: { team: Team; c
 
 
     </div>
-    <div className="management-bottom-grid"><article className="management-card"><div className="management-card-label">Driver line-up <span>{career.season.year}</span></div>{drivers.map((driver, index) => <button className="management-driver-row" key={driver.id} onClick={() => onNavigate({ section: "team", view: "drivers" })}><span>{String(driver.carNumber ?? index + 1).padStart(2, "0")}</span><div><small>Race driver · Seat {index + 1}</small><strong>{driver.name}</strong></div><b>↗</b></button>)}<button className="management-text-action" onClick={() => onNavigate({ section: "scouting", view: "grid_drivers" })}>Explore driver market <span>↗</span></button></article><article className="management-card"><div className="management-card-label">Upcoming calendar <span>{upcoming.length} weekends</span></div>{upcoming.length ? upcoming.map((round) => <button className="management-fixture-row" key={round.id} onClick={() => onNavigate({ section: "season", view: "races" })}><span>{String(round.roundNumber).padStart(2, "0")}</span><div><strong>{round.grandPrixName}</strong><small>{round.location} · {formatDate(round.weekendEndDate)}</small></div><b>→</b></button>) : <p>All race weekends have been completed.</p>}</article></div>
+    <div className="management-bottom-grid"><article className="management-card"><div className="management-card-label">Driver line-up <span>{career.season.year}</span></div>{drivers.map((driver, index) => <DriverLink className="management-driver-row" key={driver.id} id={driver.id} name={driver.name}><span>{String(driver.carNumber ?? index + 1).padStart(2, "0")}</span><div><small>Race driver · Seat {index + 1}</small><strong>{driver.name}</strong></div><b>↗</b></DriverLink>)}<button className="management-text-action" onClick={() => onNavigate({ section: "scouting", view: "grid_drivers" })}>Explore driver market <span>↗</span></button></article><article className="management-card"><div className="management-card-label">Upcoming calendar <span>{upcoming.length} weekends</span></div>{upcoming.length ? upcoming.map((round) => <button className="management-fixture-row" key={round.id} onClick={() => onNavigate({ section: "season", view: "races" })}><span>{String(round.roundNumber).padStart(2, "0")}</span><div><strong>{round.grandPrixName}</strong><small>{round.location} · {formatDate(round.weekendEndDate)}</small></div><b>→</b></button>) : <p>All race weekends have been completed.</p>}</article></div>
   </div>;
 }

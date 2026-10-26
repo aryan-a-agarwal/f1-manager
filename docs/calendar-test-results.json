@@ -2,106 +2,162 @@
   {
     "name": "test:career-save",
     "exitCode": 0,
-    "durationMs": 549,
+    "durationMs": 401,
     "stdout": "Career save calibration passed.\n",
     "stderr": ""
   },
   {
     "name": "test:game-time",
     "exitCode": 0,
-    "durationMs": 391,
+    "durationMs": 402,
     "stdout": "Controlled game-time calibration passed.\n",
     "stderr": ""
   },
   {
     "name": "test:season-calendar",
     "exitCode": 0,
-    "durationMs": 960,
+    "durationMs": 1250,
     "stdout": "Season calendar calibration passed.\n",
     "stderr": ""
   },
   {
     "name": "test:weekend-orchestration",
     "exitCode": 0,
-    "durationMs": 1892,
+    "durationMs": 2302,
     "stdout": "Weekend orchestration calibration passed.\n",
     "stderr": ""
   },
   {
     "name": "test:championship-scoring",
     "exitCode": 0,
-    "durationMs": 367,
+    "durationMs": 377,
     "stdout": "Championship scoring calibration passed.\n",
     "stderr": ""
   },
   {
     "name": "test:season-lifecycle",
     "exitCode": 0,
-    "durationMs": 380,
+    "durationMs": 388,
     "stdout": "Season lifecycle and workforce calibration passed.\n",
     "stderr": ""
   },
   {
     "name": "test:timeline",
     "exitCode": 0,
-    "durationMs": 480,
+    "durationMs": 455,
     "stdout": "Timeline and time advance calibration passed.\n",
     "stderr": ""
   },
   {
     "name": "test:comms",
     "exitCode": 0,
-    "durationMs": 385,
-    "stdout": "TAP version 13\n# Subtest: COMMS-01: Initial comms state initializes with emails, allocation, briefings, board confidence, news, and social\nok 1 - COMMS-01: Initial comms state initializes with emails, allocation, briefings, board confidence, news, and social\n  ---\n  duration_ms: 0.9253\n  ...\n# Subtest: COMMS-02: Email read status and unread count tracking\nok 2 - COMMS-02: Email read status and unread count tracking\n  ---\n  duration_ms: 18.0466\n  ...\n# Subtest: COMMS-03: Email decisions apply trade-offs to car projects and board confidence\nok 3 - COMMS-03: Email decisions apply trade-offs to car projects and board confidence\n  ---\n  duration_ms: 1.3538\n  ...\n# Subtest: COMMS-04: Engineering allocation validation enforces exact 100-point total\nok 4 - COMMS-04: Engineering allocation validation enforces exact 100-point total\n  ---\n  duration_ms: 1.3069\n  ...\n# Subtest: COMMS-05: Driver briefing priorities shift morale and confidence\nok 5 - COMMS-05: Driver briefing priorities shift morale and confidence\n  ---\n  duration_ms: 1.0148\n  ...\n# Subtest: COMMS-06: Pre-race strategy changes persist into career comms\nok 6 - COMMS-06: Pre-race strategy changes persist into career comms\n  ---\n  duration_ms: 0.9596\n  ...\n1..6\n# tests 6\n# suites 0\n# pass 6\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 30.9182\n",
+    "durationMs": 427,
+    "stdout": "TAP version 13\n# Subtest: COMMS-01: Initial comms state initializes with emails, allocation, briefings, board confidence, news, and social\nok 1 - COMMS-01: Initial comms state initializes with emails, allocation, briefings, board confidence, news, and social\n  ---\n  duration_ms: 1.1726\n  ...\n# Subtest: COMMS-02: Email read status and unread count tracking\nok 2 - COMMS-02: Email read status and unread count tracking\n  ---\n  duration_ms: 20.7159\n  ...\n# Subtest: COMMS-03: Email decisions apply trade-offs to car projects and board confidence\nok 3 - COMMS-03: Email decisions apply trade-offs to car projects and board confidence\n  ---\n  duration_ms: 2.4352\n  ...\n# Subtest: COMMS-04: Engineering allocation validation enforces exact 100-point total\nok 4 - COMMS-04: Engineering allocation validation enforces exact 100-point total\n  ---\n  duration_ms: 2.3132\n  ...\n# Subtest: COMMS-05: Driver briefing priorities shift morale and confidence\nok 5 - COMMS-05: Driver briefing priorities shift morale and confidence\n  ---\n  duration_ms: 2.7975\n  ...\n# Subtest: COMMS-06: Pre-race strategy changes persist into career comms\nok 6 - COMMS-06: Pre-race strategy changes persist into career comms\n  ---\n  duration_ms: 2.0227\n  ...\n1..6\n# tests 6\n# suites 0\n# pass 6\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 39.8773\n",
     "stderr": ""
   },
   {
     "name": "test:commercial",
     "exitCode": 0,
-    "durationMs": 403,
-    "stdout": "TAP version 13\n# Subtest: COMM-01: Commercial initializes with 7 slots, driver marketability, prestige, and WCC projection\nok 1 - COMM-01: Commercial initializes with 7 slots, driver marketability, prestige, and WCC projection\n  ---\n  duration_ms: 1.016\n  ...\n# Subtest: COMM-02: Concorde WCC prize money calculation computes 11-tier distribution & deltas\nok 2 - COMM-02: Concorde WCC prize money calculation computes 11-tier distribution & deltas\n  ---\n  duration_ms: 19.6511\n  ...\n# Subtest: COMM-03: Driver PR event awards cash bonus and applies driver fatigue/sim trade-off\nok 3 - COMM-03: Driver PR event awards cash bonus and applies driver fatigue/sim trade-off\n  ---\n  duration_ms: 1.3639\n  ...\n# Subtest: COMM-04: Signing a sponsor replacement updates active contract and removes offer\nok 4 - COMM-04: Signing a sponsor replacement updates active contract and removes offer\n  ---\n  duration_ms: 1.2435\n  ...\n# Subtest: FIN-01: Finance initializes with cash reserves, £135M cost cap, and transaction ledger\nok 5 - FIN-01: Finance initializes with cash reserves, £135M cost cap, and transaction ledger\n  ---\n  duration_ms: 0.126\n  ...\n# Subtest: FIN-02: Transaction recording strictly segregates Cap-Exempt vs Cap-Counted expenses\nok 6 - FIN-02: Transaction recording strictly segregates Cap-Exempt vs Cap-Counted expenses\n  ---\n  duration_ms: 1.1723\n  ...\n# Subtest: FIN-03: Cost cap status calculates headroom and flags warning/breach thresholds\nok 7 - FIN-03: Cost cap status calculates headroom and flags warning/breach thresholds\n  ---\n  duration_ms: 1.2519\n  ...\n1..7\n# tests 7\n# suites 0\n# pass 7\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 33.5114\n",
+    "durationMs": 414,
+    "stdout": "TAP version 13\n# Subtest: COMM-01: Commercial initializes with 7 slots, driver marketability, prestige, and WCC projection\nok 1 - COMM-01: Commercial initializes with 7 slots, driver marketability, prestige, and WCC projection\n  ---\n  duration_ms: 2.3\n  ...\n# Subtest: COMM-02: Concorde WCC prize money calculation computes 11-tier distribution & deltas\nok 2 - COMM-02: Concorde WCC prize money calculation computes 11-tier distribution & deltas\n  ---\n  duration_ms: 22.0869\n  ...\n# Subtest: COMM-03: Driver PR event awards cash bonus and applies driver fatigue/sim trade-off\nok 3 - COMM-03: Driver PR event awards cash bonus and applies driver fatigue/sim trade-off\n  ---\n  duration_ms: 3.4852\n  ...\n# Subtest: COMM-04: Signing a sponsor replacement updates active contract and removes offer\nok 4 - COMM-04: Signing a sponsor replacement updates active contract and removes offer\n  ---\n  duration_ms: 3.1629\n  ...\n# Subtest: FIN-01: Finance initializes with cash reserves, £135M cost cap, and transaction ledger\nok 5 - FIN-01: Finance initializes with cash reserves, £135M cost cap, and transaction ledger\n  ---\n  duration_ms: 0.1564\n  ...\n# Subtest: FIN-02: Transaction recording strictly segregates Cap-Exempt vs Cap-Counted expenses\nok 6 - FIN-02: Transaction recording strictly segregates Cap-Exempt vs Cap-Counted expenses\n  ---\n  duration_ms: 3.5772\n  ...\n# Subtest: FIN-03: Cost cap status calculates headroom and flags warning/breach thresholds\nok 7 - FIN-03: Cost cap status calculates headroom and flags warning/breach thresholds\n  ---\n  duration_ms: 3.035\n  ...\n1..7\n# tests 7\n# suites 0\n# pass 7\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 46.5683\n",
     "stderr": ""
   },
   {
     "name": "test:cardev",
     "exitCode": 0,
-    "durationMs": 443,
-    "stdout": "TAP version 13\n# Subtest: CARDEV-01: Car attributes initialize across 12 channels and compute overall rating\nok 1 - CARDEV-01: Car attributes initialize across 12 channels and compute overall rating\n  ---\n  duration_ms: 19.1874\n  ...\n# Subtest: CARDEV-02: Grid comparative ranking accurately sorts 11 teams across all channels\nok 2 - CARDEV-02: Grid comparative ranking accurately sorts 11 teams across all channels\n  ---\n  duration_ms: 1.6027\n  ...\n# Subtest: CARDEV-03: Starting project allocates ATR compute, burns cost cap, and creates project\nok 3 - CARDEV-03: Starting project allocates ATR compute, burns cost cap, and creates project\n  ---\n  duration_ms: 1.5456\n  ...\n# Subtest: CARDEV-04: Rush build applies -30% time reduction and +50% cost penalty\nok 4 - CARDEV-04: Rush build applies -30% time reduction and +50% cost penalty\n  ---\n  duration_ms: 1.2375\n  ...\n# Subtest: CARDEV-05: Completing project manufactures inventory and installing updates attributes\nok 5 - CARDEV-05: Completing project manufactures inventory and installing updates attributes\n  ---\n  duration_ms: 1.5505\n  ...\n# Subtest: CARDEV-06: Facilities campus upgrades, condition degradation, and refurbishment\nok 6 - CARDEV-06: Facilities campus upgrades, condition degradation, and refurbishment\n  ---\n  duration_ms: 1.4346\n  ...\n1..6\n# tests 6\n# suites 0\n# pass 6\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 39.6192\n",
+    "durationMs": 404,
+    "stdout": "TAP version 13\n# Subtest: CARDEV-01: Car attributes initialize across 12 channels and compute overall rating\nok 1 - CARDEV-01: Car attributes initialize across 12 channels and compute overall rating\n  ---\n  duration_ms: 21.0904\n  ...\n# Subtest: CARDEV-02: Grid comparative ranking accurately sorts 11 teams across all channels\nok 2 - CARDEV-02: Grid comparative ranking accurately sorts 11 teams across all channels\n  ---\n  duration_ms: 2.5526\n  ...\n# Subtest: CARDEV-03: Starting project allocates ATR compute, burns cost cap, and creates project\nok 3 - CARDEV-03: Starting project allocates ATR compute, burns cost cap, and creates project\n  ---\n  duration_ms: 2.4212\n  ...\n# Subtest: CARDEV-04: Rush build applies -30% time reduction and +50% cost penalty\nok 4 - CARDEV-04: Rush build applies -30% time reduction and +50% cost penalty\n  ---\n  duration_ms: 2.4709\n  ...\n# Subtest: CARDEV-05: Completing project manufactures inventory and installing updates attributes\nok 5 - CARDEV-05: Completing project manufactures inventory and installing updates attributes\n  ---\n  duration_ms: 2.8641\n  ...\n# Subtest: CARDEV-06: Facilities campus upgrades, condition degradation, and refurbishment\nok 6 - CARDEV-06: Facilities campus upgrades, condition degradation, and refurbishment\n  ---\n  duration_ms: 2.425\n  ...\n1..6\n# tests 6\n# suites 0\n# pass 6\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 41.7167\n",
     "stderr": ""
   },
   {
     "name": "test:workforce",
     "exitCode": 0,
-    "durationMs": 446,
-    "stdout": "TAP version 13\n# Subtest: WORKFORCE-01: Driver skills initialize across 8 granular vectors and calculate overall rating\nok 1 - WORKFORCE-01: Driver skills initialize across 8 granular vectors and calculate overall rating\n  ---\n  duration_ms: 19.8685\n  ...\n# Subtest: WORKFORCE-02: Paddock market pool contains free agents and young prospects\nok 2 - WORKFORCE-02: Paddock market pool contains free agents and young prospects\n  ---\n  duration_ms: 1.1134\n  ...\n# Subtest: WORKFORCE-03: Driver rejects lowball salary and returns counter-offer\nok 3 - WORKFORCE-03: Driver rejects lowball salary and returns counter-offer\n  ---\n  duration_ms: 1.2386\n  ...\n# Subtest: WORKFORCE-04: Championship caliber drivers refuse subordinate contract status\nok 4 - WORKFORCE-04: Championship caliber drivers refuse subordinate contract status\n  ---\n  duration_ms: 0.9892\n  ...\n# Subtest: WORKFORCE-05: Successful driver signing deducts buyout clause and updates lineup\nok 5 - WORKFORCE-05: Successful driver signing deducts buyout clause and updates lineup\n  ---\n  duration_ms: 2.3542\n  ...\n# Subtest: WORKFORCE-06: Poaching contracted rival driver triggers Cap-Exempt buyout clause\nok 6 - WORKFORCE-06: Poaching contracted rival driver triggers Cap-Exempt buyout clause\n  ---\n  duration_ms: 1.2501\n  ...\n# Subtest: WORKFORCE-07: Staff hiring and poaching counts buyout against Cost Cap\nok 7 - WORKFORCE-07: Staff hiring and poaching counts buyout against Cost Cap\n  ---\n  duration_ms: 1.2236\n  ...\n1..7\n# tests 7\n# suites 0\n# pass 7\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 41.2076\n",
+    "durationMs": 410,
+    "stdout": "TAP version 13\n# Subtest: WORKFORCE-01: Driver skills initialize across 8 granular vectors and calculate overall rating\nok 1 - WORKFORCE-01: Driver skills initialize across 8 granular vectors and calculate overall rating\n  ---\n  duration_ms: 20.7313\n  ...\n# Subtest: WORKFORCE-02: Paddock market pool contains free agents and young prospects\nok 2 - WORKFORCE-02: Paddock market pool contains free agents and young prospects\n  ---\n  duration_ms: 2.1553\n  ...\n# Subtest: WORKFORCE-03: Driver rejects lowball salary and returns counter-offer\nok 3 - WORKFORCE-03: Driver rejects lowball salary and returns counter-offer\n  ---\n  duration_ms: 2.1668\n  ...\n# Subtest: WORKFORCE-04: Championship caliber drivers refuse subordinate contract status\nok 4 - WORKFORCE-04: Championship caliber drivers refuse subordinate contract status\n  ---\n  duration_ms: 2.689\n  ...\n# Subtest: WORKFORCE-05: Successful driver signing deducts buyout clause and updates lineup\nok 5 - WORKFORCE-05: Successful driver signing deducts buyout clause and updates lineup\n  ---\n  duration_ms: 3.4354\n  ...\n# Subtest: WORKFORCE-06: Poaching contracted rival driver triggers Cap-Exempt buyout clause\nok 6 - WORKFORCE-06: Poaching contracted rival driver triggers Cap-Exempt buyout clause\n  ---\n  duration_ms: 2.3298\n  ...\n# Subtest: WORKFORCE-07: Staff hiring and poaching counts buyout against Cost Cap\nok 7 - WORKFORCE-07: Staff hiring and poaching counts buyout against Cost Cap\n  ---\n  duration_ms: 2.0636\n  ...\n1..7\n# tests 7\n# suites 0\n# pass 7\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 43.296\n",
     "stderr": ""
   },
   {
     "name": "test:season-runner",
     "exitCode": 0,
-    "durationMs": 547,
-    "stdout": "TAP version 13\n# Subtest: SEASON-01: Simulated session engine produces 22 valid driver results with realistic gaps\nok 1 - SEASON-01: Simulated session engine produces 22 valid driver results with realistic gaps\n  ---\n  duration_ms: 18.4555\n  ...\n# Subtest: SEASON-02: Simulate entire weekend resolves all sessions, awards FIA points, and archives weekend\nok 2 - SEASON-02: Simulate entire weekend resolves all sessions, awards FIA points, and archives weekend\n  ---\n  duration_ms: 59.5696\n  ...\n# Subtest: SEASON-03: Multiple consecutive race weekends accumulate points across the season\nok 3 - SEASON-03: Multiple consecutive race weekends accumulate points across the season\n  ---\n  duration_ms: 91.7699\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 179.704\n",
+    "durationMs": 602,
+    "stdout": "TAP version 13\n# Subtest: SEASON-01: Simulated session engine produces 22 valid driver results with realistic gaps\nok 1 - SEASON-01: Simulated session engine produces 22 valid driver results with realistic gaps\n  ---\n  duration_ms: 22.6039\n  ...\n# Subtest: SEASON-02: Simulate entire weekend resolves all sessions, awards FIA points, and archives weekend\nok 2 - SEASON-02: Simulate entire weekend resolves all sessions, awards FIA points, and archives weekend\n  ---\n  duration_ms: 83.8594\n  ...\n# Subtest: SEASON-03: Multiple consecutive race weekends accumulate points across the season\nok 3 - SEASON-03: Multiple consecutive race weekends accumulate points across the season\n  ---\n  duration_ms: 125.3024\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 243.1478\n",
     "stderr": ""
   },
   {
     "name": "test:calendar-integration",
     "exitCode": 0,
-    "durationMs": 966,
-    "stdout": "TAP version 13\n# Subtest: calendar profiles preserve format and support Saturday races and venue time zones\nok 1 - calendar profiles preserve format and support Saturday races and venue time zones\n  ---\n  duration_ms: 16.9888\n  ...\n# Subtest: simultaneous and overdue blockers remain actionable without reversing time\nok 2 - simultaneous and overdue blockers remain actionable without reversing time\n  ---\n  duration_ms: 19.1118\n  ...\n# Subtest: quick GP stops for decisions and cannot bypass them by acknowledgement\nok 3 - quick GP stops for decisions and cannot bypass them by acknowledgement\n  ---\n  duration_ms: 138.304\n  ...\n# Subtest: daily and jump progression produce identical completed work without auto-fitting\nok 4 - daily and jump progression produce identical completed work without auto-fitting\n  ---\n  duration_ms: 262.494\n  ...\n# Subtest: legacy partial careers migrate without rewriting played dates or results\nok 5 - legacy partial careers migrate without rewriting played dates or results\n  ---\n  duration_ms: 56.2281\n  ...\n# Subtest: save failure and invalid imports preserve retained data\nok 6 - save failure and invalid imports preserve retained data\n  ---\n  duration_ms: 3.2698\n  ...\n# Subtest: sessions cannot be acknowledged away and next-weekend works mid-weekend\nok 7 - sessions cannot be acknowledged away and next-weekend works mid-weekend\n  ---\n  duration_ms: 18.9448\n  ...\n# Subtest: postponement preserves valid order, updates the schedule and survives reload\nok 8 - postponement preserves valid order, updates the schedule and survives reload\n  ---\n  duration_ms: 8.6274\n  ...\n1..8\n# tests 8\n# suites 0\n# pass 8\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 560.3957\n",
+    "durationMs": 1097,
+    "stdout": "TAP version 13\n# Subtest: calendar profiles preserve format and support Saturday races and venue time zones\nok 1 - calendar profiles preserve format and support Saturday races and venue time zones\n  ---\n  duration_ms: 18.4182\n  ...\n# Subtest: simultaneous and overdue blockers remain actionable without reversing time\nok 2 - simultaneous and overdue blockers remain actionable without reversing time\n  ---\n  duration_ms: 30.7684\n  ...\n# Subtest: quick GP stops for decisions and cannot bypass them by acknowledgement\nok 3 - quick GP stops for decisions and cannot bypass them by acknowledgement\n  ---\n  duration_ms: 177.7513\n  ...\n# Subtest: daily and jump progression produce identical completed work without auto-fitting\nok 4 - daily and jump progression produce identical completed work without auto-fitting\n  ---\n  duration_ms: 316.4479\n  ...\n# Subtest: legacy partial careers migrate without rewriting played dates or results\nok 5 - legacy partial careers migrate without rewriting played dates or results\n  ---\n  duration_ms: 75.8385\n  ...\n# Subtest: save failure and invalid imports preserve retained data\nok 6 - save failure and invalid imports preserve retained data\n  ---\n  duration_ms: 4.6443\n  ...\n# Subtest: sessions cannot be acknowledged away and next-weekend works mid-weekend\nok 7 - sessions cannot be acknowledged away and next-weekend works mid-weekend\n  ---\n  duration_ms: 21.5733\n  ...\n# Subtest: postponement preserves valid order, updates the schedule and survives reload\nok 8 - postponement preserves valid order, updates the schedule and survives reload\n  ---\n  duration_ms: 18.5384\n  ...\n1..8\n# tests 8\n# suites 0\n# pass 8\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 697.5423\n",
     "stderr": ""
   },
   {
     "name": "test:calendar-soak",
     "exitCode": 0,
-    "durationMs": 67997,
+    "durationMs": 88718,
     "stdout": "Full calendar season: McLaren PASS\nFull calendar season: Mercedes PASS\nFull calendar season: Red Bull Racing PASS\nFull calendar season: Ferrari PASS\nFull calendar season: Williams PASS\nFull calendar season: Racing Bulls PASS\nFull calendar season: Aston Martin PASS\nFull calendar season: Haas PASS\nFull calendar season: Audi PASS\nFull calendar season: Alpine PASS\nFull calendar season: Cadillac PASS\nThree calendar seasons: ferrari PASS\nThree calendar seasons: audi PASS\nThree calendar seasons: mclaren PASS\nCalendar soak passed: 20 complete seasons, 480 weekends, 2400 sessions. Economy and contract lifecycle remain separate work.\n",
     "stderr": ""
   },
   {
     "name": "test:plain-career",
     "exitCode": 0,
-    "durationMs": 708,
-    "stdout": "TAP version 13\n# Subtest: new careers contain the season core without unimplemented management state\nok 1 - new careers contain the season core without unimplemented management state\n  ---\n  duration_ms: 22.4001\n  ...\n# Subtest: legacy cleanup removes unfinished management while preserving played races and a backup\nok 2 - legacy cleanup removes unfinished management while preserving played races and a backup\n  ---\n  duration_ms: 75.3243\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 108.5592\n",
+    "durationMs": 478,
+    "stdout": "TAP version 13\n# Subtest: new careers contain the season core without unimplemented management state\nok 1 - new careers contain the season core without unimplemented management state\n  ---\n  duration_ms: 22.273\n  ...\n# Subtest: legacy cleanup removes unfinished management while preserving played races and a backup\nok 2 - legacy cleanup removes unfinished management while preserving played races and a backup\n  ---\n  duration_ms: 88.5308\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 122.3861\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:profiles",
+    "exitCode": 0,
+    "durationMs": 304,
+    "stdout": "TAP version 13\n# Subtest: profile links retain their source page and round-trip reference and entry identities\nok 1 - profile links retain their source page and round-trip reference and entry identities\n  ---\n  duration_ms: 1.7602\n  ...\n# Subtest: history preserves forward pages and drops them only when opening a different page\nok 2 - history preserves forward pages and drops them only when opening a different page\n  ---\n  duration_ms: 0.1501\n  ...\n# Subtest: reference names can be compared without accents or punctuation changing identity\nok 3 - reference names can be compared without accents or punctuation changing identity\n  ---\n  duration_ms: 0.3027\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 9.2194\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:day-progression",
+    "exitCode": 0,
+    "durationMs": 698,
+    "stdout": "TAP version 13\n# Subtest: daily ticker visits every date and stops at the first mandatory session\nok 1 - daily ticker visits every date and stops at the first mandatory session\n  ---\n  duration_ms: 314.8318\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 324.0588\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:contract-desk",
+    "exitCode": 0,
+    "durationMs": 439,
+    "stdout": "TAP version 13\n# Subtest: contract baseline is complete, frozen, saveable and never rewrites the roster\nok 1 - contract baseline is complete, frozen, saveable and never rewrites the roster\n  ---\n  duration_ms: 26.5169\n  ...\n# Subtest: drafts are idempotent, reversible planning records with exact cents\nok 2 - drafts are idempotent, reversible planning records with exact cents\n  ---\n  duration_ms: 5.1364\n  ...\n# Subtest: unresolved terms and overlapping seat/driver drafts remain explicit review issues\nok 3 - unresolved terms and overlapping seat/driver drafts remain explicit review issues\n  ---\n  duration_ms: 4.6191\n  ...\n# Subtest: reserve drafts support two positions without creating appointments\nok 4 - reserve drafts support two positions without creating appointments\n  ---\n  duration_ms: 3.2434\n  ...\n# Subtest: failed persistence leaves the last saved draft and career intact\nok 5 - failed persistence leaves the last saved draft and career intact\n  ---\n  duration_ms: 8.2952\n  ...\n# Subtest: all published 2027 driver commitments have positive, role-specific game salary values\nok 6 - all published 2027 driver commitments have positive, role-specific game salary values\n  ---\n  duration_ms: 0.2105\n  ...\n# Subtest: salary backfill preserves sourced terms and existing saved salary assumptions\nok 7 - salary backfill preserves sourced terms and existing saved salary assumptions\n  ---\n  duration_ms: 4.9171\n  ...\n1..7\n# tests 7\n# suites 0\n# pass 7\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 59.9932\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:starting-grid",
+    "exitCode": 0,
+    "durationMs": 402,
+    "stdout": "TAP version 13\n# Subtest: new saves match all 22 database starting seats: 19 confirmed and three continuations\nok 1 - new saves match all 22 database starting seats: 19 confirmed and three continuations\n  ---\n  duration_ms: 21.1006\n  ...\n# Subtest: all starting terms and salaries match the database export while preserving reference uncertainty\nok 2 - all starting terms and salaries match the database export while preserving reference uncertainty\n  ---\n  duration_ms: 2.5621\n  ...\n# Subtest: existing saved lineups are loaded without applying the new starting grid\nok 3 - existing saved lineups are loaded without applying the new starting grid\n  ---\n  duration_ms: 4.2016\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 34.5829\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:reserves",
+    "exitCode": 0,
+    "durationMs": 402,
+    "stdout": "TAP version 13\n# Subtest: all eleven teams have two paid reserves while the race championship remains 22 drivers\nok 1 - all eleven teams have two paid reserves while the race championship remains 22 drivers\n  ---\n  duration_ms: 21.659\n  ...\n# Subtest: shared Tsunoda has one identity, two explicit retainers and no extra race entry\nok 2 - shared Tsunoda has one identity, two explicit retainers and no extra race entry\n  ---\n  duration_ms: 2.5327\n  ...\n# Subtest: existing career reserve update is additive, preserves custom pay and drafts, and runs once\nok 3 - existing career reserve update is additive, preserves custom pay and drafts, and runs once\n  ---\n  duration_ms: 7.2744\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 37.9726\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:driver-profile-database",
+    "exitCode": 0,
+    "durationMs": 327,
+    "stdout": "Driver profile database tests passed: identity joins, related records, all-field preservation, unknown values and salary units.\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:team-profile-ratings",
+    "exitCode": 0,
+    "durationMs": 298,
+    "stdout": "Team profile rating checks passed: 123 unallocated attributes, complete grouping, identity matching and preserved statistics.\n",
+    "stderr": ""
+  },
+  {
+    "name": "test:driver-database",
+    "exitCode": 0,
+    "durationMs": 366,
+    "stdout": "Driver database tests passed: complete identities, shared appointments, default masking, snapshot choice, numeric/zero sorting and unknown-last ordering.\n",
     "stderr": ""
   }
 ]
