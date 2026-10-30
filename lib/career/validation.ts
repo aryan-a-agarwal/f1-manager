@@ -1,4 +1,6 @@
+import {validWorkshop,validWorkshopLinks} from './manufacturing';
 import {isContractDeskState} from "./contracts";
+import {initializeFinance,validFinanceState} from './financeEngine';
 import {stripUnbuiltManagement} from "./stripUnbuiltManagement";
 import {removeDemoContent} from "./removeDemoContent";
 import { CAREER_SCHEMA_VERSION, type CareerAdvanceReason, type CareerPhase, type CareerState } from "./types";
@@ -62,6 +64,9 @@ export function isCareerState(value: unknown): value is CareerState {
     && isChampionship(value.championship)
     && isWorkforce(value.workforce)
     && (value.contractDesk===undefined||isContractDeskState(value.contractDesk))
+    && validFinanceState(value.finance)
+    && validWorkshop(value.manufacturing)
+    && validWorkshopLinks(value as unknown as CareerState)
     && Array.isArray(value.seasonHistory);
 }
 
@@ -82,7 +87,7 @@ function isWeekendOperations(value:unknown) {
   const strings=(items:unknown[])=>items.every((item)=>typeof item==="string");
   const unique=(items:string[])=>new Set(items).size===items.length;
   const validSnapshots=snapshots.every((item)=>isRecord(item)&&item.schemaVersion===1&&typeof item.id==="string"&&typeof item.roundId==="string"&&typeof item.trackId==="string"&&isIsoTimestamp(item.createdAt)&&Array.isArray(item.participants)&&item.participants.length===22&&item.participants.every((entry)=>isRecord(entry)&&typeof entry.teamId==="string"&&typeof entry.driverId==="string"&&typeof entry.driverName==="string"&&(entry.carNumber===null||Number.isInteger(entry.carNumber)))&&isRecord(item.circuit)&&typeof item.circuit.lapLengthKm==="number"&&item.circuit.provenance==="official_fact");
-  const validInputs=inputs.every((item)=>isRecord(item)&&item.schemaVersion===1&&typeof item.id==="string"&&typeof item.sessionId==="string"&&typeof item.snapshotId==="string"&&Array.isArray(item.participantIds)&&item.participantIds.length===22&&strings(item.participantIds)&&unique(item.participantIds)&&Number.isInteger(item.randomSeed)&&typeof item.engineId==="string"&&typeof item.engineVersion==="string"&&isRecord(item.instructions)&&item.instructions.provenance==="player_selected");
+  const validInputs=inputs.every((item)=>isRecord(item)&&item.schemaVersion===1&&typeof item.id==="string"&&typeof item.sessionId==="string"&&typeof item.snapshotId==="string"&&Array.isArray(item.participantIds)&&item.participantIds.length===22&&strings(item.participantIds)&&unique(item.participantIds)&&Number.isInteger(item.randomSeed)&&typeof item.engineId==="string"&&typeof item.engineVersion==="string"&&isRecord(item.instructions)&&item.instructions.provenance==="player_selected"&&(item.carPerformance===undefined||isRecord(item.carPerformance)&&item.carPerformance.version===1&&isRecord(item.carPerformance.scores)&&item.participantIds.every(id=>typeof (item.carPerformance as any).scores[id]==="number"&&Number.isFinite((item.carPerformance as any).scores[id]))&&Number.isInteger(item.carPerformance.raceLaps)&&Number(item.carPerformance.raceLaps)>0&&typeof item.carPerformance.lapLengthKm==="number"&&item.carPerformance.lapLengthKm>0));
   const validAttempts=attempts.every((item)=>isRecord(item)&&typeof item.id==="string"&&typeof item.sessionId==="string"&&typeof item.inputId==="string"&&Number.isInteger(item.attemptNumber)&&typeof item.inputChecksum==="string"&&(item.status==="running"||item.status==="completed"||item.status==="failed")&&isIsoTimestamp(item.startedAt)&&(item.completedAt===null||isIsoTimestamp(item.completedAt))&&(item.failureReason===null||typeof item.failureReason==="string"));
   const validOutputs=outputs.every((item)=>isRecord(item)&&item.schemaVersion===1&&typeof item.id==="string"&&typeof item.attemptId==="string"&&typeof item.sessionId==="string"&&Array.isArray(item.classification)&&isIsoTimestamp(item.createdAt)&&(item.provenance==="administrative_placeholder"||item.provenance==="engine_generated"));
   const validOutbox=outbox.every((item)=>isRecord(item)&&typeof item.id==="string"&&(item.type==="SessionCompleted"||item.type==="GrandPrixCompleted"||item.type==="WeekendArchived")&&typeof item.roundId==="string"&&isIsoTimestamp(item.createdAt)&&(item.status==="pending"||item.status==="processed"));
@@ -155,6 +160,11 @@ function migrateCareer(value: unknown): unknown {
   }
   if(migrated.schemaVersion===7){
     migrated=stripUnbuiltManagement({...migrated,schemaVersion:8} as unknown as CareerState);
+  }
+  if(migrated.schemaVersion===8||migrated.schemaVersion===9){
+    const candidate={...migrated,schemaVersion:10};
+    if(!isCareerState(candidate))return candidate;
+    migrated=initializeFinance(candidate);
   }
   return migrated;
 }

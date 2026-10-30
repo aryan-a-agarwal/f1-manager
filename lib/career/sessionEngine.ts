@@ -64,7 +64,7 @@ export const simulatedSessionEngine: SessionEngine = {
   supports: () => true,
   async run(input: SessionInput): Promise<SessionOutput> {
     const scoredDrivers = input.participantIds.map((driverId, idx) => {
-      const base = driverBaseRatings[driverId] ?? 80;
+      const base = input.carPerformance?.scores[driverId] ?? driverBaseRatings[driverId] ?? 80;
       const variance = (pseudoRandom(input.randomSeed, idx) - 0.5) * 9;
       return { driverId, score: base + variance };
     });
@@ -72,7 +72,7 @@ export const simulatedSessionEngine: SessionEngine = {
     scoredDrivers.sort((a, b) => b.score - a.score);
 
     const isRace = input.sessionKind === "race" || input.sessionKind === "sprint";
-    const totalLaps = input.sessionKind === "sprint" ? 19 : isRace ? 58 : 15;
+    const totalLaps = input.sessionKind === "sprint" ? (input.carPerformance?Math.ceil(100/input.carPerformance.lapLengthKm):19) : isRace ? (input.carPerformance?.raceLaps??58) : 15;
     const baseLapMs = isRace ? 5_400_000 : 82_000;
 
     let cumulativeGap = 0;

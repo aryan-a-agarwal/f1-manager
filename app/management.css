@@ -28,25 +28,31 @@ html[data-skin="team"] .management-shell { --mg-bg:#10151d; --mg-surface:#1b2430
 .management-shell button { cursor:pointer; }
 .management-shell button:disabled { cursor:not-allowed; opacity:.45; }
 .management-shell button:focus-visible,.management-shell summary:focus-visible,.interface-layout-picker button:focus-visible { outline:3px solid var(--mg-accent,#5685ef); outline-offset:3px; }
-.management-navbar { display:flex; align-items:center; gap:14px; flex-shrink:0; min-height:62px; padding:0 24px; background:var(--mg-surface); border-bottom:2px solid var(--mg-text); }
+.management-navbar { display:flex; align-items:center; gap:14px; flex-shrink:0; min-height:52px; padding:0 24px; background:var(--mg-surface); border-bottom:2px solid var(--mg-text); }
 .management-identity { display:flex; align-items:center; gap:10px; padding:0; flex-shrink:0; background:none; border:0; color:var(--mg-text); text-align:left; }
 .management-team-badge { display:grid; place-items:center; height:34px; min-width:40px; padding:0 6px; border-radius:50%; background:var(--team); color:var(--team-secondary); font:800 16px 'Barlow Condensed',sans-serif; }
 .management-identity strong { display:block; font:800 16px 'Barlow Condensed',sans-serif; letter-spacing:.03em; }
 .management-identity small { display:block; color:var(--mg-muted); font:9px var(--mg-mono); }
 .management-mainnav { display:flex; align-self:stretch; min-width:0; flex:1; overflow-x:auto; scrollbar-width:thin; }
-.management-mainnav button { display:flex; align-items:center; justify-content:center; gap:6px; flex-shrink:0; padding:0 clamp(7px,1vw,16px); background:none; color:var(--mg-muted); border:0; border-bottom:3px solid transparent; font:700 10px var(--mg-mono); text-transform:uppercase; letter-spacing:.025em; white-space:nowrap; }
+.management-mainnav button { display:flex; align-items:center; justify-content:center; gap:6px; flex-shrink:0; padding:0 clamp(7px,1vw,16px); background:none; color:var(--mg-muted); border:0; border-bottom:3px solid transparent; font:600 15px 'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.025em; white-space:nowrap; }
 .management-mainnav button[aria-current="page"] { color:var(--mg-text); background:var(--mg-raised); border-bottom-color:var(--mg-accent); }
 .management-mainnav button:hover { background:var(--mg-raised); color:var(--mg-text); }
 .management-count { display:inline-grid; place-items:center; min-width:17px; height:17px; padding:0 4px; border-radius:4px; background:var(--mg-accent); color:var(--mg-surface); font:700 9px var(--mg-mono); }
-.management-settings { display:grid; place-items:center; flex-shrink:0; width:32px; height:32px; background:var(--mg-surface); color:var(--mg-text); border:1px solid var(--mg-line); border-radius:4px; }
+.management-settings { display:grid; place-items:center; flex-shrink:0; width:34px; height:34px; padding:0; background:var(--mg-surface); color:var(--mg-text); border:1px solid var(--mg-line); border-radius:4px; cursor:pointer; }
+.management-settings:hover { background:var(--mg-raised); }
+.management-settings:focus-visible { outline:2px solid var(--mg-accent); outline-offset:2px; }
 .management-settings[aria-current] { border-color:var(--mg-accent); background:var(--mg-tint); }
 .management-statusbar { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-shrink:0; min-height:32px; padding:5px 28px; background:var(--mg-raised); border-bottom:1px solid var(--mg-line); font:9px var(--mg-mono); letter-spacing:.05em; text-transform:uppercase; }
 .management-statusbar>span { display:flex; align-items:center; gap:9px; }
+.management-status-location { display:flex; align-items:center; gap:36px; min-width:0; }
+.management-status-team { display:flex; align-items:center; gap:9px; white-space:nowrap; }
+.management-breadcrumb { color:var(--mg-muted); white-space:nowrap; }
+.management-breadcrumb b { padding:0 8px; font-weight:400; }
 .management-statusbar i { width:6px; height:6px; background:var(--team); border-radius:50%; }
 .management-statusbar b { color:var(--mg-muted); }
-.management-subnav { position:relative; z-index:12; display:flex; align-items:center; gap:18px; flex-shrink:0; min-height:58px; padding:8px 28px; border-bottom:1px solid var(--mg-line); background:var(--mg-surface); }
-.management-subnav>nav { display:flex; gap:5px; min-width:0; flex:1; overflow-x:auto; padding:4px 0; }
-.management-subnav>nav>button { display:flex; align-items:center; gap:7px; flex-shrink:0; padding:8px 13px; border:1px solid transparent; border-radius:3px; color:var(--mg-muted); background:none; white-space:nowrap; font:700 10px var(--mg-mono); text-transform:uppercase; letter-spacing:.04em; }
+.management-subnav { position:relative; z-index:12; display:flex; align-items:stretch; gap:18px; flex-shrink:0; box-sizing:border-box; width:100%; min-height:32px; padding:0 0 0 28px; border-bottom:1px solid var(--mg-line); background:var(--mg-surface); }
+.management-subnav>nav { display:flex; gap:5px; min-width:0; flex:1; overflow-x:auto; padding:0; }
+.management-subnav>nav>button { display:flex; align-items:center; gap:7px; flex-shrink:0; padding:3px 13px; border:1px solid transparent; border-radius:3px; color:var(--mg-muted); background:none; white-space:nowrap; font:600 15px 'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.04em; }
 .management-subnav>nav>button[aria-current] { background:var(--mg-text); color:var(--mg-surface); border-color:var(--mg-text); }
 .management-subnav>nav>button:not([aria-current]):hover { background:var(--mg-raised); color:var(--mg-text); }
 .management-time-controls { display:flex; flex-shrink:0; gap:1px; }
@@ -60,8 +66,9 @@ html[data-skin="team"] .management-shell { --mg-bg:#10151d; --mg-surface:#1b2430
 .management-advance-menu button:hover { background:var(--mg-raised); }
 .management-shell .management-content { flex:1; min-height:0; overflow:auto; padding:28px clamp(18px,2.5vw,40px) 36px; background-image:radial-gradient(var(--mg-line) .65px,transparent .65px); background-size:16px 16px; }
 .management-shell .management-content>* { max-width:1600px; margin-left:auto; margin-right:auto; }
-.management-footer { display:flex; justify-content:space-between; gap:12px; flex-shrink:0; padding:8px 28px; border-top:1px solid var(--mg-line); background:var(--mg-surface); color:var(--mg-muted); font:9px var(--mg-mono); text-transform:uppercase; }
-.management-footer b { padding:0 8px; font-weight:400; }
+.management-subnav .day-progress-controls { align-self:stretch; }
+.management-subnav .day-continue,.management-subnav .day-calendar-toggle { border-radius:0; }
+.management-subnav .day-calendar-toggle { display:none; }
 .management-error { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 16px; margin-bottom:18px; color:var(--mg-danger); background:var(--mg-surface); border:1px solid var(--mg-danger); }
 .management-error button { color:inherit; background:none; border:0; }
 .management-page-heading { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:24px; }
@@ -177,3 +184,19 @@ html[data-skin="team"] .management-shell { --mg-bg:#10151d; --mg-surface:#1b2430
 @media(max-width:1100px) { .management-navbar { padding:0 16px; gap:8px; } .management-mainnav button { font-size:9px; padding:0 9px; } .management-mainnav svg { display:none; } .management-summary-grid { grid-template-columns:1fr 1fr; } .management-summary-grid>.management-card:last-child { grid-column:1/-1; display:grid; grid-template-columns:1fr 1fr; column-gap:24px; } .management-summary-grid>.management-card:last-child .management-card-label { grid-column:1/-1; } .management-summary-grid>.management-card:last-child .management-big-number { margin-top:18px; } .management-metrics { grid-template-columns:repeat(2,1fr); } }
 @media(max-width:760px) { .management-navbar { flex-wrap:wrap; gap:0; padding:12px 16px 0; } .management-identity { order:0; } .management-settings { margin-left:auto; order:1; } .management-mainnav { order:2; width:100%; flex-basis:100%; min-height:46px; margin-top:8px; } .management-mainnav button { font-size:10px; padding:0 14px; } .management-mainnav svg { display:block; } .management-statusbar { padding:7px 16px; font-size:8px; } .management-statusbar>span:first-child { display:none; } .management-statusbar>span:last-child { width:100%; justify-content:center; } .management-subnav { padding:7px 16px; gap:8px; } .management-subnav>nav>button { font-size:9px; padding:8px 10px; } .management-continue { min-width:90px; padding:10px; font-size:9px; } .management-shell .management-content { padding:22px 16px; } .management-summary-grid,.management-bottom-grid { grid-template-columns:1fr; } .management-summary-grid>.management-card:last-child { display:block; } .management-page-heading h1 { font-size:37px; } .management-season-pill { display:none; } .management-metrics { gap:10px; } .management-metrics>button { padding:14px; } .management-metrics strong { font-size:27px; } .management-footer { padding:8px 16px; font-size:8px; } .management-shell .management-content :is(.financial-hero-grid,.facilities-cards-grid,.driver-profiles-container,.market-cards-grid,.calendar-layout,.comms-inbox-layout,.telemetry-bars-grid,.fitted-parts-grid,.kanban-board-grid,.meetings-grid-layout,.board-pillars-grid) { grid-template-columns:1fr; } .management-shell .management-content :is(.classification-table-wrap,.standings-table,.results-table,.ledger-table-box) { overflow-x:auto; } .management-shell .management-content .page-title h1 { font-size:30px; } .interface-layout-picker { padding:18px; } .interface-layout-options { gap:10px; } }
 @media(prefers-reduced-motion:reduce) { .management-shell * { scroll-behavior:auto !important; transition:none !important; animation:none !important; } }
+@media(max-width:760px) { .management-status-team { display:none; } .management-statusbar>span:last-child { width:auto; justify-content:flex-end; } .management-status-location { gap:0; } }
+@media(max-width:760px) { .management-navbar { padding:6px 16px 0; } .management-mainnav button { font-size:15px; padding:0 10px; } .management-subnav { padding:0 0 0 16px; } .management-subnav>nav>button { font-size:15px; padding:5px 10px; } }
+@media(max-width:760px) { .management-subnav { width:100%; } }
+/* Header controls stay full-height at the right edge. */
+.management-navbar { padding-right:0; position:relative; z-index:25; }
+.management-navbar .day-progress-controls { align-self:stretch; flex-shrink:0; }
+.management-navbar .day-continue { border-radius:0; height:100%; min-width:110px; }
+.management-navbar .day-calendar-toggle { display:none; }
+.management-navbar .management-settings { margin-left:0; flex-shrink:0; }
+.management-navbar .page-history { display:flex; gap:4px; flex-shrink:0; align-items:center; }
+.management-navbar .page-history button { display:grid; place-items:center; width:32px; height:32px; padding:0; border:1px solid var(--mg-line); border-radius:4px; background:var(--mg-surface); color:var(--mg-text); }
+.management-navbar .page-history button:disabled { opacity:.3; cursor:default; }
+.management-navbar .page-history button:not(:disabled):hover { background:var(--mg-raised); border-color:var(--mg-accent); }
+.management-navbar .page-history button:focus-visible { outline:2px solid var(--mg-accent); outline-offset:2px; }
+@media(min-width:761px) and (max-width:1200px) { .management-navbar { gap:7px; padding-left:16px; } .management-mainnav button { font-size:15px; padding:0 9px; } }
+@media(max-width:760px) { .management-navbar .management-settings { margin-left:auto; } .management-navbar .day-progress-controls { order:1; height:42px; margin-left:8px; } .management-navbar .management-mainnav { order:2; } }

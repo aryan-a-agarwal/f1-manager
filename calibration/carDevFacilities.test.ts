@@ -69,7 +69,8 @@ test("CARDEV-03: Starting project allocates ATR compute, burns cost cap, and cre
   assert.equal(updated.carDev!.atr.cfdMflopsUsed, 250);
 
   // Cost cap counted
-  assert.ok(updated.finance!.costCapSpent > initialCap, "Cost cap spent must increase");
+  assert.ok(updated.finance!.book!.entries.some(e=>e.relevantCents>0), "Development is recorded as a relevant cost before season adjustments");
+  assert.ok(updated.finance!.costCapSpent >= initialCap, "Adjusted cost-cap usage cannot decrease");
   assert.ok(updated.finance!.cashBalance < initialCash, "Cash balance must decrease");
 });
 

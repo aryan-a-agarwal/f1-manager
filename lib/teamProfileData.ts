@@ -21,11 +21,12 @@ const GROUPS:[string,RegExp][]=[
   ["Season & governance",/^(season_progress|board_patience|job_security|recent_form|momentum|cost_cap_compliance|technical_compliance|sporting_compliance|grid_penalty_risk)/],
   ["AI preferences",/^ai_/],
 ];
-export function teamRatingGroups(row:DatabaseRow){
+export function teamRatingGroups(row:DatabaseRow,allocated?:Record<string,unknown>){
   const groups=new Map<string,{key:string;label:string;text:string}[]>();
   for(const key of Object.keys(row).filter(isTeamRatingField)){
     const title=GROUPS.find(([,pattern])=>pattern.test(key))?.[0]??"Other team attributes";
-    groups.set(title,[...groups.get(title)??[],{key,label:databaseFieldLabel(key),text:teamAttributeDisplay(key,row[key])}]);
+    const value=allocated?.[key];
+    groups.set(title,[...groups.get(title)??[],{key,label:databaseFieldLabel(key),text:typeof value==='number'&&Number.isFinite(value)?String(value):teamAttributeDisplay(key,row[key])}]);
   }
   return [...groups].map(([title,fields])=>({title,fields}));
 }

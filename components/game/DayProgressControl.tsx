@@ -12,6 +12,7 @@ export default function DayProgressControl({career,updateCareer,onBlocked,onErro
   const continueRef=useRef<HTMLButtonElement>(null);
   const stopRef=useRef<HTMLButtonElement>(null);
   const tick=useRef<()=>void>(()=>{});
+  const timerRef=useRef<number|null>(null);
   const stripRef=useRef<HTMLDivElement>(null);
   const previousTiles=useRef(new Map<string,number>());
   useLayoutEffect(()=>{
@@ -32,7 +33,8 @@ export default function DayProgressControl({career,updateCareer,onBlocked,onErro
   const blocked=career.clock.status==="blocked";
   const next=findNextActionableEvent(career);
   const schedule=careerSchedule(career);
-  const stop=()=>{setRunning(false);continueRef.current?.focus();};
+  const stop=()=>{if(timerRef.current!==null){clearTimeout(timerRef.current);timerRef.current=null;}setRunning(false);continueRef.current?.focus();};
+  const stopAndClose=()=>{stop();setOpen(false);};
   function pauseForEvent(state:CareerState,eventId:string){
     setRunning(false);setOpen(false);continueRef.current?.focus();
     const title=careerSchedule(state).find(event=>event.id===eventId)?.title??state.scheduler.pendingEvent?.title??"a required event";
@@ -60,12 +62,12 @@ export default function DayProgressControl({career,updateCareer,onBlocked,onErro
   useEffect(()=>{
     if(!running)return;
     // A fresh timeout per committed day prevents overlapping saves or stale ticks.
-    const timer=window.setTimeout(()=>tick.current(),850);
-    return()=>window.clearTimeout(timer);
+    timerRef.current=window.setTimeout(()=>{timerRef.current=null;tick.current();},850);
+    return()=>{if(timerRef.current!==null){clearTimeout(timerRef.current);timerRef.current=null;}};
   },[running,career]);
   useEffect(()=>{
     if(!open)return;
-    const escape=(event:KeyboardEvent)=>{if(event.key==="Escape"){setRunning(false);setOpen(false);continueRef.current?.focus();}};
+    const escape=(event:KeyboardEvent)=>{if(event.key==="Escape")stopAndClose();};
     window.addEventListener("keydown",escape);return()=>window.removeEventListener("keydown",escape);
   },[open]);
   useEffect(()=>{if(running)stopRef.current?.focus();},[running]);
@@ -74,10 +76,10 @@ export default function DayProgressControl({career,updateCareer,onBlocked,onErro
     setOpen(true);setRunning(true);
   }
   return <div className="day-progress-controls">
-    <button ref={continueRef} className={`day-continue${blocked?" is-blocked":""}`} onClick={running?stop:start} disabled={!next&&!blocked} aria-label={running?"Stop day-by-day simulation":blocked?"Open required action":"Continue day-by-day simulation"}>{running?"■ Stop":blocked?"Action required":"▶ Continue"}</button>
+    <button ref={continueRef} className={`day-continue${blocked?" is-blocked":""}`} onClick={running?stopAndClose:start} disabled={!next&&!blocked} aria-label={running?"Stop day-by-day simulation":blocked?"Open required action":"Continue day-by-day simulation"}>{running?"■ Stop":blocked?"Action required":"▶ Continue"}</button>
     <button className="day-calendar-toggle" aria-label="Toggle progression calendar" aria-expanded={open} aria-controls="day-progression-calendar" onClick={()=>{if(running)stop();setOpen(!open);}}>⌄</button>
     <section id="day-progression-calendar" className={`day-calendar-drop${open?" is-open":""}`} aria-hidden={!open} ref={element=>{if(element)element.inert=!open;}} aria-label="Day-by-day simulation calendar">
-      <div className="day-calendar-heading"><div><strong>{running?"Advancing day by day":blocked?"Action required":"Calendar paused"}</strong><p aria-live="polite">{career.clock.date} · {String(Math.floor(career.clock.minuteOfDay/60)).padStart(2,"0")}:{String(career.clock.minuteOfDay%60).padStart(2,"0")}</p></div><div className="day-calendar-actions"><button ref={stopRef} onClick={running?stop:start} disabled={!next&&!blocked}>{running?"■ Stop (Esc)":blocked?"Open session / action":"▶ Continue"}</button><button onClick={()=>{stop();setOpen(false);}} aria-label="Close progression calendar">×</button></div></div>
+      <div className="day-calendar-heading"><div><strong>{running?"Advancing day by day":blocked?"Action required":"Calendar paused"}</strong><p aria-live="polite">{career.clock.date} · {String(Math.floor(career.clock.minuteOfDay/60)).padStart(2,"0")}:{String(career.clock.minuteOfDay%60).padStart(2,"0")}</p></div><div className="day-calendar-actions"><button ref={stopRef} onClick={stopAndClose}>{running?"■ Stop and return (Esc)":"Return to game"}</button><button onClick={stopAndClose} aria-label="Close progression calendar">×</button></div></div>
       <div className="day-calendar-strip" ref={stripRef}>{[-1,0,1,2,3,4,5].map(offset=>{
         const date=addDaysToDate(career.clock.date,offset);
         const events=schedule.filter(event=>event.startsAt.date===date);

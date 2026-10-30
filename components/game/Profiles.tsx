@@ -4,9 +4,13 @@ import {createContext,useContext,useEffect,useState,type MouseEvent,type ReactNo
 import {teams} from "@/lib/data/grid";
 import type {CareerState} from "@/lib/career";
 import {normalizedName,profileUrl,type ProfileTarget} from "@/lib/profileNavigation";
+import {ContractNegotiation} from "./ContractNegotiation";
+import {ContractClauses} from "./ContractClauses";
 import {contractSalary} from "@/lib/career/contracts";
 import {assumedDriverSalary} from "@/lib/career/driverSalaries";
 import {supabase} from "@/lib/supabaseClient";
+import teamBaselineSeed from "@/supabase/seed-data/2027-team-baselines.json";
+import ownershipSeed from "@/supabase/seed-data/2027-team-ownership.json";
 import {matchingTeamRecord,teamRatingGroups} from "@/lib/teamProfileData";
 import {DRIVER_PROFILE_TABLES,DRIVER_ATTRIBUTE_GROUPS,matchingDriverRecords,linkedDriverRows,databaseFields,databaseFieldLabel,databaseValueText,driverAttributeDisplay,type DatabaseRow} from "@/lib/driverProfileData";
 import {calculateDriverRatings} from "@/lib/driverRatings";
@@ -23,23 +27,26 @@ type Dataset={id:string;season:number;as_of_date:string};
 type TeamAchievement={team_id:number|null;team_slug:string;constructors_championships:number;drivers_championships:number;race_wins:number;podiums:number;pole_positions:number;fastest_laps:number;first_win_year:number|null;last_win_year:number|null;last_championship_year:number|null;notable_achievements:string|null};
 type DriverCareerStint={person_id:number|null;driver_slug:string;season:number;team_name:string;team_slug:string|null;starts:number;wins:number;podiums:number;poles:number;points:number;championship_position:number|null;titles_won:number};
 type DriverDatabaseCatalogue=Record<keyof typeof DRIVER_PROFILE_TABLES,DatabaseRow[]>;
-type Catalogue=DriverDatabaseCatalogue&{people:Person[];entries:Entry[];teams:TeamFact[];staff:Staff[];contracts:Contract[];slots:Slot[];sources:Source[];datasets:Dataset[];teamAchievements:TeamAchievement[];driverHistory:DriverCareerStint[]};
-const EMPTY:Catalogue={people:[],entries:[],teams:[],staff:[],contracts:[],slots:[],sources:[],datasets:[],teamAchievements:[],driverHistory:[],driverRecords:[],driverContracts:[],driverStats:[],driverRatings:[],startingContracts:[],startingSlots:[],startingDatasets:[],legacyTeams:[]};
-type ProfileContextValue={career:CareerState;catalogue:Catalogue;loading:boolean;errors:string[];open:(target:ProfileTarget)=>void};
+type Catalogue=DriverDatabaseCatalogue&{people:Person[];entries:Entry[];teams:TeamFact[];staff:Staff[];contracts:Contract[];slots:Slot[];sources:Source[];datasets:Dataset[];teamAchievements:TeamAchievement[];driverHistory:DriverCareerStint[];teamBaselines:DatabaseRow[];teamOwners:DatabaseRow[];teamOwnership:DatabaseRow[]};
+const EMPTY:Catalogue={people:[],entries:[],teams:[],staff:[],contracts:[],slots:[],sources:[],datasets:[],teamAchievements:[],driverHistory:[],teamBaselines:[],teamOwners:[],teamOwnership:[],driverRecords:[],driverContracts:[],driverStats:[],driverRatings:[],startingContracts:[],startingSlots:[],startingDatasets:[],legacyTeams:[]};
+type ProfileContextValue={updateCareer:(career:CareerState)=>void;career:CareerState;catalogue:Catalogue;loading:boolean;errors:string[];open:(target:ProfileTarget)=>void};
 const ProfileContext=createContext<ProfileContextValue|null>(null);
 export function useProfiles(){const value=useContext(ProfileContext);if(!value)throw new Error("Profiles require the game profile provider.");return value;}
 
-export function ProfileProvider({career,open,children}:{career:CareerState;open:(target:ProfileTarget)=>void;children:ReactNode}){
+export function ProfileProvider({career,updateCareer,open,children}:{career:CareerState;updateCareer:(career:CareerState)=>void;open:(target:ProfileTarget)=>void;children:ReactNode}){
   const [catalogue,setCatalogue]=useState<Catalogue>(EMPTY),[loading,setLoading]=useState(true),[errors,setErrors]=useState<string[]>([]);
   useEffect(()=>{let live=true;
-    const queries={people:"people",entries:"series_entries",teams:"f1_team_facts",staff:"f1_team_staff",contracts:"driver_contracts_2027",slots:"f1_team_driver_slots",sources:"data_sources",datasets:"f1_contract_reference_datasets",teamAchievements:"f1_team_achievements",driverHistory:"f1_driver_career_history",...DRIVER_PROFILE_TABLES};
+    const queries={people:"people",entries:"series_entries",teams:"f1_team_facts",staff:"f1_team_staff",contracts:"driver_contracts_2027",slots:"f1_team_driver_slots",sources:"data_sources",datasets:"f1_contract_reference_datasets",teamAchievements:"f1_team_achievements",driverHistory:"f1_driver_career_history",teamBaselines:"f1_team_game_baselines",teamOwners:"f1_owners",teamOwnership:"f1_team_ownership_periods",...DRIVER_PROFILE_TABLES};
     Promise.allSettled(Object.values(queries).map(async table=>{const rows:unknown[]=[];for(let offset=0;;offset+=500){let query=supabase.from(table).select("*");for(const key of table==="f1_team_driver_slots"||table==="f1_starting_team_slots"?["dataset_id","team_id","role","slot_number"]:["id"])query=query.order(key);const result=await query.range(offset,offset+499);if(result.error)throw new Error(`${table}: ${result.error.message}`);rows.push(...result.data??[]);if((result.data?.length??0)<500)return rows;}})).then(results=>{
       if(!live)return;const values:Record<string,unknown>={},failures:string[]=[];
-      Object.keys(queries).forEach((key,index)=>{const result=results[index];values[key]=result.status==="fulfilled"?result.value:[];if(result.status==="rejected")failures.push(result.reason instanceof Error?result.reason.message:"Reference data unavailable");});
+      Object.keys(queries).forEach((key,index)=>{const result=results[index];values[key]=result.status==="fulfilled"?result.value:[];if(result.status==="rejected"&&!['teamBaselines','teamOwners','teamOwnership'].includes(key))failures.push(result.reason instanceof Error?result.reason.message:"Reference data unavailable");});
+      // A clearly labelled local preview remains available until the separate database migration is applied.
+      if(!(values.teamBaselines as unknown[]).length)values.teamBaselines=teamBaselineSeed.teams.map(row=>({...row,storage:'local_preview'}));
+      if(!(values.teamOwners as unknown[]).length||!(values.teamOwnership as unknown[]).length){values.teamOwners=ownershipSeed.owners.map(owner=>({...owner,id:owner.slug,storage:'local_preview'}));const teamFacts=values.teams as TeamFact[];values.teamOwnership=ownershipSeed.relationships.flatMap(link=>{const team=teamFacts.find(item=>item.slug===link.team_slug);return team?[{id:`${link.team_slug}:${link.owner_slug}`,team_id:team.id,owner_id:link.owner_slug,relationship:link.relationship,ownership_percentage:link.percentage,dataset_version:ownershipSeed.dataset_version,source_url:ownershipSeed.owners.find(o=>o.slug===link.owner_slug)?.source_url,storage:'local_preview'}]:[];});}
       setCatalogue(values as Catalogue);setErrors(failures);setLoading(false);
     });return()=>{live=false;};
   },[]);
-  return <ProfileContext.Provider value={{career,catalogue,loading,errors,open}}>{children}</ProfileContext.Provider>;
+  return <ProfileContext.Provider value={{career,updateCareer,catalogue,loading,errors,open}}>{children}</ProfileContext.Provider>;
 }
 
 function activate(event:MouseEvent<HTMLAnchorElement>,open:()=>void){if(event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault();event.stopPropagation();open();}
@@ -65,7 +72,7 @@ export function resolveTeam(catalogue:Catalogue,id:string){
   if(!fact&&game)fact=catalogue.teams.find(item=>item.slug===game!.id||(game!.id==="red-bull"&&item.slug==="red-bull-racing"));
   return {fact,game,name};
 }
-function resolveDriver(career:CareerState,catalogue:Catalogue,id:string){
+export function resolveDriver(career:CareerState,catalogue:Catalogue,id:string){
   const legacy=catalogue.driverRecords.find(row=>`legacy:${row.id}`===id);
   let person=career.workforce.people.find(item=>item.kind==="driver"&&item.id===id);
   const grid=teams.flatMap(team=>team.drivers).find(item=>item.id===id);
@@ -101,11 +108,11 @@ export function ProfilePage({target}:{target:ProfileTarget}){
   return <div className="full-profile" key={`${target.kind}:${target.id}`}>
     {loading&&<p className="profile-notice" role="status">Loading reference details…</p>}
     {errors.length>0&&<p className="profile-notice" role="status">Some reference data is unavailable. Saved career information is still shown; missing details remain unrecorded.</p>}
-    {target.kind==="driver"?<DriverProfile id={target.id}/>:target.kind==="staff"?<StaffProfile id={target.id}/>:<TeamProfile id={target.id}/>}
+    {target.kind==="negotiation"?<ContractNegotiation id={target.id}/>:target.kind==="driver"?<DriverProfile id={target.id}/>:target.kind==="staff"?<StaffProfile id={target.id}/>:<TeamProfile id={target.id}/>}
   </div>;
 }
 function DriverProfile({id}:{id:string}){
-  const {career,catalogue,loading}=useProfiles();const {person,grid,reference,legacy}=resolveDriver(career,catalogue,id);
+  const {career,catalogue,loading,open}=useProfiles();const {person,grid,reference,legacy}=resolveDriver(career,catalogue,id);
   const name=person?.name??reference?.display_name??grid?.name??(legacy?String(legacy["driver-name"]??[legacy.first_name,legacy.last_name].filter(Boolean).join(" ")):undefined);
   if(!name)return loading?null:<Card title="Driver not found"><p>This driver is not in the loaded career or reference catalogue.</p></Card>;
   const lineup=person?career.workforce.lineups.find(row=>row.season===career.season.year&&row.driverIds.includes(person.id)):undefined;
@@ -114,7 +121,7 @@ function DriverProfile({id}:{id:string}){
   const entries=reference?catalogue.entries.filter(entry=>entry.person_id===reference.id).sort((a,b)=>b.season-a.season):[];
   const contracts=reference?catalogue.contracts.filter(row=>row.person_id===reference.id):[];
   const history=person?career.seasonHistory.map(season=>({year:season.year,standing:season.championship.drivers.find(row=>row.driverId===person.id)})).filter(row=>row.standing):[];
-  return <><header className="profile-hero" style={{"--profile-accent":currentTeam?.primary??"#4779bd"} as React.CSSProperties}><div className="profile-monogram">{initials(name)}</div><div><small>DRIVER PROFILE</small><h1>{name}</h1><p>{reference?.racing_nationality??grid?.nationality??"Nationality not recorded"}{(person?.carNumber??grid?.number)!=null?` · #${person?.carNumber??grid?.number}`:""}</p>{currentTeam?<TeamLink id={currentTeam.id} name={currentTeam.name}/>:<span className="profile-muted">No race assignment in this career</span>}</div></header>
+  return <><header className="profile-hero driver-profile-hero" style={{"--profile-accent":currentTeam?.primary??"#4779bd"} as React.CSSProperties}><div className="profile-monogram">{initials(name)}</div><div className="driver-profile-identity"><small>DRIVER PROFILE</small><h1>{name}</h1><p>{reference?.racing_nationality??grid?.nationality??"Nationality not recorded"}{(person?.carNumber??grid?.number)!=null?` · #${person?.carNumber??grid?.number}`:""}</p>{currentTeam?<TeamLink id={currentTeam.id} name={currentTeam.name}/>:<span className="profile-muted">No race assignment in this career</span>}</div><button className="negotiation-profile-button" onClick={()=>open({kind:"negotiation",id})}>Negotiate contract</button></header>
     <nav className="profile-section-nav" aria-label="Driver profile sections"><ProfileSectionLink target="driver-overview">Overview</ProfileSectionLink><ProfileSectionLink target="driver-attributes">Attributes</ProfileSectionLink><ProfileSectionLink target="driver-agreements">Contracts</ProfileSectionLink><ProfileSectionLink target="driver-records">History & records</ProfileSectionLink><ProfileSectionLink target="driver-database">All database records</ProfileSectionLink></nav>
     <div id="driver-overview" className="profile-grid"><Card title="Driver details"><dl className="profile-facts"><Detail label="First name" value={reference?.first_name}/><Detail label="Last name" value={reference?.last_name}/><Detail label="Date of birth" value={date(reference?.date_of_birth)}/><Detail label="Age at career date" value={age(reference?.date_of_birth,career.clock.date)}/><Detail label="Nationality" value={reference?.racing_nationality??grid?.nationality}/><Detail label="Place of birth" value={reference?.place_of_birth}/><Detail label="F1 debut season" value={reference?.f1_debut_season}/><Detail label="Career race team" value={currentTeam?<TeamLink id={currentTeam.id} name={currentTeam.shortName}/>:null}/></dl></Card>
     <Card title={`${career.season.year} · This career`}>{standing?<><dl className="profile-stat-grid"><Detail label="Points" value={standing.points}/><Detail label="Race wins" value={standing.wins}/><Detail label="Podiums" value={standing.podiums}/></dl><p className="profile-muted">Results from this saved career. Imported real-world totals are not combined with them.</p></>:<p>No championship entry recorded in this career.</p>}</Card>
@@ -203,6 +210,8 @@ function TeamProfile({id}:{id:string}){
   const contracts=fact?catalogue.contracts.filter(row=>row.team_id===fact.id&&row.role==="race_driver"):[];
   return <><header className="profile-hero" style={{"--profile-accent":game?.primary??"#4779bd"} as React.CSSProperties}><div className="profile-monogram team">{(fact?.short_name??game?.shortName??entryName).slice(0,3).toUpperCase()}</div><div><small>TEAM PROFILE</small><h1>{name}</h1><p>{fact?[fact.base_city,fact.base_country].filter(Boolean).join(", "):game?.base??"Reference entry team"}</p><span className="profile-muted">{game?`${career.season.year} career constructor`:"Series entry catalogue"}</span></div></header>
     <TeamPalmaresBanner teamSlug={fact?.slug??game?.id} />
+    {fact&&<TeamOwnership teamId={fact.id}/>}
+    {fact&&<TeamBaselineDetails slug={fact.slug}/>}
     <div className="profile-grid"><Card title="Team details"><dl className="profile-facts"><Detail label="Official name" value={fact?.official_full_name??game?.name??entryName}/><Detail label="Legal name" value={fact?.legal_name}/><Detail label="Base" value={fact?[fact.base_city,fact.base_country].filter(Boolean).join(", "):game?.base}/><Detail label="Reference team chief" value={fact?.team_chief}/><Detail label="Reference technical chief" value={fact?.technical_chief}/><Detail label="Reference chassis" value={fact?.chassis}/><Detail label="Reference power unit" value={fact?.power_unit}/><Detail label="First F1 entry" value={fact?.first_team_entry}/></dl></Card>
     <Card title={`${career.season.year} · This career`}>{standing?<><dl className="profile-stat-grid"><Detail label="Points" value={standing.points}/><Detail label="Race wins" value={standing.wins}/><Detail label="Podiums" value={standing.podiums}/></dl><h3>Race driver line-up</h3><div className="profile-record-list">{drivers.map(driver=><article key={driver.id}><DriverLink id={driver.id} name={driver.name}/>{driver.carNumber!=null&&<small>Car #{driver.carNumber}</small>}</article>)}</div><p className="profile-muted">Saved lineup; published 2027 contract references below may differ.</p></>:<p>No constructor championship entry in this career.</p>}</Card>
     <div className="profile-wide"><TeamAttributeRatings slug={fact?.slug??game?.id} name={fact?.short_name??game?.shortName}/></div>
@@ -217,8 +226,22 @@ function TeamAttributeRatings({slug,name}:{slug?:string;name?:string}){
   const {catalogue,loading}=useProfiles();
   const row=matchingTeamRecord(catalogue.legacyTeams,slug,name);
   if(!row)return loading?<p className="profile-muted">Loading team attributes…</p>:null;
-  const groups=teamRatingGroups(row);
-  return <Card title="Team attributes"><p className="profile-muted">Team ratings have not been allocated yet. Unassigned attributes are marked Unrated; stored database defaults are not treated as ratings. These fields do not indicate active gameplay systems.</p><div className="profile-database-groups team-rating-groups">{groups.map(group=><details className="profile-data-group" key={group.title} open={group.title==="Identity & reputation"}><summary>{group.title}<span>{group.fields.length} unrated</span></summary><dl className="profile-rating-grid">{group.fields.map(field=><div key={field.key}><dt>{field.label}</dt><dd className="profile-unrated">{field.text}</dd></div>)}</dl></details>)}</div></Card>;
+  const teamSlug=slug==="red-bull"?"red-bull-racing":slug;
+  const baseline=catalogue.teamBaselines.find(item=>item.team_slug===teamSlug&&item.dataset_version==="f1-team-baseline-2027-v1");
+  const ratings=baseline?.ratings&&typeof baseline.ratings==="object"?baseline.ratings as Record<string,unknown>:undefined;
+  const groups=teamRatingGroups(row,ratings);
+  return <Card title="Team attributes">{baseline?.storage==="local_preview"&&<p className="profile-muted">Local preview · database migration pending</p>}<p className="profile-muted">{ratings?"2027 starting ratings are game-balance assumptions. They do not yet activate management systems.":"Team ratings have not been allocated yet. Unassigned attributes are marked Unrated; stored database defaults are not treated as ratings."}</p><div className="profile-database-groups team-rating-groups">{groups.map(group=><details className="profile-data-group" key={group.title} open={group.title==="Identity & reputation"}><summary>{group.title}<span>{group.fields.length} attributes</span></summary><dl className="profile-rating-grid">{group.fields.map(field=><div key={field.key}><dt>{field.label}</dt><dd className={field.text==="Unrated"?"profile-unrated":undefined}>{field.text}</dd></div>)}</dl></details>)}</div></Card>;
+}
+function TeamBaselineDetails({slug}:{slug:string}){
+  const {catalogue}=useProfiles();const row=catalogue.teamBaselines.find(item=>item.team_slug===slug&&item.dataset_version==="f1-team-baseline-2027-v1");
+  if(!row)return null;
+  return <div className="profile-wide"><Card title="2027 team starting assumptions">{row.storage==="local_preview"&&<p className="profile-muted">Local preview · database migration pending</p>}<p className="profile-muted">Game-balance estimates, not verified financial statements or live career values. Facilities and finances are not activated by these records.</p><div className="profile-database-groups">{([["facilities","Facilities & condition"],["financial_assumptions_usd_millions","Financial assumptions · USD millions"],["objectives","Starting objectives"]] as const).map(([key,label])=>{const values=row[key] as Record<string,unknown>|undefined;return values?<details className="profile-data-group" key={key}><summary>{label}<span>{Object.keys(values).length} values</span></summary><dl className="profile-facts">{Object.entries(values).map(([field,value])=><Detail key={field} label={databaseFieldLabel(field)} value={value===null?"Not recorded":typeof value==="boolean"?(value?"Yes":"No"):String(value)}/>)}</dl></details>:null;})}</div></Card></div>;
+}
+function TeamOwnership({teamId}:{teamId:number}){
+  const {catalogue}=useProfiles();
+  const links=catalogue.teamOwnership.filter(r=>r.team_id===teamId&&r.dataset_version==="f1-team-baseline-2027-v1");
+  if(!links.length)return null;
+  return <div className="profile-wide"><Card title="Starting ownership">{links[0]?.storage==="local_preview"&&<p className="profile-muted">Local preview · database migration pending</p>}<p className="profile-muted">Based on published ownership and backing; continuation into 2027 is a game assumption. Unpublished ownership stakes remain unrecorded.</p><div className="profile-record-list">{links.map((link,index)=>{const owner=catalogue.teamOwners.find(o=>o.id===link.owner_id);return <article key={String(link.id??index)}><strong>{String(owner?.name??"Owner not recorded")}</strong><small>{String(link.relationship??"").replaceAll("_"," ")}{typeof link.ownership_percentage==="number"?` · ${link.ownership_percentage}%`:" · stake not recorded"}</small>{typeof link.source_url==="string"&&<a className="profile-source-link" href={link.source_url} target="_blank" rel="noreferrer">Ownership source ↗</a>}</article>;})}</div></Card></div>;
 }
 function CareerReserveContracts({personId,teamId}:{personId?:string;teamId?:string}){
   const {career}=useProfiles();const desk=career.contractDesk;
@@ -233,6 +256,7 @@ function CareerReserveContracts({personId,teamId}:{personId?:string;teamId?:stri
       <small>Reserve {slot?.number??""} · {slot?.status.replaceAll("_"," ")} · {shared?"Shared arrangement":"Team appointment"}</small>
       <strong>{salary.annualCents===null?"Salary not recorded":new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(salary.annualCents/100)+" / year"}</strong>
       <small>F1 reserve retainer · game estimate · game term through {f.scenarioTerms?.endSeason??2027}</small>
+      <ContractClauses package={f.clausePackage}/>
       <a className="profile-source-link" href={f.sourceUrl} target="_blank" rel="noreferrer">Team connection source ↗</a>
     </article>;
   })}</div><p className="profile-muted">Unconfirmed 2027 appointments are game assumptions. Race substitution, eligibility and event availability checks are not yet implemented.</p></Card>;
@@ -246,7 +270,7 @@ function ProfileContractSalary({row}:{row:Contract}){
   const estimate=assumedDriverSalary(reference?.slug??"",row.role)??assumedDriverSalary(reference?.display_name??"",row.role);
   const amount=salary?.annualCents??row.annual_salary_usd_cents??estimate;
   const estimated=salary?.annualCents!=null?salary.basis==="game_estimate":row.annual_salary_usd_cents===null&&estimate!==null;
-  return <><Detail label={estimated?"Annual salary · game estimate":"Annual salary"} value={amount==null?null:new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(amount/100)}/>{saved?.scenarioTerms&&<Detail label={saved.scenarioTerms.endBasis==="published_exact"?"Game contract expiry":"Game contract expiry · assumption"} value={saved.scenarioTerms.endSeason}/>}</>;
+  return <><Detail label={estimated?"Annual salary · game estimate":"Annual salary"} value={amount==null?null:new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(amount/100)}/>{saved?.scenarioTerms&&<Detail label={saved.scenarioTerms.endBasis==="published_exact"?"Game contract expiry":"Game contract expiry · assumption"} value={saved.scenarioTerms.endSeason}/>}<ContractClauses package={saved?.clausePackage}/></>;
 }
 function ReferenceSource({sourceKey,verifiedOn}:{sourceKey?:string;verifiedOn?:string}){
   const {catalogue}=useProfiles();const source=catalogue.sources.find(row=>row.source_key===sourceKey);

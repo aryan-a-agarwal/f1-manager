@@ -1,13 +1,17 @@
+import {negotiationCosts,validNegotiation,type NegotiationTerms} from "./negotiation";
+import {ensureStartingContractClauses,isClausePackage,type ContractClausePackage} from "./contractClauses";
 import type {CareerState} from "./types";
 import {teams} from "../data/grid";
 import {assumedDriverSalary,DRIVER_SALARY_MODEL_VERSION} from "./driverSalaries";
+import {isOfferNegotiation,type OfferNegotiation} from './offerNegotiation';
 
 export type ContractRole="race_driver"|"reserve_driver";
 export type ContractPerson={id:string;name:string;careerDriverId:string|null};
-export type ContractFact={id:string;personId:string;teamId:string;role:ContractRole;status:"confirmed"|"reported"|"unconfirmed";minimumEnd:number|null;exactEnd:number|null;salaryCents:number|null;sourceUrl:string;checkedOn:string;notes:string;scenarioTerms?:{endSeason:number;endBasis:"published_exact"|"game_assumption";seatBasis:"confirmed"|"game_assumption"}};
+export type ContractFact={clausePackage?:ContractClausePackage;id:string;personId:string;teamId:string;role:ContractRole;status:"confirmed"|"reported"|"unconfirmed";minimumEnd:number|null;exactEnd:number|null;salaryCents:number|null;sourceUrl:string;checkedOn:string;notes:string;scenarioTerms?:{endSeason:number;endBasis:"published_exact"|"game_assumption";seatBasis:"confirmed"|"game_assumption"}};
 export type ContractSlot={teamId:string;role:ContractRole;number:1|2;personId:string|null;status:string};
 export type ContractBaseline={datasetId:string;season:number;asOfDate:string;capturedOn:string;people:ContractPerson[];facts:ContractFact[];slots:ContractSlot[]};
-export type ContractDraft={id:string;teamId:string;personId:string;role:ContractRole;seat:1|2;startSeason:number;seasons:number;salaryCents:number;createdOn:string;status:"draft"|"withdrawn"};
+export type ContractAppointment={status:'scheduled'|'active'|'blocked'|'expired';signedOn:string;blockReason?:string;terminationCents:number;releaseCents:number;reservePriority?:'race_first'};
+export type ContractDraft={negotiation?:NegotiationTerms;offerState?:OfferNegotiation;appointment?:ContractAppointment;id:string;teamId:string;personId:string;role:ContractRole;seat:1|2;startSeason:number;seasons:number;salaryCents:number;createdOn:string;status:"draft"|"withdrawn"};
 export type ContractDeskState={version:1;baseline:ContractBaseline;drafts:ContractDraft[];reserveRosterVersion?:string;salaryModel?:{version:string;entries:{factId:string;annualCents:number}[]}};
 
 const record=(v:unknown):v is Record<string,unknown>=>typeof v==="object"&&v!==null&&!Array.isArray(v);
@@ -30,6 +34,7 @@ export function isContractDeskState(value:unknown):value is ContractDeskState{
   if(b.slots.length!==teams.length*4||!b.slots.every(s=>record(s)&&team(s.teamId)&&role(s.role)&&Number.isInteger(s.number)&&[1,2].includes(Number(s.number))&&(s.personId===null||personIds.has(s.personId))&&text(s.status))||!unique(b.slots.map(s=>`${s.teamId}:${s.role}:${s.number}`)))return false;
   const minimumRaceFacts=b.facts.filter(f=>f.role==="race_driver").length;
   if(minimumRaceFacts<teams.length*2)return false;
+  if(!b.facts.every(f=>f.clausePackage===undefined||(isClausePackage(f.clausePackage)&&f.clausePackage.personSlug===f.personId&&f.clausePackage.teamId===f.teamId&&f.clausePackage.role===f.role&&f.clausePackage.endSeason===f.scenarioTerms?.endSeason)))return false;
   const factIds=new Set(b.facts.map(f=>f.id));
   if(!b.facts.every(f=>f.scenarioTerms===undefined||(record(f.scenarioTerms)&&year(f.scenarioTerms.endSeason)&&Number(f.scenarioTerms.endSeason)>=Number(b.season)&&["published_exact","game_assumption"].includes(String(f.scenarioTerms.endBasis))&&["confirmed","game_assumption"].includes(String(f.scenarioTerms.seatBasis))&&(f.exactEnd===null||f.scenarioTerms.endSeason===f.exactEnd)&&(f.minimumEnd===null||Number(f.scenarioTerms.endSeason)>=Number(f.minimumEnd)))))return false;
   if(value.salaryModel!==undefined){
@@ -37,6 +42,9 @@ export function isContractDeskState(value:unknown):value is ContractDeskState{
     if(!record(model)||!text(model.version)||!Array.isArray(model.entries)||!unique(model.entries.map(e=>record(e)?e.factId:null))||!model.entries.every(e=>record(e)&&factIds.has(e.factId)&&money(e.annualCents)&&Number(e.annualCents)>0))return false;
   }
   if(!value.drafts.every(d=>record(d)&&text(d.id)&&team(d.teamId)&&personIds.has(d.personId)&&role(d.role)&&Number.isInteger(d.seat)&&[1,2].includes(Number(d.seat))&&year(d.startSeason)&&Number.isInteger(d.seasons)&&Number(d.seasons)>=1&&Number(d.seasons)<=5&&money(d.salaryCents)&&Number(d.salaryCents)>0&&Number.isSafeInteger(Number(d.salaryCents)*Number(d.seasons))&&date(d.createdOn)&&["draft","withdrawn"].includes(String(d.status))))return false;
+  if(!value.drafts.every(d=>d.negotiation===undefined||(validNegotiation(d.negotiation)&&Number(d.negotiation.startDate.slice(0,4))===d.startSeason&&Number(d.negotiation.endDate.slice(0,4))-d.startSeason+1===d.seasons)))return false;
+  if(!value.drafts.every(d=>d.offerState===undefined||isOfferNegotiation(d.offerState)))return false;
+  if(!value.drafts.every(d=>d.appointment===undefined||(record(d.appointment)&&['scheduled','active','blocked','expired'].includes(String(d.appointment.status))&&date(d.appointment.signedOn)&&money(d.appointment.terminationCents)&&money(d.appointment.releaseCents)&&(d.appointment.blockReason===undefined||typeof d.appointment.blockReason==='string')&&(d.appointment.reservePriority===undefined||d.appointment.reservePriority==='race_first')&&d.offerState?.status==='accepted'&&d.negotiation!==undefined)))return false;
   return unique(value.drafts.map(d=>d.id));
 }
 
@@ -55,8 +63,8 @@ export function ensureContractSalaries(career:CareerState):CareerState{
     const amount=assumedDriverSalary(f.personId,f.role)??assumedDriverSalary(desk.baseline.people.find(p=>p.id===f.personId)?.name??"",f.role);
     return amount===null?[]:[{factId:f.id,annualCents:amount}];
   });
-  if(!additions.length)return career;
-  return {...career,contractDesk:{...desk,salaryModel:{version:desk.salaryModel?.version??DRIVER_SALARY_MODEL_VERSION,entries:[...existing,...additions]}}};
+  if(!additions.length)return ensureStartingContractClauses(career);
+  return ensureStartingContractClauses({...career,contractDesk:{...desk,salaryModel:{version:desk.salaryModel?.version??DRIVER_SALARY_MODEL_VERSION,entries:[...existing,...additions]}}});
 }
 
 export function contractSalary(desk:ContractDeskState,fact:ContractFact):{annualCents:number|null;basis:"reference"|"game_estimate"|"unrecorded"}{
@@ -70,9 +78,18 @@ export function saveContractDraft(career:CareerState,input:Omit<ContractDraft,"c
   const old=career.contractDesk.drafts.find(d=>d.id===input.id);
   if(old&&old.teamId!==career.player.teamId)throw new Error("You can only manage your own team's drafts.");
   if(old?.status==="withdrawn")throw new Error("A withdrawn draft cannot be overwritten. Create a new draft.");
-  if(input.startSeason<career.season.year+1)throw new Error("Drafts must begin next season or later.");
+  if(old?.offerState&&old.offerState.status!=='open'){
+    const reopening=old.offerState.status==='withdrawn'&&input.offerState?.status==='open'&&input.offerState.reopenedFromRevision===(old.offerState.revision??0)
+      &&(old.offerState.endedBy==='player'||!!old.offerState.context?.fingerprint&&old.offerState.context.fingerprint!==input.offerState.context?.fingerprint||input.offerState.reopenedForRole==='race_driver'&&old.offerState.rounds.at(-1)?.assessment?.issues.some(i=>i.key==='role')&&old.offerState.rounds.at(-1)?.offer.role==='reserve_driver');
+    if(!reopening)throw new Error('This negotiation has ended and its agreed terms cannot be changed.');
+  }
+  const other=career.contractDesk.drafts.find(d=>d.id!==input.id&&d.teamId===career.player.teamId&&d.personId===input.personId&&d.offerState&&d.offerState.status!=='accepted');
+  if(other)throw new Error('Continue the existing negotiation with this driver; starting a new draft cannot reset their patience.');
+  if(input.negotiation&&(!validNegotiation(input.negotiation)||input.negotiation.startDate<career.clock.date))throw new Error("The proposed start date must be today or later, with valid terms.");
+  if(!input.negotiation&&input.startSeason<career.season.year+1)throw new Error("Drafts must begin next season or later.");
   if(input.startSeason>career.season.year+5)throw new Error("Drafts can start at most five seasons ahead.");
-  const draft:ContractDraft={...input,teamId:career.player.teamId,createdOn:old?.createdOn??career.clock.date,status:"draft"};
+  const draft:ContractDraft={...input,offerState:input.offerState??old?.offerState,teamId:career.player.teamId,createdOn:old?.createdOn??career.clock.date,status:"draft"};
+  if(draft.offerState===undefined)delete draft.offerState;
   const next={...career,contractDesk:{...career.contractDesk,drafts:[...career.contractDesk.drafts.filter(d=>d.id!==input.id),draft]}};
   if(!isContractDeskState(next.contractDesk))throw new Error("Choose a driver, a valid seat, one to five seasons and a positive annual salary in whole cents.");
   return next;
@@ -82,6 +99,7 @@ export function withdrawContractDraft(career:CareerState,id:string):CareerState{
   const desk=career.contractDesk;
   const draft=desk?.drafts.find(d=>d.id===id);
   if(!desk||!draft||draft.teamId!==career.player.teamId)throw new Error("This draft is not managed by your team.");
+  if(draft.offerState)throw new Error('Open this negotiation to cancel it; its history and the driver’s patience must be retained.');
   if(draft.status==="withdrawn")return career;
   return {...career,contractDesk:{...desk,drafts:desk.drafts.map(d=>d.id===id?{...d,status:"withdrawn"}:d)}};
 }
@@ -89,6 +107,10 @@ export function withdrawContractDraft(career:CareerState,id:string):CareerState{
 /** Draft conflicts are visible review issues, never implied acceptance or seat reservations. */
 export function contractDraftIssues(career:CareerState,draft:ContractDraft):string[]{
   const desk=career.contractDesk;if(!desk)return ["Contract baseline is unavailable."];
+  if(draft.negotiation){try{
+    if(draft.appointment)return [draft.appointment.status==='active'?'Contract active.':draft.appointment.status==='scheduled'?`Contract signed; starts ${draft.negotiation.startDate}.`:draft.appointment.status==='blocked'?`Appointment blocked: ${draft.appointment.blockReason??'requires review'}.`:'Contract expired.'];
+    return [...negotiationCosts(career,draft.personId,draft.role,draft.seat,draft.salaryCents,draft.negotiation).issues,draft.offerState?.status==='accepted'?'Driver terms agreed; signing still requires a resolved appointment.':draft.offerState?.status==='withdrawn'?'Negotiation ended.':'Driver acceptance is still required.'];
+  }catch(e){return [e instanceof Error?e.message:"Invalid negotiation terms."];}}
   const issues:string[]=[];
   const end=draft.startSeason+draft.seasons-1;
   const facts=desk.baseline.facts.filter(f=>f.personId===draft.personId);

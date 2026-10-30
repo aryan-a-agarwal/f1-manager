@@ -1,8 +1,8 @@
-export type ProfileTarget={kind:"driver"|"team"|"staff";id:string};
+export type ProfileTarget={kind:"driver"|"team"|"staff"|"negotiation";id:string};
 export type NavigationTrail={entries:string[];cursor:number};
 export function profileFromSearch(search:string):ProfileTarget|null {
   const params=new URLSearchParams(search),kind=params.get("profile"),id=params.get("profileId");
-  return (kind==="driver"||kind==="team"||kind==="staff")&&id?{kind,id}:null;
+  return (kind==="driver"||kind==="team"||kind==="staff"||kind==="negotiation")&&id?{kind,id}:null;
 }
 export function profileUrl(current:string,target:ProfileTarget){
   const url=new URL(current,"http://game.local");

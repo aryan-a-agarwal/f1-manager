@@ -1,6 +1,7 @@
 import {ensureCareerReserves} from "./reserves";
 import {initializeContractDesk} from "./contracts";
 import {startingContractBaseline} from "./startingGrid";
+import {initializeFinance} from './financeEngine';
 import {
   CAREER_SCHEMA_VERSION,
   CAREER_START_DATE,
@@ -48,5 +49,5 @@ export function createCareer(teamId: string, options: { now?: Date; careerId?: s
     stopSettings: { ...DEFAULT_STOP_SETTINGS },
 
   };
-  return ensureCareerReserves(initializeContractDesk(career,startingContractBaseline(career)));
+  return initializeFinance(ensureCareerReserves(initializeContractDesk(career,startingContractBaseline(career))));
 }

@@ -19,6 +19,7 @@ export function buildDriverDatabaseRows(input:{people:DatabaseRow[];drivers:Data
   const stats=driver?input.stats.filter(row=>row.driver_id===driver.id).sort((a,b)=>Number(b.season??-1)-Number(a.season??-1))[0]:undefined;
   const values:DriverDatabaseRow["values"]={name,age,nationality:typeof person.racing_nationality==="string"?person.racing_nationality:typeof driver?.nationality==="string"?driver.nationality:null,
    team:[...new Set(appointments.map(row=>typeof row.team_name==="string"?row.team_name:null).filter(Boolean))].join("; ")||null,
+   teamDisplay:[...new Set(appointments.map(row=>typeof row.team_name==="string"?`${row.team_name}${row.role==='reserve_driver'?' · Reserve':''}`:null).filter(Boolean))].join('; ')||null,
    role:[...new Set(appointments.map(row=>String(row.role).replaceAll("_"," ")))].join("; ")||null,
    series:[...new Set(input.entries.filter(row=>person.id!==undefined&&row.person_id===person.id).map(row=>String(row.series)))].sort().join("; ")||null,
    birthDate:dob,birthplace:typeof person.place_of_birth==="string"?person.place_of_birth:null,debut:typeof person.f1_debut_season==="number"?person.f1_debut_season:typeof driver?.f1_debut_season==="number"?driver.f1_debut_season:null,

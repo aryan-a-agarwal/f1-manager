@@ -81,7 +81,7 @@ test("legacy partial careers migrate without rewriting played dates or results",
   const storage=new MemoryStorage();let career=quiet();career.projects=[];
   career=await simulateEntireWeekend(career,career.season.calendar.rounds[0].id,undefined,storage);
   const raw=JSON.stringify({...career,schemaVersion:5,scheduler:undefined});const migrated=parseCareerState(raw)!;
-  assert.ok(migrated);assert.equal(migrated.schemaVersion,8);
+  assert.ok(migrated);assert.equal(migrated.schemaVersion,10);
   assert.deepEqual(migrated.season.calendar.rounds,career.season.calendar.rounds);
   assert.deepEqual(migrated.weekendOperations.outputs,career.weekendOperations.outputs);
   assert.deepEqual(migrated.championship,career.championship);assert.deepEqual(migrated.clock,career.clock);

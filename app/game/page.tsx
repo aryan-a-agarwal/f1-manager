@@ -25,7 +25,12 @@ import {
   type SimulationStopSettings,
 } from "@/lib/career";
 import DriverDatabaseTable from "@/components/game/DriverDatabaseTable";
-import {ProfileProvider,ProfilePage,DriverLink,TeamLink} from "@/components/game/Profiles";
+import CommercialFinancePage from '@/components/game/CommercialFinancePage';
+import ManufacturingPage from '@/components/game/ManufacturingPage';
+import FinancesPage from '@/components/game/FinancesPage';
+import {ProfileProvider,ProfilePage,DriverLink,TeamLink,useProfiles} from "@/components/game/Profiles";
+import {teamRatingGroups} from "@/lib/teamProfileData";
+import {databaseFieldLabel} from "@/lib/driverProfileData";
 import StaffDatabaseTable from "@/components/game/StaffDatabaseTable";
 import {HistoryArrows,useGameNavigation} from "@/components/game/useGameNavigation";
 import {profileFromSearch,profileUrl,type ProfileTarget} from "@/lib/profileNavigation";
@@ -37,13 +42,14 @@ import CalendarFeature from "@/components/game/CalendarFeature";
 import { supabase } from "@/lib/supabaseClient";
 import { InterfaceLayoutPicker, ManagementOverview, ManagementShell, SectionTabProvider, locationForPage, resolveManagementLocation, useSectionTab, type InterfaceLayout, type ManagementLocation } from "@/components/game/ManagementShell";
 
-type Page = "home" | "comms" | "team" | "race" | "drivers" | "calendar" | "finance" | "standings" | "market" | "database" | "settings";
+type Page = "home" | "comms" | "team" | "race" | "drivers" | "calendar" | "finance" | "commercial" | "standings" | "market" | "database" | "settings";
 type Skin = "light" | "dark" | "retro" | "team";
 const skins: readonly Skin[] = ["light", "dark", "retro", "team"];
 const nav: { id: Page; label: string; icon: string }[] = [
   { id:"home", label:"Home", icon:"⌂" }, { id:"comms", label:"Comms", icon:"✉" }, { id:"team", label:"Team", icon:"◆" },
   { id:"race", label:"Race Centre", icon:"⚑" }, { id:"drivers", label:"Drivers", icon:"●" },
   { id:"calendar", label:"Calendar", icon:"▦" }, { id:"finance", label:"Finance", icon:"$" },
+  { id:'commercial', label:'Commercial', icon:'$' },
   { id:"standings", label:"Standings", icon:"▥" }, { id:"market", label:"Market", icon:"+" },
   { id:"database", label:"Database", icon:"DB" }, { id:"settings", label:"Settings", icon:"⚙" },
 ];
@@ -177,7 +183,7 @@ export default function GamePage() {
   const historyControls=<HistoryArrows navigation={navigation}/>;
   const timeControls=<DayProgressControl career={career} updateCareer={setCareer} onBlocked={handleBlockedReached} onError={setTimeError}/>;
   if (interfaceLayout === "management") {
-    return <ProfileProvider career={career} open={openProfile}><ManagementShell historyControls={historyControls} profileKey={profile?`${profile.kind}:${profile.id}`:undefined} team={team} career={career} location={managementLocation} onNavigate={navigateManagement} controls={timeControls}>
+    return <ProfileProvider career={career} updateCareer={setCareer} open={openProfile}><ManagementShell historyControls={historyControls} profileKey={profile?`${profile.kind}:${profile.id}`:undefined} team={team} career={career} location={managementLocation} onNavigate={navigateManagement} controls={timeControls}>
       {timeError && <div className="management-error" role="alert"><span>{timeError}</span><button onClick={() => setTimeError(null)} aria-label="Dismiss error">×</button></div>}
       {profile&&<ProfilePage target={profile}/>}
       <div className="game-screen" hidden={!!profile}><SectionTabProvider value={tabContext}>
@@ -187,7 +193,8 @@ export default function GamePage() {
         {page === "race" && <RacePage career={career} updateCareer={setCareer}/>}
         {page === "drivers" && <DriversPage career={career} updateCareer={setCareer}/>}
         {page === "calendar" && <CalendarPage career={career} open={goTo}/>}
-        {page === "finance" && <FinancePage career={career} updateCareer={setCareer}/>}
+        {page === "finance" && <FinancesPage career={career} updateCareer={setCareer}/>}
+        {page === "commercial" && <CommercialFinancePage career={career} updateCareer={setCareer}/>}
         {page === "standings" && <StandingsPage career={career}/>}
         {page === "market" && <MarketPage career={career} updateCareer={setCareer} shortlist={shortlist} toggle={toggleShortlist}/>}
         {page === "database" && <DatabasePage/>}
@@ -197,7 +204,7 @@ export default function GamePage() {
     </ManagementShell></ProfileProvider>;
   }
 
-  return <ProfileProvider career={career} open={openProfile}><main className="dashboard" style={{ "--team":team.primary,"--team-secondary":team.secondary } as React.CSSProperties}>
+  return <ProfileProvider career={career} updateCareer={setCareer} open={openProfile}><main className="dashboard" style={{ "--team":team.primary,"--team-secondary":team.secondary } as React.CSSProperties}>
     <aside className="sidebar"><div className="dashboard-logo"><span>F1</span><strong>MANAGER</strong><small>2027</small></div><nav>{nav.map((item) => {
       const unreadCount = item.id === "comms" && career ? getUnreadEmailCount(career) : 0;
       return <button key={item.id} className={`${page===item.id?"active ":""}${item.id==="database"?"database-nav":""}`} onClick={() => goTo(item.id)}><i>{item.icon}</i>{item.label}{unreadCount > 0 && <span className="nav-badge">{unreadCount}</span>}</button>;
@@ -248,7 +255,8 @@ export default function GamePage() {
         {page==="race"&&<RacePage career={career} updateCareer={setCareer}/>}
         {page==="drivers"&&<DriversPage career={career} updateCareer={setCareer}/>}
         {page==="calendar"&&<CalendarPage career={career} open={goTo}/>}
-        {page==="finance"&&<FinancePage career={career} updateCareer={setCareer}/>}
+        {page==="finance"&&<FinancesPage career={career} updateCareer={setCareer}/>}
+        {page==="commercial"&&<CommercialFinancePage career={career} updateCareer={setCareer}/>}
         {page==="standings"&&<StandingsPage career={career}/>}
         {page==="market"&&<MarketPage career={career} updateCareer={setCareer} shortlist={shortlist} toggle={toggleShortlist}/>}
         {page==="database"&&<DatabasePage/>}
@@ -275,8 +283,8 @@ function PageTitle({ eyebrow,title,children }:{ eyebrow:string;title:React.React
 function Home({ team,career,open }:{ team:Team;career:CareerState;open:(page:Page)=>void }) { const next=nextCalendarSession(career.season.calendar); const round=next?.round; const session=next?.session; const unread=getUnreadEmailCount(career); const pending=getPendingDecisionCount(career); return <><PageTitle eyebrow="TEAM HEADQUARTERS" title={<>Welcome to <TeamLink id={team.id} name={team.shortName}/></>}/><div className="home-grid"><Tile title="Next event" meta={round?`Round ${round.roundNumber} · Weekend ${round.weekendNumber}`:"Season complete"} action={()=>open("race")} wide><h2>{round?.grandPrixName??"No remaining event"}</h2><p>{round?`${round.location} · ${formatGameDate(round.weekendEndDate)}`:"The calendar is complete."}</p><div className="tile-stats"><span><small>SESSION</small><b>{session?session.kind.replaceAll("_"," ").toUpperCase():"—"}</b></span><span><small>STATUS</small><b>{round?.status.replaceAll("_"," ").toUpperCase()??"COMPLETE"}</b></span></div></Tile><Tile title="Communications & Board" meta={`${unread} unread`} action={()=>open("comms")}><div className="home-team-mark">✉</div><h2>Executive Office</h2><p>{pending > 0 ? `${pending} decision dilemmas requiring attention` : "No decisions waiting"}</p></Tile><Tile title="Your team" meta={team.base} action={()=>open("team")}><div className="home-team-mark">{team.shortName.slice(0,3).toUpperCase()}</div><h2><TeamLink id={team.id} name={team.shortName}/></h2><p>{team.powerUnit} power unit</p></Tile><Tile title="Driver line-up" meta={`${career.season.year} line-up`} action={()=>open("drivers")}>{team.drivers.map((driver)=><div className="mini-driver" key={driver.id}><b>{driver.number}</b><span><DriverLink id={driver.id} name={driver.name}/><small>{driver.abbreviation} · {driver.nationality}</small></span></div>)}</Tile><Tile title="Season calendar" meta={`${career.season.calendar.rounds.length} rounds`} action={()=>open("calendar")}><h2>{career.season.year} campaign</h2><p>View the generated weekend schedule</p></Tile><Tile title="Championship" meta={`${career.season.year} standings`} action={()=>open("standings")}><h2>{career.championship.teams.find(entry=>entry.teamId===team.id)?.points ?? 0} points</h2><p>View the current championship.</p></Tile></div></>; }
 function Tile({ title,meta,action,wide,children }:{ title:string;meta:string;action:()=>void;wide?:boolean;children:React.ReactNode }) { return <article className={`work-tile${wide?" wide":""}`}><div className="tile-head"><span>{title}</span><small>{meta}</small></div><div className="tile-body">{children}</div><button className="open-tile" onClick={action}>OPEN →</button></article>; }
 
-function TeamPage(_props: {team:Team;career:CareerState;updateCareer:(career:CareerState)=>void}) {
-  return <UnbuiltSection eyebrow="CAR" initial="performance" views={[['performance','Performance'],['projects','Development'],['facilities','Facilities'],['powertrain','Power unit & ATR']]}/>;
+function TeamPage(props: {team:Team;career:CareerState;updateCareer:(career:CareerState)=>void}) {
+  return <ManufacturingPage career={props.career} updateCareer={props.updateCareer}/>;
 }
 
 function RacePage({ career, updateCareer }: { career: CareerState; updateCareer: (career: CareerState) => void }) {
@@ -623,10 +631,8 @@ function DriversPage({career,updateCareer}: {career:CareerState;updateCareer:(ca
 
 function formatGameDate(date:string) { return new Intl.DateTimeFormat("en-GB",{day:"2-digit",month:"short",year:"numeric",timeZone:"UTC"}).format(new Date(`${date}T00:00:00Z`)); }
 function CalendarPage({career,open}:{career:CareerState;open:(page:Page)=>void}) {
-  const [tab,setTab]=useSectionTab<"races"|"factory"|"agenda">("races");
-  return <><PageTitle eyebrow={`${career.season.year} SEASON · UTC GAME CLOCK`} title="Calendar & Operations"/>
-    <div className="calendar-tabs-bar"><button className={`calendar-tab-btn${tab==="races"?" active":""}`} onClick={()=>setTab("races")}>Championship calendar</button><button className={`calendar-tab-btn${tab==="factory"?" active":""}`} onClick={()=>setTab("factory")}>Factory timeline</button><button className={`calendar-tab-btn${tab==="agenda"?" active":""}`} onClick={()=>setTab("agenda")}>Team agenda</button></div>
-    <CalendarFeature career={career} open={open} section={tab}/></>;
+  return <><PageTitle eyebrow={`${career.season.year} SEASON · UTC GAME CLOCK`} title="Calendar"/>
+    <CalendarFeature career={career} open={open} section="races"/></>;
 }
 
 function EventAlertModal({
@@ -662,7 +668,7 @@ function EventAlertModal({
 }
 
 function FinancePage(_props:{career:CareerState;updateCareer:(career:CareerState)=>void}) {
-  return <UnbuiltSection eyebrow="COMMERCIAL" initial="prize" views={[['prize','Prize money & merchandise'],['sponsors','Sponsors'],['cost_cap','Finance & cost cap']]}/>;
+  return <UnbuiltSection eyebrow="COMMERCIAL" initial="prize" views={[['prize','Prize money & merchandise'],['sponsors','Sponsors']]}/>;
 }
 
 function StandingsPage({career}:{career:CareerState}) {
@@ -676,7 +682,7 @@ function MarketPage(_props:{career:CareerState;updateCareer:(career:CareerState)
 
 type FactPerson = { id:number;display_name:string;date_of_birth:string|null;racing_nationality:string|null;place_of_birth:string|null;person_type:string;f1_debut_season:number|null;source_key:string;verified_on:string };
 type FactEntry = { person_id:number;series:string;season:number;entrant_name:string;car_number:number|null;entry_role:string };
-type FactTeam = { id:number;short_name:string;official_full_name:string;legal_name:string|null;base_city:string|null;base_country:string|null;team_chief:string|null;technical_chief:string|null;chassis:string|null;power_unit:string|null;first_team_entry:number|null };
+type FactTeam = { id:number;slug:string;short_name:string;official_full_name:string;legal_name:string|null;base_city:string|null;base_country:string|null;team_chief:string|null;technical_chief:string|null;chassis:string|null;power_unit:string|null;first_team_entry:number|null };
 type FactStaff = { person_id:number;team_id:number;season:number;role_title:string };
 type FactTrack = { id:number;slug:string;circuit_name:string;display_name:string;city:string|null;country:string;circuit_type:string|null;lap_length_km:number|null;race_laps:number|null;race_distance_km:number|null;first_f1_grand_prix_year:number|null;official_2026_calendar:boolean;confirmed_future_event:boolean;future_confirmed_through_year:number|null;future_event_source_url:string|null;f1_history_status:string|null;fia_grade:string|null;fia_licence_expiry:string|null;fia_status_note:string|null;fia_source_key:string|null;f1_facts_source_url:string|null;source_key:string;verified_on:string };
 type SelectedFact = { kind:"driver"|"staff";person:FactPerson };
@@ -690,16 +696,38 @@ function DatabasePage() {
     supabase.from("people").select("id,display_name,date_of_birth,racing_nationality,place_of_birth,person_type,f1_debut_season,source_key,verified_on").order("display_name"),
     supabase.from("series_entries").select("person_id,series,season,entrant_name,car_number,entry_role"),
     supabase.from("f1_team_staff").select("person_id,team_id,season,role_title"),
-    supabase.from("f1_team_facts").select("id,short_name,official_full_name,legal_name,base_city,base_country,team_chief,technical_chief,chassis,power_unit,first_team_entry").order("short_name"),
+    supabase.from("f1_team_facts").select("id,slug,short_name,official_full_name,legal_name,base_city,base_country,team_chief,technical_chief,chassis,power_unit,first_team_entry").order("short_name"),
     supabase.from("track_facts").select("id,slug,circuit_name,display_name,city,country,circuit_type,lap_length_km,race_laps,race_distance_km,first_f1_grand_prix_year,official_2026_calendar,confirmed_future_event,future_confirmed_through_year,future_event_source_url,f1_history_status,fia_grade,fia_licence_expiry,fia_status_note,fia_source_key,f1_facts_source_url,source_key,verified_on").order("display_name")
   ]); if(!live)return; const failed=[p,e,s,t,c].find(x=>x.error); if(failed?.error)setError(failed.error.message); else { setPeople((p.data||[]) as FactPerson[]);setEntries((e.data||[]) as FactEntry[]);setStaff((s.data||[]) as FactStaff[]);setFactTeams((t.data||[]) as FactTeam[]);setTracks((c.data||[]) as FactTrack[]); } setLoading(false); })(); return()=>{live=false}; },[]);
   const drivers=people.filter(p=>p.person_type.includes("driver")); const staffPeople=people.filter(p=>staff.some(a=>a.person_id===p.id));
   const teamName=(id:number)=>factTeams.find(t=>t.id===id)?.short_name||"Unknown team";
   return <><div className="database-tabs">{(["drivers","staff","teams","tracks"] as const).map(x=><button key={x} className={tab===x?"active":""} onClick={()=>setTab(x)}>{x}</button>)}</div>
-    {tab==="drivers"?<DriverDatabaseTable/>:tab==="staff"?<StaffDatabaseTable/>:loading?<section className="database-message">Loading verified records…</section>:error?<section className="database-message">Database unavailable: {error}</section>:<div className="database-list">
-      {tab==="teams"&&factTeams.map(x=><article key={x.id}><b><TeamLink id={`ref:${x.id}`} name={x.short_name}/></b><span><TeamLink id={`ref:${x.id}`} name={x.official_full_name}/></span><dl><Fact label="Base" value={[x.base_city,x.base_country].filter(Boolean).join(", ")}/><Fact label="Team chief" value={x.team_chief}/><Fact label="Technical chief" value={x.technical_chief}/><Fact label="Chassis" value={x.chassis}/><Fact label="Power unit" value={x.power_unit}/><Fact label="First entry" value={x.first_team_entry}/><Fact label="Legal name" value={x.legal_name}/></dl></article>)}
+    {tab==="drivers"?<DriverDatabaseTable/>:tab==="staff"?<StaffDatabaseTable/>:loading?<section className="database-message">Loading verified records…</section>:error?<section className="database-message">Database unavailable: {error}</section>:tab==="teams"?<TeamDatabaseTable teams={factTeams}/>:<div className="database-list">
       {tab==="tracks"&&tracks.map(x=><TrackFactCard key={x.id} track={x}/>)}
     </div>}{selected&&<PersonFactModal selected={selected} entries={entries} assignments={staff} teams={factTeams} close={()=>setSelected(null)}/>}</>;
+}
+function TeamDatabaseTable({teams}:{teams:FactTeam[]}) {
+  const {catalogue}=useProfiles();
+  const [search,setSearch]=useState(''),[view,setView]=useState('overview'),[sort,setSort]=useState('short_name'),[ascending,setAscending]=useState(true);
+  const views:Record<string,{label:string;fields:[string,string][]}>={overview:{label:'Overview',fields:[['official_full_name','Official name'],['base_city','Base city'],['base_country','Country'],['first_team_entry','First entry']]},technical:{label:'Technical',fields:[['chassis','Chassis'],['power_unit','Power unit'],['technical_chief','Technical chief']]},organisation:{label:'Organisation',fields:[['legal_name','Legal name'],['team_chief','Team chief'],['technical_chief','Technical chief']]}};
+  const template=catalogue.legacyTeams[0];
+  if(template)for(const group of teamRatingGroups(template))for(let offset=0;offset<group.fields.length;offset+=6){
+    const subset=group.fields.slice(offset,offset+6),suffix=group.fields.length>6?` ${Math.floor(offset/6)+1}`:'';
+    views[`rating:${group.title}:${offset}`]={label:`${group.title}${suffix}`,fields:subset.map(f=>[f.key,f.label])};
+  }
+  const first=catalogue.teamBaselines.find(row=>row.dataset_version==='f1-team-baseline-2027-v1');
+  for(const [key,label] of [['facilities','Facilities'],['financial_assumptions_usd_millions','Finance assumptions'],['objectives','Objectives']] as const){
+    const obj=first?.[key];if(!obj||typeof obj!=='object')continue;const keys=Object.keys(obj);
+    for(let offset=0;offset<keys.length;offset+=6)views[`${key}:${offset}`]={label:`${label}${keys.length>6?` ${Math.floor(offset/6)+1}`:''}`,fields:keys.slice(offset,offset+6).map(k=>[k,databaseFieldLabel(k)])};
+  }
+  const current=views[view]??views.overview;
+  const data=teams.map(team=>{
+    const baseline=catalogue.teamBaselines.find(row=>row.team_slug===team.slug&&row.dataset_version==='f1-team-baseline-2027-v1');
+    return {...team,...(baseline?.ratings as Record<string,unknown>??{}),...(baseline?.facilities as Record<string,unknown>??{}),...(baseline?.financial_assumptions_usd_millions as Record<string,unknown>??{}),...(baseline?.objectives as Record<string,unknown>??{})} as Record<string,unknown>&FactTeam;
+  });
+  const rows=data.filter(team=>Object.values(team).some(value=>String(value??'').toLowerCase().includes(search.toLowerCase()))).sort((a,b)=>{const av=a[sort],bv=b[sort];if(av==null)return bv==null?0:1;if(bv==null)return -1;const comparison=typeof av==='number'&&typeof bv==='number'?av-bv:String(av).localeCompare(String(bv),undefined,{numeric:true});return ascending?comparison:-comparison;});
+  const columns:[string,string][]=[['short_name','Team'],...current.fields];
+  return <section className="driver-database" aria-label="Teams database"><div className="driver-database-tools"><label className="driver-database-search"><span className="driver-database-control-label">Search teams</span><input type="search" aria-label="Search teams" placeholder="Search teams" value={search} onChange={e=>setSearch(e.target.value)}/></label><label><span className="driver-database-control-label">Team view</span><select aria-label="Team view" value={view} onChange={e=>{setView(e.target.value);setSort('short_name');setAscending(true);}}>{Object.entries(views).map(([id,v])=><option key={id} value={id}>{v.label}</option>)}</select></label><button className="driver-database-reset" onClick={()=>{setSearch('');setView('overview');setSort('short_name');setAscending(true);}}>Reset view</button></div><section className="driver-database-block"><h2>{current.label}</h2>{first?.storage==="local_preview"&&<p>Local preview · team database migration pending</p>}<div className="driver-database-scroll"><table><caption>Teams and selected database details. Select a column heading to sort. Starting ratings and financial values are game assumptions.</caption><thead><tr>{columns.map(([key,label])=><th scope="col" key={key} aria-sort={sort===key?ascending?'ascending':'descending':'none'}><button onClick={()=>{setAscending(sort===key?!ascending:true);setSort(key);}}>{label}<span aria-hidden="true">{sort===key?ascending?' ↑':' ↓':' ↕'}</span></button></th>)}</tr></thead><tbody>{rows.map(team=><tr key={team.id}>{columns.map(([key])=><td key={key} className={team[key]==null?'driver-database-missing':undefined}>{key==='short_name'?<TeamLink id={`ref:${team.id}`} name={team.short_name}/>:team[key]==null?'Not recorded':typeof team[key]==='boolean'?(team[key]?'Yes':'No'):String(team[key])}</td>)}</tr>)}</tbody></table>{!rows.length&&<p className="driver-database-empty">No teams match this search.</p>}</div></section></section>;
 }
 function Fact({label,value}:{label:string;value:string|number|null|undefined}) { return <div><dt>{label}</dt><dd>{value??"Not recorded"}</dd></div>; }
 function TrackFactCard({track:x}:{track:FactTrack}) { return <article><b>{x.display_name}</b><span>{x.circuit_name}</span><dl><Fact label="Database ID" value={x.slug}/><Fact label="Location" value={[x.city,x.country].filter(Boolean).join(", ")}/><Fact label="Type" value={x.circuit_type}/><Fact label="Lap length" value={x.lap_length_km&&`${x.lap_length_km} km`}/><Fact label="Race laps" value={x.race_laps}/><Fact label="Race distance" value={x.race_distance_km&&`${x.race_distance_km} km`}/><Fact label="F1 history status" value={x.f1_history_status?.replaceAll("_"," ")}/><Fact label="First F1 GP" value={x.first_f1_grand_prix_year}/><Fact label="2026 calendar" value={x.official_2026_calendar?"Yes":"No"}/><Fact label="Confirmed future event" value={x.confirmed_future_event?"Yes":"No"}/><Fact label="Confirmed through" value={x.future_confirmed_through_year}/><Fact label="FIA grade" value={x.fia_grade}/><Fact label="Licence expiry in source" value={x.fia_licence_expiry}/><Fact label="FIA status" value={x.fia_status_note}/><Fact label="Primary source" value={x.source_key}/><Fact label="FIA source" value={x.fia_source_key}/><Fact label="F1 facts source" value={x.f1_facts_source_url}/><Fact label="Future-event source" value={x.future_event_source_url}/><Fact label="Verified on" value={x.verified_on}/></dl></article>; }

@@ -1,5 +1,7 @@
+import type {ManufacturingState} from './manufacturing';
 import type {ContractDeskState} from "./contracts";
-export const CAREER_SCHEMA_VERSION = 8 as const;
+import type {FinanceBook} from './financeTypes';
+export const CAREER_SCHEMA_VERSION = 10 as const;
 export const CAREER_START_SEASON = 2027;
 export const CAREER_START_DATE = "2027-01-04";
 export const CAREER_START_MINUTE = 9 * 60;
@@ -360,8 +362,10 @@ export type FinancialTransaction = {
 };
 
 export type FinanceState = {
+  book?: FinanceBook;
+  teamBooks?: Record<string,FinanceBook>;
   cashBalance: number;
-  costCapLimit: number; // £135,000,000 standard
+  costCapLimit: number; // USD; versioned rules are stored in book.rules
   costCapSpent: number;
   costCapExemptSpent: number;
   transactions: FinancialTransaction[];
@@ -430,6 +434,7 @@ export type WeekendSnapshot = {
   circuit:{ lapLengthKm:number; raceLaps:number|null; raceDistanceKm:number|null; provenance:"official_fact" };
 };
 export type SessionInput = {
+  carPerformance?: {version:1; scores:Record<string,number>; raceLaps:number; lapLengthKm:number};
   schemaVersion:1;
   id:string;
   sessionId:string;
@@ -495,7 +500,7 @@ export type DriverStanding = {driverId:string;driverName:string;teamId:string;po
 export type TeamStanding = {teamId:string;teamName:string;points:number;wins:number;podiums:number;finishes:Record<string,number>};
 export type ChampionshipState = {year:number;ruleset:"fia-2026-points-v1";sourceUrl:string;drivers:DriverStanding[];teams:TeamStanding[];processedResultIds:string[]};
 export type WorkforcePerson = {id:string;name:string;kind:"driver"|"staff";carNumber:number|null;provenance:"official_fact"|"career_generated"};
-export type WorkforceAgreement = {id:string;personId:string;teamId:string;role:"driver_1"|"driver_2"|"reserve_1"|"reserve_2"|"team_principal";startSeason:number;endSeason:number|null;salary:number|null;termKnown:boolean;salaryBasis?:"game_estimate";termBasis?:"published_exact"|"game_assumption";provenance:"official_fact"|"career_generated"};
+export type WorkforceAgreement = {id:string;personId:string;teamId:string;role:"driver_1"|"driver_2"|"reserve_1"|"reserve_2"|"team_principal";startSeason:number;endSeason:number|null;salary:number|null;termKnown:boolean;salaryBasis?:"game_estimate";termBasis?:"published_exact"|"game_assumption";provenance:"official_fact"|"career_generated";startDate?:string;endDate?:string;terminatedOn?:string};
 export type SeasonLineup = {season:number;teamId:string;driverIds:[string,string];reserveDriverIds?:[string|null,string|null];teamPrincipalId:string;provenance:"official_fact"|"career_generated"};
 export type WorkforceState = {people:WorkforcePerson[];agreements:WorkforceAgreement[];lineups:SeasonLineup[]};
 export type SeasonArchive = {year:number;archivedAt:string;calendar:SeasonCalendar;championship:ChampionshipState;results:SessionOutput[];lineups:SeasonLineup[]};
@@ -759,6 +764,7 @@ export type CareerStateV5 = {
   comms?: CommsState;
   commercial?: CommercialState;
   finance?: FinanceState;
+  manufacturing?: ManufacturingState;
   carDev?: CarDevelopmentState;
   facilities?: FacilitiesState;
   market?: MarketState;

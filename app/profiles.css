@@ -109,6 +109,17 @@
 .driver-database-groups label{gap:4px;font-size:11px;line-height:20px}.driver-database-groups input{margin:0;width:12px;height:12px}
 .driver-database-note{margin:6px 0;font-size:10px;line-height:1.4}
 .driver-database-block{margin-top:8px}.driver-database-block h2{font-size:18px;margin-bottom:6px}
+/* Tournament leaderboard table treatment, adapted to fit the available page width. */
+.driver-database-scroll{border:1px solid var(--mg-line,#42434b);border-radius:4px;overflow:visible}
+.driver-database-scroll table{border-collapse:collapse;font-family:'Barlow Condensed',sans-serif;font-size:14px}
+.driver-database-scroll th,.driver-database-scroll th:first-child{background:var(--mg-surface,#24252b);border-bottom:1px solid var(--mg-line,#42434b);border-right:0;color:var(--mg-muted,#a5a5ae);padding:7px 10px}
+.driver-database-scroll th button{min-height:30px;font:700 9px/1.3 var(--mg-mono,monospace);letter-spacing:.06em;text-transform:uppercase}
+.driver-database-scroll td,.driver-database-scroll td:first-child{border-right:0;border-bottom:1px solid var(--mg-line,#42434b);padding:8px 10px;background:transparent;font:12px/1.3 var(--mg-mono,monospace)}
+.driver-database-scroll td:first-child{font:700 14px/1.3 'Barlow Condensed',sans-serif}
+.driver-database-scroll td small{font:10px/1.3 var(--mg-mono,monospace);text-transform:uppercase;margin-top:2px}
+.driver-database-scroll tbody tr:last-child td{border-bottom:0}
+.driver-database-scroll tr:hover td{background:color-mix(in srgb,var(--mg-text,#eee) 4%,var(--mg-surface,#24252b))}
+.driver-database-scroll th[aria-sort=ascending],.driver-database-scroll th[aria-sort=descending]{color:var(--mg-accent,#4779bd)}
 .profile-rating-grid meter{grid-column:1/-1;width:100%;height:5px;border:0;background:var(--pf-line);border-radius:3px;appearance:none}
 .profile-rating-grid meter::-webkit-meter-bar{background:var(--pf-line);border:0;border-radius:3px}
 .profile-rating-grid meter::-webkit-meter-optimum-value{background:var(--mg-accent,#4779bd);border-radius:3px}

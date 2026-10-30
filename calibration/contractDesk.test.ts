@@ -26,7 +26,7 @@ test("contract baseline is complete, frozen, saveable and never rewrites the ros
   assert.equal(initializeContractDesk(initialized,baseline()),initialized);
   assert.deepEqual(initialized.workforce,original.workforce);
   assert.deepEqual(initialized.weekendOperations,original.weekendOperations);
-  assert.equal(initialized.finance,undefined);
+  assert.deepEqual(initialized.finance,original.finance);
   const {store}=storage();const saved=saveCareer(initialized,store);
   assert.deepEqual(loadCareer(store)!.contractDesk,saved.contractDesk);
   const incomplete=baseline();incomplete.slots.pop();
@@ -40,7 +40,7 @@ test("drafts are idempotent, reversible planning records with exact cents",()=>{
   assert.equal(state.contractDesk!.drafts[0].seasons,3);
   assert.deepEqual(state.workforce,original.workforce);
   assert.deepEqual(state.clock,original.clock);
-  assert.equal(state.finance,undefined);
+  assert.deepEqual(state.finance,original.finance);
   assert.equal(parseContractSalary("1234567.89"),123456789);
   for(const value of ["", "0", "-1", "1.001", "1e6", "12abc", "99999999999999999999"])assert.throws(()=>parseContractSalary(value));
   state=withdrawContractDraft(state,"draft-1");

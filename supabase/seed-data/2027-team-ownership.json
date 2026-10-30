@@ -1,0 +1,208 @@
+{
+  "dataset_version": "f1-team-baseline-2027-v1",
+  "basis": "2027_start_scenario_projection",
+  "checked_on": "2026-10-27",
+  "note": "Public ownership structures are complex. 2027 continuity is a game projection; unknown stakes remain null; backer is not a claim of direct equity.",
+  "owners": [
+    {
+      "slug": "mumtalakat",
+      "name": "Bahrain Mumtalakat Holding Company",
+      "kind": "investment_fund",
+      "source_url": "https://www.mclaren.com/racing/latest-news/2025/mclaren-racing-consolidates-shareholder-structure/"
+    },
+    {
+      "slug": "cyvn",
+      "name": "CYVN Holdings",
+      "kind": "investment_fund",
+      "source_url": "https://www.mclaren.com/racing/latest-news/2025/mclaren-racing-consolidates-shareholder-structure/"
+    },
+    {
+      "slug": "mercedes-benz",
+      "name": "Mercedes-Benz Group",
+      "kind": "manufacturer",
+      "source_url": "https://www.mercedesamgf1.com/sustainability/governance"
+    },
+    {
+      "slug": "ineos",
+      "name": "INEOS",
+      "kind": "company",
+      "source_url": "https://www.mercedesamgf1.com/sustainability/governance"
+    },
+    {
+      "slug": "motorsport-invest",
+      "name": "Motorsport Invest Limited",
+      "kind": "investment_company",
+      "source_url": "https://www.mercedesamgf1.com/sustainability/governance"
+    },
+    {
+      "slug": "ferrari",
+      "name": "Ferrari",
+      "kind": "manufacturer",
+      "source_url": "https://www.ferrari.com/en-EN/corporate/homepage"
+    },
+    {
+      "slug": "red-bull",
+      "name": "Red Bull GmbH",
+      "kind": "company",
+      "source_url": "https://www.formula1.com/en/latest/article/team-preview-racing-bulls-all-you-need-to-know-about-the-team-ahead-of-the.1CEWtqM7eihjycMGOjbegp"
+    },
+    {
+      "slug": "dorilton",
+      "name": "Dorilton Capital",
+      "kind": "investment_company",
+      "source_url": "https://www.formula1.com/en/latest/article/williams-unveil-new-logo-and-evolved-identity-from-2026-season.4nAh5n9KjkilPLFrvmx2Io.4nAh5n9KjkilPLFrvmx2Io"
+    },
+    {
+      "slug": "aston-consortium",
+      "name": "Lawrence Stroll-led consortium",
+      "kind": "consortium",
+      "source_url": "https://www.formula1.com/en/latest/article/team-preview-aston-martin-all-you-need-to-know-about-the-team-ahead-of-the.2JzjmMD0JC1omDty4QBOZ2"
+    },
+    {
+      "slug": "gene-haas",
+      "name": "Gene Haas",
+      "kind": "individual",
+      "source_url": "https://www.formula1.com/en/latest/article/its-a-whole-different-mindset-how-haas-transformed-their-fortunes-as-they.46wHk7OMUm0dKkS2pWd1KA"
+    },
+    {
+      "slug": "audi",
+      "name": "Audi AG",
+      "kind": "manufacturer",
+      "source_url": "https://www.audi-mediacenter.com/en/press-releases/audi-f1-project-strengthened-by-investment-from-qia-16415/download"
+    },
+    {
+      "slug": "qia",
+      "name": "Qatar Investment Authority",
+      "kind": "investment_fund",
+      "source_url": "https://www.audi-mediacenter.com/en/press-releases/audi-f1-project-strengthened-by-investment-from-qia-16415/download"
+    },
+    {
+      "slug": "renault",
+      "name": "Renault Group",
+      "kind": "manufacturer",
+      "source_url": "https://www.formula1.com/en/latest/article/alpine-clarify-rumours-over-interest-from-former-red-bull-boss-horner.CQvRv1m7Q6MqsgiTD1cu4"
+    },
+    {
+      "slug": "otro",
+      "name": "Otro Capital",
+      "kind": "investment_fund",
+      "source_url": "https://www.formula1.com/en/latest/article/alpine-clarify-rumours-over-interest-from-former-red-bull-boss-horner.CQvRv1m7Q6MqsgiTD1cu4"
+    },
+    {
+      "slug": "twg",
+      "name": "TWG Motorsports",
+      "kind": "company",
+      "source_url": "https://corp.formula1.com/fia-and-formula-1-joint-statement-regarding-2026-eleventh-team-process/"
+    },
+    {
+      "slug": "gm",
+      "name": "General Motors",
+      "kind": "manufacturer",
+      "source_url": "https://corp.formula1.com/fia-and-formula-1-joint-statement-regarding-2026-eleventh-team-process/"
+    }
+  ],
+  "relationships": [
+    {
+      "team_slug": "mclaren",
+      "owner_slug": "mumtalakat",
+      "relationship": "majority_investor",
+      "percentage": null
+    },
+    {
+      "team_slug": "mclaren",
+      "owner_slug": "cyvn",
+      "relationship": "minority_investor",
+      "percentage": null
+    },
+    {
+      "team_slug": "mercedes",
+      "owner_slug": "mercedes-benz",
+      "relationship": "shareholder",
+      "percentage": null
+    },
+    {
+      "team_slug": "mercedes",
+      "owner_slug": "ineos",
+      "relationship": "shareholder",
+      "percentage": null
+    },
+    {
+      "team_slug": "mercedes",
+      "owner_slug": "motorsport-invest",
+      "relationship": "shareholder",
+      "percentage": null
+    },
+    {
+      "team_slug": "ferrari",
+      "owner_slug": "ferrari",
+      "relationship": "parent",
+      "percentage": null
+    },
+    {
+      "team_slug": "red-bull-racing",
+      "owner_slug": "red-bull",
+      "relationship": "parent",
+      "percentage": null
+    },
+    {
+      "team_slug": "racing-bulls",
+      "owner_slug": "red-bull",
+      "relationship": "parent",
+      "percentage": null
+    },
+    {
+      "team_slug": "williams",
+      "owner_slug": "dorilton",
+      "relationship": "owner",
+      "percentage": null
+    },
+    {
+      "team_slug": "aston-martin",
+      "owner_slug": "aston-consortium",
+      "relationship": "controlling_group",
+      "percentage": null
+    },
+    {
+      "team_slug": "haas",
+      "owner_slug": "gene-haas",
+      "relationship": "owner",
+      "percentage": null
+    },
+    {
+      "team_slug": "audi",
+      "owner_slug": "audi",
+      "relationship": "majority_investor",
+      "percentage": null
+    },
+    {
+      "team_slug": "audi",
+      "owner_slug": "qia",
+      "relationship": "minority_investor",
+      "percentage": null
+    },
+    {
+      "team_slug": "alpine",
+      "owner_slug": "renault",
+      "relationship": "majority_investor",
+      "percentage": 76
+    },
+    {
+      "team_slug": "alpine",
+      "owner_slug": "otro",
+      "relationship": "minority_investor",
+      "percentage": 24
+    },
+    {
+      "team_slug": "cadillac",
+      "owner_slug": "twg",
+      "relationship": "backer",
+      "percentage": null
+    },
+    {
+      "team_slug": "cadillac",
+      "owner_slug": "gm",
+      "relationship": "backer",
+      "percentage": null
+    }
+  ]
+}

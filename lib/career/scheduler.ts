@@ -1,9 +1,15 @@
+import {workshopScheduleDates} from './manufacturing';
 import type { CareerState, TimelineEvent, EventCategory, FacilityKey } from "./types";
 import { collectCareerScheduledEvents, DEFAULT_STOP_SETTINGS, type EnrichedScheduledEvent } from "./timeline";
 import { toGameMinute, fromGameMinute, type TimeAdvanceRequest, type TimeAdvanceResult } from "./gameTime";
 import { completeCarDevelopmentProjectState } from "./carDev";
 import { processFacilityWearAndUpkeepState } from "./facilities";
 import { saveCareer, type CareerStorage } from "./storage";
+import {applyDueContractAppointments} from './contractAppointments';
+import {processFinance,financeObligations,financePaymentShortfall} from './financeEngine';
+import {manufacturingScheduleDates} from './manufacturingFinance';
+import {financeOperationsScheduleDates} from './financeOperations';
+import {processRivalFinances} from './rivalFinance';
 
 export type ScheduleAdvanceResult = TimeAdvanceResult & {
   outcome: "target_reached" | "action_required" | "session_ready" | "season_complete";
@@ -11,6 +17,11 @@ export type ScheduleAdvanceResult = TimeAdvanceResult & {
 
 export function careerSchedule(career: CareerState): EnrichedScheduledEvent[] {
   const events = collectCareerScheduledEvents(career);
+  if(career.finance?.book){
+    const book=career.finance.book,posted=new Set(book.entries.map(e=>e.id));
+    const dates=new Set([...workshopScheduleDates(career),...manufacturingScheduleDates(career),...financeOperationsScheduleDates(career),...financeObligations(career).flatMap(o=>[...(!posted.has(`${o.id}:recognition`)?[o.recognitionDate]:[]),...(!posted.has(`${o.id}:payment`)?[o.dueDate]:[])])]);
+    for(const date of dates)events.push({id:`finance:${date}`,startsAt:{date,minuteOfDay:540},blocking:false,title:'Scheduled financial settlement',category:'financial_warnings',severity:'informational',actionPage:'finance'});
+  }
   for(const email of career.comms?.emails ?? []) {
     if(!email.requiresDecision || email.chosenDecisionId)continue;
     events.push({id:email.id,startsAt:{date:email.date,minuteOfDay:540},blocking:true,title:email.subject,
@@ -74,9 +85,16 @@ export function advanceCareerSchedule(career:CareerState,request:TimeAdvanceRequ
     if(!next)break;
     if(++iterations>10000)throw new Error("Calendar progression stopped because the schedule made no progress.");
     const previousKey=`${next.id}|${state.scheduler.processedEventIds.length}`;
+    const previousCash=state.finance?.cashBalance??0,previousCap=state.finance?.costCapSpent??0;
     const at=Math.max(toGameMinute(state.clock),toGameMinute(next.startsAt));
     state={...state,clock:{...state.clock,...fromGameMinute(at)}};
+    state=applyDueContractAppointments(state,state.clock.date);
+    state=processFinance(state,state.clock.date);
     state=applyDueEvent(state,next);
+    if(next.id.startsWith('finance:')&&(state.stopSettings??DEFAULT_STOP_SETTINGS).financialWarnings&&(financePaymentShortfall(state)||(state.finance?.book?.cashKnown&&previousCash>=0&&state.finance!.cashBalance<0)||(previousCap<=state.finance!.costCapLimit&&state.finance!.costCapSpent>state.finance!.costCapLimit))){
+      const notice={...next,id:`${next.id}:warning`,blocking:true,title:financePaymentShortfall(state)||state.finance!.book?.cashKnown&&state.finance!.cashBalance<0?'Payments need funding':'Cost-cap overspend',severity:'important' as const,description:'Scheduled financial obligations have been processed. Review unpaid bills and the forecast in Finances.'};
+      reached=notice;target=at;state={...state,clock:{...state.clock,status:'blocked',blockingEventId:notice.id},scheduler:{...state.scheduler,pendingEvent:eventNotice(notice)}};break;
+    }
     const stop=next.blocking || (options.preparationStop&&next.id.endsWith("-preparation"));
     if(stop){
       reached=next;target=at;
@@ -90,6 +108,8 @@ export function advanceCareerSchedule(career:CareerState,request:TimeAdvanceRequ
   if(!changed)return {career,changed:false,reachedEvent:null,outcome:nextStop?"target_reached":"season_complete"};
   const destination=fromGameMinute(target);
   state={...state,clock:{...state.clock,...destination,lastAdvance:{fromDate:career.clock.date,fromMinuteOfDay:career.clock.minuteOfDay,toDate:destination.date,toMinuteOfDay:destination.minuteOfDay,reason:request.type==="target"?"target":request.type}},season:{...state.season,currentEventId:reached?.id??state.season.currentEventId}};
+  state=applyDueContractAppointments(state,destination.date);
+  state=processRivalFinances(processFinance(state,destination.date),destination.date);
   return {career:saveCareer(state,storage),changed:true,reachedEvent:reached,outcome:state.clock.status==="blocked"?(reached?.category==="race_weekend"?"session_ready":"action_required"):"target_reached"};
 }
 

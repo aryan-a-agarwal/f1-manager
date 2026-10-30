@@ -1,0 +1,4516 @@
+{
+  "version": "2027-contract-clauses-v1",
+  "datasetId": "f1-2027-starting-grid-2026-10-26-v2",
+  "packages": [
+    {
+      "personSlug": "lando-norris",
+      "teamId": "mclaren",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2030,
+      "version": "2027-contract-clauses-v1",
+      "category": "Established race driver",
+      "rationale": "Lando Norris: established race driver package for the existing 2027–2030 mclaren appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$750,000 per win; $250,000 for second or third; $50,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $6,250,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 75000000,
+            "podiumCents": 25000000,
+            "pointsFinishCents": 5000000,
+            "annualCapCents": 625000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$3,750,000 once per season for finishing 3rd or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 3,
+            "amountCents": 375000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "commercial_duties",
+          "title": "Commercial appearance limit",
+          "terms": "Up to eight scheduled sponsor days per season, with at least 14 days’ notice and no clash with race duties.",
+          "parameters": {
+            "daysPerSeason": 8,
+            "noticeDays": 14
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$2,500,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 250000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "oscar-piastri",
+      "teamId": "mclaren",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2028,
+      "version": "2027-contract-clauses-v1",
+      "category": "Established race driver",
+      "rationale": "Oscar Piastri: established race driver package for the existing 2027–2028 mclaren appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$540,000 per win; $180,000 for second or third; $36,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $4,500,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 54000000,
+            "podiumCents": 18000000,
+            "pointsFinishCents": 3600000,
+            "annualCapCents": 450000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$2,700,000 once per season for finishing 3rd or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 3,
+            "amountCents": 270000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "commercial_duties",
+          "title": "Commercial appearance limit",
+          "terms": "Up to eight scheduled sponsor days per season, with at least 14 days’ notice and no clash with race duties.",
+          "parameters": {
+            "daysPerSeason": 8,
+            "noticeDays": 14
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$1,800,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 180000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "george-russell",
+      "teamId": "mercedes",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Established race driver",
+      "rationale": "George Russell: established race driver package for the existing 2027–2027 mercedes appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$600,000 per win; $200,000 for second or third; $40,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $5,000,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 60000000,
+            "podiumCents": 20000000,
+            "pointsFinishCents": 4000000,
+            "annualCapCents": 500000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$3,000,000 once per season for finishing 3rd or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 3,
+            "amountCents": 300000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "commercial_duties",
+          "title": "Commercial appearance limit",
+          "terms": "Up to eight scheduled sponsor days per season, with at least 14 days’ notice and no clash with race duties.",
+          "parameters": {
+            "daysPerSeason": 8,
+            "noticeDays": 14
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$1,000,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 100000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "kimi-antonelli",
+      "teamId": "mercedes",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2028,
+      "version": "2027-contract-clauses-v1",
+      "category": "Developing race driver",
+      "rationale": "Kimi Antonelli: developing race driver package for the existing 2027–2028 mercedes appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$150,000 per win; $50,000 for second or third; $10,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $1,250,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 15000000,
+            "podiumCents": 5000000,
+            "pointsFinishCents": 1000000,
+            "annualCapCents": 125000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$500,000 once per season for finishing 12th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 12,
+            "amountCents": 50000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "development_support",
+          "title": "Development programme",
+          "terms": "At least 12 scheduled simulator/coaching days per season, agreed around race duties and medical availability.",
+          "parameters": {
+            "daysPerSeason": 12
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "salary_escalator",
+          "title": "Annual salary progression",
+          "terms": "Base salary increases by 10% each 1 January from 2028, compounded within the existing term. This does not extend the contract.",
+          "parameters": {
+            "annualPercent": 10,
+            "firstSeason": 2028
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$500,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 50000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "max-verstappen",
+      "teamId": "red-bull",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2030,
+      "version": "2027-contract-clauses-v1",
+      "category": "Established race driver",
+      "rationale": "Max Verstappen: established race driver package for the existing 2027–2030 red-bull appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$1,650,000 per win; $550,000 for second or third; $110,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $13,750,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 165000000,
+            "podiumCents": 55000000,
+            "pointsFinishCents": 11000000,
+            "annualCapCents": 1375000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$8,250,000 once per season for finishing 3rd or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 3,
+            "amountCents": 825000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "commercial_duties",
+          "title": "Commercial appearance limit",
+          "terms": "Up to eight scheduled sponsor days per season, with at least 14 days’ notice and no clash with race duties.",
+          "parameters": {
+            "daysPerSeason": 8,
+            "noticeDays": 14
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$5,500,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 550000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "isack-hadjar",
+      "teamId": "red-bull",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Developing race driver",
+      "rationale": "Isack Hadjar: developing race driver package for the existing 2027–2027 red-bull appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$120,000 per win; $40,000 for second or third; $8,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $1,000,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 12000000,
+            "podiumCents": 4000000,
+            "pointsFinishCents": 800000,
+            "annualCapCents": 100000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$400,000 once per season for finishing 12th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 12,
+            "amountCents": 40000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "development_support",
+          "title": "Development programme",
+          "terms": "At least 12 scheduled simulator/coaching days per season, agreed around race duties and medical availability.",
+          "parameters": {
+            "daysPerSeason": 12
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$200,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 20000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "charles-leclerc",
+      "teamId": "ferrari",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2029,
+      "version": "2027-contract-clauses-v1",
+      "category": "Established race driver",
+      "rationale": "Charles Leclerc: established race driver package for the existing 2027–2029 ferrari appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$1,020,000 per win; $340,000 for second or third; $68,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $8,500,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 102000000,
+            "podiumCents": 34000000,
+            "pointsFinishCents": 6800000,
+            "annualCapCents": 850000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$5,100,000 once per season for finishing 3rd or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 3,
+            "amountCents": 510000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "commercial_duties",
+          "title": "Commercial appearance limit",
+          "terms": "Up to eight scheduled sponsor days per season, with at least 14 days’ notice and no clash with race duties.",
+          "parameters": {
+            "daysPerSeason": 8,
+            "noticeDays": 14
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$3,400,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 340000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "lewis-hamilton",
+      "teamId": "ferrari",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Established race driver",
+      "rationale": "Lewis Hamilton: established race driver package for the existing 2027–2027 ferrari appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$1,500,000 per win; $500,000 for second or third; $100,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $12,500,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 150000000,
+            "podiumCents": 50000000,
+            "pointsFinishCents": 10000000,
+            "annualCapCents": 1250000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$7,500,000 once per season for finishing 3rd or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 3,
+            "amountCents": 750000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "commercial_duties",
+          "title": "Commercial appearance limit",
+          "terms": "Up to eight scheduled sponsor days per season, with at least 14 days’ notice and no clash with race duties.",
+          "parameters": {
+            "daysPerSeason": 8,
+            "noticeDays": 14
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$2,500,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 250000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "alexander-albon",
+      "teamId": "williams",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Team-building race driver",
+      "rationale": "Alexander Albon: team-building race driver package for the existing 2027–2027 williams appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$300,000 per win; $100,000 for second or third; $20,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $2,500,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 30000000,
+            "podiumCents": 10000000,
+            "pointsFinishCents": 2000000,
+            "annualCapCents": 250000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$1,000,000 once per season for finishing 10th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 10,
+            "amountCents": 100000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "commercial_duties",
+          "title": "Commercial appearance limit",
+          "terms": "Up to eight scheduled sponsor days per season, with at least 14 days’ notice and no clash with race duties.",
+          "parameters": {
+            "daysPerSeason": 8,
+            "noticeDays": 14
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$500,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 50000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "carlos-sainz",
+      "teamId": "williams",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2028,
+      "version": "2027-contract-clauses-v1",
+      "category": "Team-building race driver",
+      "rationale": "Carlos Sainz: team-building race driver package for the existing 2027–2028 williams appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$390,000 per win; $130,000 for second or third; $26,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $3,250,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 39000000,
+            "podiumCents": 13000000,
+            "pointsFinishCents": 2600000,
+            "annualCapCents": 325000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$1,300,000 once per season for finishing 10th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 10,
+            "amountCents": 130000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "commercial_duties",
+          "title": "Commercial appearance limit",
+          "terms": "Up to eight scheduled sponsor days per season, with at least 14 days’ notice and no clash with race duties.",
+          "parameters": {
+            "daysPerSeason": 8,
+            "noticeDays": 14
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$1,300,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 130000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "liam-lawson",
+      "teamId": "racing-bulls",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Developing race driver",
+      "rationale": "Liam Lawson: developing race driver package for the existing 2027–2027 racing-bulls appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$75,000 per win; $25,000 for second or third; $5,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $625,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 7500000,
+            "podiumCents": 2500000,
+            "pointsFinishCents": 500000,
+            "annualCapCents": 62500000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$250,000 once per season for finishing 12th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 12,
+            "amountCents": 25000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "development_support",
+          "title": "Development programme",
+          "terms": "At least 12 scheduled simulator/coaching days per season, agreed around race duties and medical availability.",
+          "parameters": {
+            "daysPerSeason": 12
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$125,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 12500000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "arvid-lindblad",
+      "teamId": "racing-bulls",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Developing race driver",
+      "rationale": "Arvid Lindblad: developing race driver package for the existing 2027–2027 racing-bulls appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$45,000 per win; $15,000 for second or third; $3,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $375,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 4500000,
+            "podiumCents": 1500000,
+            "pointsFinishCents": 300000,
+            "annualCapCents": 37500000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$150,000 once per season for finishing 12th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 12,
+            "amountCents": 15000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "development_support",
+          "title": "Development programme",
+          "terms": "At least 12 scheduled simulator/coaching days per season, agreed around race duties and medical availability.",
+          "parameters": {
+            "daysPerSeason": 12
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$75,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 7500000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "fernando-alonso",
+      "teamId": "aston-martin",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Established race driver",
+      "rationale": "Fernando Alonso: established race driver package for the existing 2027–2027 aston-martin appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$600,000 per win; $200,000 for second or third; $40,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $5,000,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 60000000,
+            "podiumCents": 20000000,
+            "pointsFinishCents": 4000000,
+            "annualCapCents": 500000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$3,000,000 once per season for finishing 3rd or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 3,
+            "amountCents": 300000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "commercial_duties",
+          "title": "Commercial appearance limit",
+          "terms": "Up to eight scheduled sponsor days per season, with at least 14 days’ notice and no clash with race duties.",
+          "parameters": {
+            "daysPerSeason": 8,
+            "noticeDays": 14
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$1,000,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 100000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "lance-stroll",
+      "teamId": "aston-martin",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2028,
+      "version": "2027-contract-clauses-v1",
+      "category": "Team-building race driver",
+      "rationale": "Lance Stroll: team-building race driver package for the existing 2027–2028 aston-martin appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$240,000 per win; $80,000 for second or third; $16,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $2,000,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 24000000,
+            "podiumCents": 8000000,
+            "pointsFinishCents": 1600000,
+            "annualCapCents": 200000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$800,000 once per season for finishing 10th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 10,
+            "amountCents": 80000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "commercial_duties",
+          "title": "Commercial appearance limit",
+          "terms": "Up to eight scheduled sponsor days per season, with at least 14 days’ notice and no clash with race duties.",
+          "parameters": {
+            "daysPerSeason": 8,
+            "noticeDays": 14
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$800,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 80000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "rafael-camara",
+      "teamId": "haas",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2028,
+      "version": "2027-contract-clauses-v1",
+      "category": "Developing race driver",
+      "rationale": "Rafael Câmara: developing race driver package for the existing 2027–2028 haas appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$37,500 per win; $12,500 for second or third; $2,500 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $312,500. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 3750000,
+            "podiumCents": 1250000,
+            "pointsFinishCents": 250000,
+            "annualCapCents": 31250000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$125,000 once per season for finishing 12th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 12,
+            "amountCents": 12500000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "development_support",
+          "title": "Development programme",
+          "terms": "At least 12 scheduled simulator/coaching days per season, agreed around race duties and medical availability.",
+          "parameters": {
+            "daysPerSeason": 12
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "salary_escalator",
+          "title": "Annual salary progression",
+          "terms": "Base salary increases by 10% each 1 January from 2028, compounded within the existing term. This does not extend the contract.",
+          "parameters": {
+            "annualPercent": 10,
+            "firstSeason": 2028
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$125,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 12500000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "oliver-bearman",
+      "teamId": "haas",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Developing race driver",
+      "rationale": "Oliver Bearman: developing race driver package for the existing 2027–2027 haas appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$90,000 per win; $30,000 for second or third; $6,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $750,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 9000000,
+            "podiumCents": 3000000,
+            "pointsFinishCents": 600000,
+            "annualCapCents": 75000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$300,000 once per season for finishing 12th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 12,
+            "amountCents": 30000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "development_support",
+          "title": "Development programme",
+          "terms": "At least 12 scheduled simulator/coaching days per season, agreed around race duties and medical availability.",
+          "parameters": {
+            "daysPerSeason": 12
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$150,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 15000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "nico-hulkenberg",
+      "teamId": "audi",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Team-building race driver",
+      "rationale": "Nico Hülkenberg: team-building race driver package for the existing 2027–2027 audi appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$210,000 per win; $70,000 for second or third; $14,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $1,750,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 21000000,
+            "podiumCents": 7000000,
+            "pointsFinishCents": 1400000,
+            "annualCapCents": 175000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$700,000 once per season for finishing 10th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 10,
+            "amountCents": 70000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "commercial_duties",
+          "title": "Commercial appearance limit",
+          "terms": "Up to eight scheduled sponsor days per season, with at least 14 days’ notice and no clash with race duties.",
+          "parameters": {
+            "daysPerSeason": 8,
+            "noticeDays": 14
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$350,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 35000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "gabriel-bortoleto",
+      "teamId": "audi",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Developing race driver",
+      "rationale": "Gabriel Bortoleto: developing race driver package for the existing 2027–2027 audi appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$60,000 per win; $20,000 for second or third; $4,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $500,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 6000000,
+            "podiumCents": 2000000,
+            "pointsFinishCents": 400000,
+            "annualCapCents": 50000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$200,000 once per season for finishing 12th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 12,
+            "amountCents": 20000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "development_support",
+          "title": "Development programme",
+          "terms": "At least 12 scheduled simulator/coaching days per season, agreed around race duties and medical availability.",
+          "parameters": {
+            "daysPerSeason": 12
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$100,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 10000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "pierre-gasly",
+      "teamId": "alpine",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2028,
+      "version": "2027-contract-clauses-v1",
+      "category": "Team-building race driver",
+      "rationale": "Pierre Gasly: team-building race driver package for the existing 2027–2028 alpine appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$360,000 per win; $120,000 for second or third; $24,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $3,000,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 36000000,
+            "podiumCents": 12000000,
+            "pointsFinishCents": 2400000,
+            "annualCapCents": 300000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$1,200,000 once per season for finishing 10th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 10,
+            "amountCents": 120000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "commercial_duties",
+          "title": "Commercial appearance limit",
+          "terms": "Up to eight scheduled sponsor days per season, with at least 14 days’ notice and no clash with race duties.",
+          "parameters": {
+            "daysPerSeason": 8,
+            "noticeDays": 14
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$1,200,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 120000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "franco-colapinto",
+      "teamId": "alpine",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Developing race driver",
+      "rationale": "Franco Colapinto: developing race driver package for the existing 2027–2027 alpine appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$60,000 per win; $20,000 for second or third; $4,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $500,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 6000000,
+            "podiumCents": 2000000,
+            "pointsFinishCents": 400000,
+            "annualCapCents": 50000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$200,000 once per season for finishing 12th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 12,
+            "amountCents": 20000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "development_support",
+          "title": "Development programme",
+          "terms": "At least 12 scheduled simulator/coaching days per season, agreed around race duties and medical availability.",
+          "parameters": {
+            "daysPerSeason": 12
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$100,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 10000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "sergio-perez",
+      "teamId": "cadillac",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Team-building race driver",
+      "rationale": "Sergio Pérez: team-building race driver package for the existing 2027–2027 cadillac appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$240,000 per win; $80,000 for second or third; $16,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $2,000,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 24000000,
+            "podiumCents": 8000000,
+            "pointsFinishCents": 1600000,
+            "annualCapCents": 200000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$800,000 once per season for finishing 10th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 10,
+            "amountCents": 80000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "commercial_duties",
+          "title": "Commercial appearance limit",
+          "terms": "Up to eight scheduled sponsor days per season, with at least 14 days’ notice and no clash with race duties.",
+          "parameters": {
+            "daysPerSeason": 8,
+            "noticeDays": 14
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$400,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 40000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "valtteri-bottas",
+      "teamId": "cadillac",
+      "role": "race_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Team-building race driver",
+      "rationale": "Valtteri Bottas: team-building race driver package for the existing 2027–2027 cadillac appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Race-seat commitment",
+          "terms": "Race seat for the recorded contract term, subject to fitness, eligibility and agreed termination.",
+          "parameters": {
+            "role": "race_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "race_bonus",
+          "title": "Grand Prix result bonuses",
+          "terms": "$240,000 per win; $80,000 for second or third; $16,000 for any other points finish. Only the highest tier pays per Grand Prix; sprints excluded. Annual cap $2,000,000. Final classified results after penalties apply.",
+          "parameters": {
+            "winCents": 24000000,
+            "podiumCents": 8000000,
+            "pointsFinishCents": 1600000,
+            "annualCapCents": 200000000,
+            "stacking": "highest_only",
+            "sprints": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "championship_bonus",
+          "title": "Championship position bonus",
+          "terms": "$800,000 once per season for finishing 10th or better in the final drivers’ standings. Separate from the race bonus cap.",
+          "parameters": {
+            "maximumPosition": 10,
+            "amountCents": 80000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "equipment_parity",
+          "title": "Equal equipment access",
+          "terms": "Equal specification when two serviceable sets are available. Manufacturing shortages or accident damage allow a maximum two-Grand-Prix delay; no promise of lead-driver status.",
+          "parameters": {
+            "maximumDelayGrandsPrix": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "commercial_duties",
+          "title": "Commercial appearance limit",
+          "terms": "Up to eight scheduled sponsor days per season, with at least 14 days’ notice and no clash with race duties.",
+          "parameters": {
+            "daysPerSeason": 8,
+            "noticeDays": 14
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$400,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 40000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "leonardo-fornaroli",
+      "teamId": "mclaren",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Development reserve",
+      "rationale": "Leonardo Fornaroli: development reserve package for the existing 2027–2027 mclaren appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$37,500 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 3750000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "20 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 20
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "practice_opportunity",
+          "title": "Practice opportunities",
+          "terms": "Two practice appearances per season, conditional on licence eligibility, sporting rules and a serviceable car; an unavailable appearance must be rescheduled within the season.",
+          "parameters": {
+            "sessionsPerSeason": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing is permitted under an agreed calendar. Conflicts must be declared before the season; this appointment does not guarantee simultaneous availability.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$75,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 7500000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "pato-oward",
+      "teamId": "mclaren",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Development reserve",
+      "rationale": "Pato O’Ward: development reserve package for the existing 2027–2027 mclaren appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$50,000 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 5000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "20 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 20
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "practice_opportunity",
+          "title": "Practice opportunities",
+          "terms": "Two practice appearances per season, conditional on licence eligibility, sporting rules and a serviceable car; an unavailable appearance must be rescheduled within the season.",
+          "parameters": {
+            "sessionsPerSeason": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing is permitted under an agreed calendar. Conflicts must be declared before the season; this appointment does not guarantee simultaneous availability.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$100,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 10000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "fred-vesti",
+      "teamId": "mercedes",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Development reserve",
+      "rationale": "Fred Vesti: development reserve package for the existing 2027–2027 mercedes appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$37,500 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 3750000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "20 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 20
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "practice_opportunity",
+          "title": "Practice opportunities",
+          "terms": "Two practice appearances per season, conditional on licence eligibility, sporting rules and a serviceable car; an unavailable appearance must be rescheduled within the season.",
+          "parameters": {
+            "sessionsPerSeason": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$75,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 7500000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "joshua-duerksen",
+      "teamId": "mercedes",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Development reserve",
+      "rationale": "Joshua Dürksen: development reserve package for the existing 2027–2027 mercedes appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$17,500 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 1750000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "20 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 20
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "practice_opportunity",
+          "title": "Practice opportunities",
+          "terms": "Two practice appearances per season, conditional on licence eligibility, sporting rules and a serviceable car; an unavailable appearance must be rescheduled within the season.",
+          "parameters": {
+            "sessionsPerSeason": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$35,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 3500000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "yuki-tsunoda",
+      "teamId": "red-bull",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Experienced reserve",
+      "rationale": "Yuki Tsunoda: experienced reserve package for the existing 2027–2027 red-bull appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$37,500 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 3750000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "16 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 16
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "shared_reserve",
+          "title": "Shared reserve priority",
+          "terms": "Shared Red Bull / Racing Bulls appointment: Red Bull has priority if both require a substitute at the same event. Racing Bulls must use its other available reserve.",
+          "parameters": {
+            "priorityTeamId": "red-bull",
+            "secondaryTeamId": "racing-bulls"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$75,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 7500000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "sebastien-buemi",
+      "teamId": "red-bull",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Experienced reserve",
+      "rationale": "Sébastien Buemi: experienced reserve package for the existing 2027–2027 red-bull appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$50,000 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 5000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "16 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 16
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing is permitted under an agreed calendar. Conflicts must be declared before the season; this appointment does not guarantee simultaneous availability.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$100,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 10000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "antonio-giovinazzi",
+      "teamId": "ferrari",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Experienced reserve",
+      "rationale": "Antonio Giovinazzi: experienced reserve package for the existing 2027–2027 ferrari appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$50,000 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 5000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "16 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 16
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing is permitted under an agreed calendar. Conflicts must be declared before the season; this appointment does not guarantee simultaneous availability.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$100,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 10000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "dino-beganovic",
+      "teamId": "ferrari",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Development reserve",
+      "rationale": "Dino Beganovic: development reserve package for the existing 2027–2027 ferrari appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$20,000 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 2000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "20 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 20
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "practice_opportunity",
+          "title": "Practice opportunities",
+          "terms": "Two practice appearances per season, conditional on licence eligibility, sporting rules and a serviceable car; an unavailable appearance must be rescheduled within the season.",
+          "parameters": {
+            "sessionsPerSeason": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$40,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 4000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "luke-browning",
+      "teamId": "williams",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Development reserve",
+      "rationale": "Luke Browning: development reserve package for the existing 2027–2027 williams appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$25,000 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 2500000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "20 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 20
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "practice_opportunity",
+          "title": "Practice opportunities",
+          "terms": "Two practice appearances per season, conditional on licence eligibility, sporting rules and a serviceable car; an unavailable appearance must be rescheduled within the season.",
+          "parameters": {
+            "sessionsPerSeason": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$50,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 5000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "victor-martins",
+      "teamId": "williams",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Development reserve",
+      "rationale": "Victor Martins: development reserve package for the existing 2027–2027 williams appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$25,000 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 2500000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "20 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 20
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "practice_opportunity",
+          "title": "Practice opportunities",
+          "terms": "Two practice appearances per season, conditional on licence eligibility, sporting rules and a serviceable car; an unavailable appearance must be rescheduled within the season.",
+          "parameters": {
+            "sessionsPerSeason": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$50,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 5000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "yuki-tsunoda",
+      "teamId": "racing-bulls",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Experienced reserve",
+      "rationale": "Yuki Tsunoda: experienced reserve package for the existing 2027–2027 racing-bulls appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$37,500 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 3750000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "16 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 16
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "shared_reserve",
+          "title": "Shared reserve priority",
+          "terms": "Shared Red Bull / Racing Bulls appointment: Red Bull has priority if both require a substitute at the same event. Racing Bulls must use its other available reserve.",
+          "parameters": {
+            "priorityTeamId": "red-bull",
+            "secondaryTeamId": "racing-bulls"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$75,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 7500000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "ayumu-iwasa",
+      "teamId": "racing-bulls",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Development reserve",
+      "rationale": "Ayumu Iwasa: development reserve package for the existing 2027–2027 racing-bulls appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$25,000 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 2500000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "20 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 20
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "practice_opportunity",
+          "title": "Practice opportunities",
+          "terms": "Two practice appearances per season, conditional on licence eligibility, sporting rules and a serviceable car; an unavailable appearance must be rescheduled within the season.",
+          "parameters": {
+            "sessionsPerSeason": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$50,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 5000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "jak-crawford",
+      "teamId": "aston-martin",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Development reserve",
+      "rationale": "Jak Crawford: development reserve package for the existing 2027–2027 aston-martin appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$30,000 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 3000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "20 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 20
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "practice_opportunity",
+          "title": "Practice opportunities",
+          "terms": "Two practice appearances per season, conditional on licence eligibility, sporting rules and a serviceable car; an unavailable appearance must be rescheduled within the season.",
+          "parameters": {
+            "sessionsPerSeason": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$60,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 6000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "stoffel-vandoorne",
+      "teamId": "aston-martin",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Experienced reserve",
+      "rationale": "Stoffel Vandoorne: experienced reserve package for the existing 2027–2027 aston-martin appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$50,000 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 5000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "16 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 16
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$100,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 10000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "jack-doohan",
+      "teamId": "haas",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Experienced reserve",
+      "rationale": "Jack Doohan: experienced reserve package for the existing 2027–2027 haas appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$37,500 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 3750000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "16 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 16
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$75,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 7500000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "ryo-hirakawa",
+      "teamId": "haas",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Experienced reserve",
+      "rationale": "Ryo Hirakawa: experienced reserve package for the existing 2027–2027 haas appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$37,500 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 3750000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "16 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 16
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing is permitted under an agreed calendar. Conflicts must be declared before the season; this appointment does not guarantee simultaneous availability.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$75,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 7500000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "theo-pourchaire",
+      "teamId": "audi",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Development reserve",
+      "rationale": "Théo Pourchaire: development reserve package for the existing 2027–2027 audi appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$35,000 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 3500000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "20 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 20
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "practice_opportunity",
+          "title": "Practice opportunities",
+          "terms": "Two practice appearances per season, conditional on licence eligibility, sporting rules and a serviceable car; an unavailable appearance must be rescheduled within the season.",
+          "parameters": {
+            "sessionsPerSeason": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$70,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 7000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "zane-maloney",
+      "teamId": "audi",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Development reserve",
+      "rationale": "Zane Maloney: development reserve package for the existing 2027–2027 audi appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$25,000 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 2500000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "20 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 20
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "practice_opportunity",
+          "title": "Practice opportunities",
+          "terms": "Two practice appearances per season, conditional on licence eligibility, sporting rules and a serviceable car; an unavailable appearance must be rescheduled within the season.",
+          "parameters": {
+            "sessionsPerSeason": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$50,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 5000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "paul-aron",
+      "teamId": "alpine",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Development reserve",
+      "rationale": "Paul Aron: development reserve package for the existing 2027–2027 alpine appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$25,000 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 2500000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "20 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 20
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "practice_opportunity",
+          "title": "Practice opportunities",
+          "terms": "Two practice appearances per season, conditional on licence eligibility, sporting rules and a serviceable car; an unavailable appearance must be rescheduled within the season.",
+          "parameters": {
+            "sessionsPerSeason": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$50,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 5000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "kush-maini",
+      "teamId": "alpine",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Development reserve",
+      "rationale": "Kush Maini: development reserve package for the existing 2027–2027 alpine appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$17,500 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 1750000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "20 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 20
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "practice_opportunity",
+          "title": "Practice opportunities",
+          "terms": "Two practice appearances per season, conditional on licence eligibility, sporting rules and a serviceable car; an unavailable appearance must be rescheduled within the season.",
+          "parameters": {
+            "sessionsPerSeason": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$35,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 3500000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "zhou-guanyu",
+      "teamId": "cadillac",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Experienced reserve",
+      "rationale": "Zhou Guanyu: experienced reserve package for the existing 2027–2027 cadillac appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$50,000 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 5000000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "16 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 16
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing requires advance team agreement and must not conflict with confirmed reserve call-up dates.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$100,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 10000000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    },
+    {
+      "personSlug": "colton-herta",
+      "teamId": "cadillac",
+      "role": "reserve_driver",
+      "startSeason": 2027,
+      "endSeason": 2027,
+      "version": "2027-contract-clauses-v1",
+      "category": "Development reserve",
+      "rationale": "Colton Herta: development reserve package for the existing 2027–2027 cadillac appointment. Values are design assumptions scaled to its recorded salary, not inferred personality ratings or verified private terms.",
+      "clauses": [
+        {
+          "kind": "role_commitment",
+          "title": "Reserve appointment",
+          "terms": "Reserve duties only; no automatic race-seat promotion. Substitution requires availability and sporting eligibility.",
+          "parameters": {
+            "role": "reserve_driver"
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "substitution_fee",
+          "title": "Race substitution fee",
+          "terms": "$37,500 per Grand Prix started as a substitute, additional to the reserve retainer. Practice sessions and sprints do not trigger this fee.",
+          "parameters": {
+            "perGrandPrixStartCents": 3750000
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "simulator_duties",
+          "title": "Simulator programme",
+          "terms": "20 scheduled simulator days per season, subject to agreed event availability.",
+          "parameters": {
+            "daysPerSeason": 20
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "practice_opportunity",
+          "title": "Practice opportunities",
+          "terms": "Two practice appearances per season, conditional on licence eligibility, sporting rules and a serviceable car; an unavailable appearance must be rescheduled within the season.",
+          "parameters": {
+            "sessionsPerSeason": 2
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "outside_racing",
+          "title": "Outside racing permission",
+          "terms": "Outside racing is permitted under an agreed calendar. Conflicts must be declared before the season; this appointment does not guarantee simultaneous availability.",
+          "parameters": {
+            "priorCalendarAgreement": true
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "promotion_review",
+          "title": "Race-seat consideration",
+          "terms": "A review of race-seat suitability by 30 September each season. This is consideration only, not a guaranteed promotion.",
+          "parameters": {
+            "reviewMonth": 9,
+            "reviewDay": 30,
+            "guaranteedPromotion": false
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "loyalty_bonus",
+          "title": "Season-completion payment",
+          "terms": "$75,000 after each completed contracted season on 31 December. Voluntary early departure forfeits that season’s payment; team-initiated termination without driver breach does not.",
+          "parameters": {
+            "annualCents": 7500000,
+            "paymentMonth": 12,
+            "paymentDay": 31
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "termination_protection",
+          "title": "Guaranteed-pay protection",
+          "terms": "Team-initiated termination without driver breach requires payment of the remaining scheduled base salary. Untriggered performance bonuses are excluded.",
+          "parameters": {
+            "remainingBaseSalaryPercent": 100
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        },
+        {
+          "kind": "confidentiality",
+          "title": "Technical confidentiality",
+          "terms": "Technical and strategic information remains confidential during the appointment and for 24 months after departure. This does not prohibit joining another team.",
+          "parameters": {
+            "monthsAfterDeparture": 24
+          },
+          "basis": "game_assumption",
+          "execution": "recorded_only"
+        }
+      ]
+    }
+  ]
+}

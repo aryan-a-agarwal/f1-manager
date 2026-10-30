@@ -6,7 +6,8 @@ import {createScenarioCareer} from "./fixtures/managementScenario";
 test("new careers contain the season core without unimplemented management state",()=>{
   const career=createCareer("ferrari");
   assert.deepEqual(career.events,[]);assert.deepEqual(career.projects,[]);
-  for(const key of ['comms','commercial','finance','carDev','facilities','market','weekendSim'] as const)assert.equal(career[key],undefined);
+  for(const key of ['comms','commercial','carDev','facilities','market','weekendSim'] as const)assert.equal(career[key],undefined);
+  assert.equal(career.finance?.book?.version,2);
   assert.equal(career.season.calendar.rounds.length,24);
   assert.ok(career.workforce.people.length>0);
 });
@@ -29,10 +30,11 @@ test("legacy cleanup removes unfinished management while preserving played races
   const values=new Map([[CAREER_STORAGE_KEY,raw]]);
   const storage:CareerStorage={getItem:key=>values.get(key)??null,setItem:(key,value)=>{values.set(key,value);},removeItem:key=>{values.delete(key);}};
   const cleaned=loadCareer(storage)!;
-  assert.equal(cleaned.schemaVersion,8);assert.equal(values.get(CAREER_BACKUP_KEY),raw);
+  assert.equal(cleaned.schemaVersion,10);assert.equal(values.get(CAREER_BACKUP_KEY),raw);
   assert.equal(cleaned.clock.status,"paused");assert.equal(cleaned.clock.blockingEventId,null);assert.equal(cleaned.scheduler.pendingEvent,null);
   assert.deepEqual(cleaned.projects,[]);assert.deepEqual(cleaned.events,[]);
-  for(const key of ['comms','commercial','finance','carDev','facilities','market','weekendSim'] as const)assert.equal(cleaned[key],undefined);
+  for(const key of ['comms','commercial','carDev','facilities','market','weekendSim'] as const)assert.equal(cleaned[key],undefined);
+  assert.equal(cleaned.finance?.book?.version,2);
   assert.deepEqual(cleaned.season.calendar,played.season.calendar);
   assert.deepEqual(cleaned.weekendOperations,played.weekendOperations);
   assert.deepEqual(cleaned.championship,played.championship);

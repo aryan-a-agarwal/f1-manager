@@ -1,0 +1,44 @@
+import assert from 'node:assert/strict';
+import {test} from 'node:test';
+import {createCareer,saveCareer,loadCareer,type CareerStorage} from '../lib/career';
+import {ensureStartingContractClauses} from '../lib/career/contractClauses';
+import {isContractDeskState} from '../lib/career/contracts';
+
+test('all starting appointments have isolated, validated clause snapshots',()=>{
+  const career=createCareer('mclaren'),desk=career.contractDesk!;
+  assert.equal(desk.baseline.facts.length,44);
+  assert.ok(desk.baseline.facts.every(f=>f.clausePackage));
+  assert.ok(isContractDeskState(desk));
+  assert.equal(ensureStartingContractClauses(career),career);
+  const shared=desk.baseline.facts.filter(f=>f.personId==='yuki-tsunoda');
+  assert.equal(shared.length,2);
+  assert.notEqual(shared[0].clausePackage,shared[1].clausePackage);
+  assert.ok(shared.every(f=>f.clausePackage!.clauses.some(c=>c.kind==='shared_reserve')));
+  const storeMap=new Map<string,string>();
+  const store:CareerStorage={getItem:k=>storeMap.get(k)??null,setItem:(k,v)=>{storeMap.set(k,v);},removeItem:k=>{storeMap.delete(k);}};
+  saveCareer(career,store);
+  assert.deepEqual(loadCareer(store)!.contractDesk,desk);
+});
+test('additive enrichment preserves salary, drafts, roster, clock and existing packages',()=>{
+  const career=createCareer('mclaren');
+  const first=career.contractDesk!.baseline.facts[0];
+  delete first.clausePackage;
+  const before=structuredClone(career);
+  const next=ensureStartingContractClauses(career);
+  assert.ok(next.contractDesk!.baseline.facts[0].clausePackage);
+  assert.deepEqual(next.workforce,before.workforce);
+  assert.deepEqual(next.clock,before.clock);
+  assert.deepEqual(next.contractDesk!.salaryModel,before.contractDesk!.salaryModel);
+  assert.deepEqual(next.contractDesk!.drafts,before.contractDesk!.drafts);
+  assert.equal(next.contractDesk!.baseline.facts[1],career.contractDesk!.baseline.facts[1]);
+  const unrelated=structuredClone(before);unrelated.contractDesk!.baseline.datasetId='other';
+  assert.equal(ensureStartingContractClauses(unrelated),unrelated);
+  const invalid=structuredClone(next.contractDesk!);
+  invalid.baseline.facts[0].clausePackage!.teamId='ferrari';
+  assert.equal(isContractDeskState(invalid),false);
+  const earlier=structuredClone(before);earlier.contractDesk!.baseline.datasetId='f1-2027-starting-grid-2026-10-26-v1';
+  assert.ok(ensureStartingContractClauses(earlier).contractDesk!.baseline.facts[0].clausePackage);
+  const bad=structuredClone(next.contractDesk!);
+  (bad.baseline.facts[0].clausePackage!.clauses as unknown[])[0]=null;
+  assert.equal(isContractDeskState(bad),false);
+});

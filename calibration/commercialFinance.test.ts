@@ -80,10 +80,10 @@ test("COMM-04: Signing a sponsor replacement updates active contract and removes
   assert.equal(stillInOffers, false, "Offer should be removed from available pool");
 });
 
-test("FIN-01: Finance initializes with cash reserves, £135M cost cap, and transaction ledger", () => {
+test("FIN-01: Finance initializes with cash reserves, USD 215M base cap, and transaction ledger", () => {
   const fin = createInitialFinance("ferrari", 2027);
 
-  assert.equal(fin.costCapLimit, 135_000_000);
+  assert.equal(fin.costCapLimit, 215_000_000);
   assert.ok(fin.cashBalance > 0);
   assert.equal(fin.costCapSpent,0);
   assert.equal(fin.costCapExemptSpent,0);
@@ -119,7 +119,8 @@ test("FIN-02: Transaction recording strictly segregates Cap-Exempt vs Cap-Counte
   );
 
   assert.equal(afterCounted.finance?.cashBalance, initialCash - 7_500_000);
-  assert.equal(afterCounted.finance?.costCapSpent, initialCapSpent + 2_500_000, "Cost cap spent MUST increase for counted items");
+  assert.equal(afterCounted.finance?.book?.entries.at(-1)?.relevantCents,250_000_000,"The expense is recognised before season adjustments");
+  assert.equal(afterCounted.finance?.costCapSpent,initialCapSpent+2_500_000,"No unrecorded team integration allowance is applied");
 });
 
 test("FIN-03: Cost cap status calculates headroom and flags warning/breach thresholds", () => {
@@ -134,7 +135,7 @@ test("FIN-03: Cost cap status calculates headroom and flags warning/breach thres
     ...career,
     finance: {
       ...career.finance!,
-      costCapSpent: 130_000_000, // > 95%
+      costCapSpent: 210_000_000, // > 95%
     },
   };
   const warningStatus = calculateCostCapStatus(nearCapCareer);
@@ -145,10 +146,10 @@ test("FIN-03: Cost cap status calculates headroom and flags warning/breach thres
     ...career,
     finance: {
       ...career.finance!,
-      costCapSpent: 136_500_000, // > 135M
+      costCapSpent: 216_500_000, // > 215M
     },
   };
   const breachedStatus = calculateCostCapStatus(breachCareer);
   assert.equal(breachedStatus.status, "breached");
-  assert.match(breachedStatus.sanctionsRisk, /points deduction/);
+  assert.match(breachedStatus.sanctionsRisk, /review/);
 });

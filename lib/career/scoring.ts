@@ -1,3 +1,4 @@
+import {processFinance} from './financeEngine';
 import { saveCareer, type CareerStorage } from "./storage";
 import type { CareerState, ChampionshipState, ClassificationEntry, DriverStanding, TeamStanding } from "./types";
 
@@ -46,7 +47,7 @@ export function processChampionshipEventsState(career:CareerState):CareerState {
     }
     if(event.type==="SessionCompleted")outbox=outbox.map((entry)=>entry.id===event.id?{...entry,status:"processed",receipts:[...new Set([...(entry.receipts??[]),"scoring"])]}:entry);
   }
-  return {...career,championship,weekendOperations:{...career.weekendOperations,outbox}};
+  return processFinance({...career,championship,weekendOperations:{...career.weekendOperations,outbox}});
 }
 
 /** Lifecycle notices have their own owner; scoring never consumes these. */

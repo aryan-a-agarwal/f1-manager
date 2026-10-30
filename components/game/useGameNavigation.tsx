@@ -31,5 +31,5 @@ export function useGameNavigation(){
   return {...state,push,back:()=>window.history.back(),forward:()=>window.history.forward()};
 }
 export function HistoryArrows({navigation}:{navigation:ReturnType<typeof useGameNavigation>}){
-  return <nav className="page-history" aria-label="Page history"><button type="button" aria-label="Go back" title="Go back" disabled={!navigation.canBack} onClick={navigation.back}>←</button><button type="button" aria-label="Go forward" title="Go forward" disabled={!navigation.canForward} onClick={navigation.forward}>→</button></nav>;
+  return <nav className="page-history" aria-label="Page history">{(['back','forward'] as const).map(direction=><button key={direction} type="button" aria-label={`Go ${direction}`} title={`Go ${direction}`} disabled={direction==='back'?!navigation.canBack:!navigation.canForward} onClick={navigation[direction]}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={direction==='back'?'m12 5-7 7 7 7M5 12h15':'m12 5 7 7-7 7M19 12H4'}/></svg></button>)}</nav>;
 }

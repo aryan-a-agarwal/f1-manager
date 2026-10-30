@@ -8,6 +8,9 @@ assert.equal(rows.length,3);const rated=rows.find(r=>r.name==="Rated Driver")!,r
 assert.equal(rated.values.age,26);assert.equal(rated.values.pace,92);assert.equal(rated.values.adaptability,80);assert.equal(rated.values.morale,70);
 assert.equal(rated.values.starts,60,"Choose latest totals snapshot instead of summing snapshots");assert.equal(reserve.values.starts,null,"Separate numeric ID spaces must not cross-link stats");
 assert.equal(reserve.values.team,"Team A; Team B");assert.equal(reserve.values.series,"F2");assert.equal(reserve.values.pace,null);assert.equal(legacy.values.pace,0);assert.equal(legacy.id,"legacy:8");
+assert.equal(reserve.values.teamDisplay,"Team A · Reserve; Team B · Reserve");
+const mixed=buildDriverDatabaseRows({people:[people[1]],drivers:[],contracts:[{person_id:5,dataset_id:'v2',team_name:'Team A',role:'race_driver'},{person_id:5,dataset_id:'v2',team_name:'Team B',role:'reserve_driver'}],entries:[],stats:[],today:'2027-01-04'})[0];
+assert.equal(mixed.values.teamDisplay,'Team A; Team B · Reserve');
 assert.deepEqual([...rows].sort((a,b)=>compareDriverDatabaseRows(a,b,"pace","asc")).map(r=>r.name),["Legacy Only","Rated Driver","New Reserve"]);
 assert.deepEqual([...rows].sort((a,b)=>compareDriverDatabaseRows(a,b,"pace","desc")).map(r=>r.name),["Rated Driver","Legacy Only","New Reserve"]);
 assert.ok(compareDriverDatabaseRows(rated,legacy,"name","asc")>0);

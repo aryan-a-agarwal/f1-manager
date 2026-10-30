@@ -139,7 +139,8 @@ test("WORKFORCE-07: Staff hiring and poaching counts buyout against Cost Cap", (
   // Cash deducted
   assert.equal(result.career.finance!.cashBalance, initialCash - 4_000_000);
   // Staff buyout DOES count against Cost Cap!
-  assert.equal(result.career.finance!.costCapSpent, initialCap + 4_000_000);
+  assert.equal(result.career.finance!.book!.entries.reduce((n,e)=>n+e.relevantCents,0), 400_000_000);
+  assert.equal(result.career.finance!.costCapSpent, initialCap + 4_000_000); // no assumed team-specific relief
 
   const bono = result.career.market!.staff.find((s) => s.id === "staff-bonnington");
   assert.equal(bono!.currentTeamId, "ferrari");

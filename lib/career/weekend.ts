@@ -1,3 +1,6 @@
+import {carPerformance,carPerformanceScore,markWorkshopUse,recordWorkshopDistance} from './manufacturing';
+import {calculateDriverRatings} from '../driverRatings';
+import driverAttributes from '../../supabase/seed-data/all-91-drivers-attributes.json';
 import { advanceCareerSchedule } from "./scheduler";
 import { teams } from "@/lib/data/grid";
 import { circuitRaceFacts } from "@/lib/data/circuitFacts";
@@ -73,8 +76,12 @@ export function startSessionAttempt(career:CareerState, sessionId:string, engine
   const inputId=`${attemptId}-input`;
   const seed=stableSeed(`${career.metadata.careerId}|${career.season.year}|${round.id}|${sessionId}|${attemptNumber}`);
   const input:SessionInput={schemaVersion:1,id:inputId,sessionId,roundId:round.id,snapshotId:snapshot.id,sessionKind:session.kind,participantIds:snapshot.participants.map((entry)=>entry.driverId),randomSeed:seed,engineId:engine.id,engineVersion:engine.version,instructions:{runPlan:"neutral",startingTyre:null,pitPlan:null,provenance:"player_selected"},provenance:"system_derived"};
+  if(career.manufacturing){
+    const scores=Object.fromEntries(snapshot.participants.map(person=>{const lineup=career.workforce.lineups.find(l=>l.teamId===person.teamId&&l.season===career.season.year);const car=(lineup?.driverIds.indexOf(person.driverId)===1?2:1) as 1|2;const performance=carPerformance(career,person.teamId,car)!;const row=driverAttributes.find(d=>d['driver-name']===person.driverName);const ability=row?calculateDriverRatings(row,null,career.clock.date).overall:null;return [person.driverId,(ability??70)*.55+carPerformanceScore(performance,round.trackId)*.45];}));
+    input.carPerformance={version:1,scores,raceLaps:snapshot.circuit.raceLaps??Math.ceil(305/snapshot.circuit.lapLengthKm),lapLengthKm:snapshot.circuit.lapLengthKm};
+  }
   const attempt:SessionAttempt={id:attemptId,sessionId,inputId,attemptNumber,status:"running",engineId:engine.id,engineVersion:engine.version,randomSeed:seed,inputChecksum:stableSeed(JSON.stringify(input)).toString(16).padStart(8,"0"),startedAt:now.toISOString(),completedAt:null,failureReason:null};
-  let changed=replaceSession(career,sessionId,{status:"running"},"weekend_active");
+  let changed=replaceSession(engine.id===simulatedSessionEngine.id?markWorkshopUse(career,sessionId):career,sessionId,{status:"running"},"weekend_active");
   changed={...changed,weekendOperations:{...changed.weekendOperations,inputs:[...changed.weekendOperations.inputs,input],attempts:[...changed.weekendOperations.attempts,attempt]}};
   return saveCareer(changed,storage,now);
 }
@@ -110,6 +117,7 @@ export async function finishSessionAttempt(career:CareerState, sessionId:string,
   const outbox=[...changed.weekendOperations.outbox,event(`${output.id}-completed`,"SessionCompleted",round.id,sessionId,output.id,now)];
   if(session.kind==="race") outbox.push(event(`${output.id}-grand-prix`,"GrandPrixCompleted",round.id,sessionId,output.id,now));
   changed={...changed,scheduler:{...changed.scheduler,pendingEvent:null},clock:{...changed.clock,status:"paused",blockingEventId:null},weekendOperations:{...changed.weekendOperations,activeSessionId:null,attempts,outputs:[...changed.weekendOperations.outputs,output],outbox}};
+  if(output.completionMode==='simulated'&&changed.manufacturing){const snap=changed.weekendOperations.snapshots.find(s=>s.id===input.snapshotId)!;const lineup=changed.workforce.lineups.find(l=>l.teamId===changed.player.teamId&&l.season===changed.season.year);const distances=Object.fromEntries((lineup?.driverIds??[]).map((id,i)=>[i+1,(output.classification.find(r=>r.driverId===id)?.laps??0)*snap.circuit.lapLengthKm]));changed=recordWorkshopDistance(changed,sessionId,distances);}
   return saveCareer(changed,storage,now);
 }
 

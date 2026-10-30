@@ -6,7 +6,8 @@ import type {
   FinancialTransaction,
 } from "./types";
 
-export const DEFAULT_COST_CAP_LIMIT = 135_000_000;
+import {initializeFinance,refreshFinance} from './financeEngine';
+export const DEFAULT_COST_CAP_LIMIT = 215_000_000;
 
 function persistCareer(career: CareerState, storage?: CareerStorage): CareerState {
   if (storage || (typeof window !== "undefined" && window.localStorage)) {
@@ -62,11 +63,7 @@ export function createInitialFinance(teamId: string, year: number): FinanceState
 }
 
 export function syncFinanceState(career: CareerState): CareerState {
-  const finance = career.finance ?? createInitialFinance(career.player.teamId, career.season.year);
-  return {
-    ...career,
-    finance,
-  };
+  return initializeFinance(career);
 }
 
 export function recordFinancialTransaction(
@@ -77,6 +74,7 @@ export function recordFinancialTransaction(
   isCostCapExempt: boolean,
   storage?: CareerStorage,
 ): CareerState {
+  if(!Number.isFinite(amount)||!Number.isSafeInteger(Math.round(amount*100)))throw new Error('Invalid transaction amount.');
   const synced = syncFinanceState(career);
   const fin = synced.finance!;
 
@@ -106,13 +104,14 @@ export function recordFinancialTransaction(
     costCapSpent: newCostCapSpent,
     costCapExemptSpent: newExemptSpent,
     transactions: [newTx, ...fin.transactions],
+    ...(fin.book?{book:{...fin.book,entries:[...fin.book.entries,{id:newTx.id,sourceId:newTx.id,date:newTx.date,description,category:'other' as const,cashCents:Math.round(amount*100),relevantCents:amount<0&&!isCostCapExempt?Math.round(-amount*100):0,excludedCents:amount<0&&isCostCapExempt?Math.round(-amount*100):0,kind:'adjustment' as const,basis:'career_action' as const}]}}:{}),
   };
 
   return persistCareer(
-    {
+    refreshFinance({
       ...synced,
       finance: updatedFinance,
-    },
+    }),
     storage,
   );
 }
@@ -134,9 +133,9 @@ export function calculateCostCapStatus(career: CareerState): CostCapStatus {
   let status: CostCapStatus["status"] = "compliant";
   let sanctionsRisk = "No sanctions risk. Audit healthy.";
 
-  if (pctSpent >= 100) {
+  if (pctSpent > 100) {
     status = "breached";
-    sanctionsRisk = "CRITICAL: Regulatory breach. FIA Championship points deduction & fines applicable.";
+    sanctionsRisk = "Cost-cap overspend. Regulatory review is required; sanctions are not automatic.";
   } else if (pctSpent >= 95) {
     status = "warning";
     sanctionsRisk = "HIGH ALERT: Within 5% of cap. Factory R&D throttling recommended.";

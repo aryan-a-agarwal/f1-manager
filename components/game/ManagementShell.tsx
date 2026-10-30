@@ -6,7 +6,7 @@ import { compareStandings, getPendingDecisionCount, getUnreadEmailCount, nextCal
 import {DriverLink,TeamLink} from "./Profiles";
 import type { Team } from "@/lib/data/grid";
 
-export type GamePageId = "home" | "comms" | "team" | "race" | "drivers" | "calendar" | "finance" | "standings" | "market" | "database" | "settings";
+export type GamePageId = "home" | "comms" | "team" | "race" | "drivers" | "calendar" | "finance" | "commercial" | "standings" | "market" | "database" | "settings";
 export type InterfaceLayout = "management" | "original";
 export type ManagementLocation = { section: string; view: string };
 type View = { id: string; label: string; page: GamePageId; tab?: string };
@@ -15,6 +15,8 @@ type Section = { id: string; label: string; icon: string; views: View[] };
 export const MANAGEMENT_SECTIONS: Section[] = [
   { id: "home", label: "Home", icon: "home", views: [
     { id: "overview", label: "Overview", page: "home" },
+    { id: "races", label: "Calendar", page: "calendar", tab: "races" },
+    { id: "weekend", label: "Race centre", page: "race" },
     { id: "inbox", label: "Inbox", page: "comms", tab: "inbox" },
     { id: "meetings", label: "Meetings & board", page: "comms", tab: "meetings" },
     { id: "paddock", label: "Paddock news", page: "comms", tab: "paddock" },
@@ -23,27 +25,36 @@ export const MANAGEMENT_SECTIONS: Section[] = [
     { id: "drivers", label: "Driver line-up", page: "drivers", tab:"lineup" },
     { id: "contracts", label: "Contracts", page: "drivers", tab:"contracts" },
   ] },
-  { id: "car", label: "Car", icon: "car", views: [
+  { id: "car", label: "Manufacturing", icon: "car", views: [
     { id: "performance", label: "Performance", page: "team", tab: "performance" },
     { id: "projects", label: "Development", page: "team", tab: "projects" },
     { id: "facilities", label: "Facilities", page: "team", tab: "facilities" },
     { id: "powertrain", label: "Power unit & ATR", page: "team", tab: "powertrain" },
   ] },
+  { id: "finances", label: "Finances", icon: "commercial", views: [
+    { id: "overview", label: "Overview", page: "finance", tab: "overview" },
+    { id: "payments", label: "Payments & commitments", page: "finance", tab: "payments" },
+    { id: "ledger", label: "Ledger", page: "finance", tab: "ledger" },
+    { id: "forecast", label: "Forecast", page: "finance", tab: "forecast" },
+    { id: "cost_cap", label: "Cost cap & rules", page: "finance", tab: "cost_cap" },
+    { id: "setup", label: "Opening position", page: "finance", tab: "setup" },
+    { id: "agreements", label: "Agreements", page: "finance", tab: "agreements" },
+    { id: "invoices", label: "Invoices", page: "finance", tab: "invoices" },
+    { id: "budgets", label: "Budgets & scenarios", page: "finance", tab: "budgets" },
+    { id: "assets", label: "Assets", page: "finance", tab: "assets" },
+    { id: "ownership", label: "Ownership", page: "finance", tab: "ownership" },
+    { id: "reporting", label: "Reporting", page: "finance", tab: "reporting" },
+    { id: "personnel", label: "Personnel", page: "finance", tab: "personnel" },
+    { id: "rivals", label: "Other teams", page: "finance", tab: "rivals" },
+  ] },
   { id: "commercial", label: "Commercial", icon: "commercial", views: [
-    { id: "prize", label: "Prize money & merchandise", page: "finance", tab: "prize" },
-    { id: "sponsors", label: "Sponsors", page: "finance", tab: "sponsors" },
-    { id: "cost_cap", label: "Finance & cost cap", page: "finance", tab: "cost_cap" },
+    { id: "prize", label: "Prize money & merchandise", page: "commercial", tab: "prize" },
+    { id: "sponsors", label: "Sponsors", page: "commercial", tab: "sponsors" },
   ] },
   { id: "scouting", label: "Scouting", icon: "scouting", views: [
     { id: "grid_drivers", label: "Driver market", page: "market", tab: "grid_drivers" },
     { id: "prospects", label: "Free agents & prospects", page: "market", tab: "prospects" },
     { id: "staff", label: "Staff & engineers", page: "market", tab: "staff" },
-  ] },
-  { id: "season", label: "Season", icon: "season", views: [
-    { id: "weekend", label: "Race centre", page: "race" },
-    { id: "races", label: "Calendar", page: "calendar", tab: "races" },
-    { id: "factory", label: "Factory timeline", page: "calendar", tab: "factory" },
-    { id: "agenda", label: "Team agenda", page: "calendar", tab: "agenda" },
   ] },
   { id: "championship", label: "Championship", icon: "championship", views: [
     { id: "teams", label: "Constructors", page: "standings", tab: "teams" },
@@ -61,6 +72,8 @@ export const MANAGEMENT_SECTIONS: Section[] = [
 ];
 
 export function resolveManagementLocation(location: ManagementLocation) {
+  if(location.section==='commercial'&&location.view==='cost_cap')location={section:'finances',view:'cost_cap'};
+  if(location.section==="season")location={section:"home",view:location.view==="weekend"?"weekend":"races"};
   const section = MANAGEMENT_SECTIONS.find((item) => item.id === location.section) ?? MANAGEMENT_SECTIONS[0];
   const view = section.views.find((item) => item.id === location.view) ?? section.views[0];
   return { section, view };
@@ -101,7 +114,7 @@ function Icon({ name }: { name: string }) {
     season: <><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18M7 15h3m4 0h3m-10 3h3"/></>,
     championship: <><path d="M8 3h8v6a4 4 0 0 1-8 0V3Zm8 2h5v3a5 5 0 0 1-5 5M8 5H3v3a5 5 0 0 0 5 5m4 0v6m-5 2h10"/></>,
     database: <><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 4 18 4 18 0V5M3 12c0 4 18 4 18 0"/></>,
-    settings: <><path d="m9 3-1 3-3 1-2 4 2 3 1 4 4 2 3-1 4-1 2-4-1-3-1-4-4-2-4 1Z"/><circle cx="11" cy="11" r="3"/></>,
+    settings: <><path d="M10.5 2.5h3l.5 2.1 1.7.7 1.9-1.2 2.1 2.1-1.2 1.9.7 1.7 2.1.5v3l-2.1.5-.7 1.7 1.2 1.9-2.1 2.1-1.9-1.2-1.7.7-.5 2.1h-3l-.5-2.1-1.7-.7-1.9 1.2-2.1-2.1 1.2-1.9-.7-1.7-2.1-.5v-3l2.1-.5.7-1.7-1.2-1.9 2.1-2.1 1.9 1.2 1.7-.7z"/><circle cx="12" cy="12" r="3"/></>,
   };
   return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name] ?? paths.home}</svg>;
 }
@@ -117,19 +130,17 @@ export function ManagementShell({ team, career, location, onNavigate, controls, 
   return <main className="management-shell" style={{ "--team": team.primary, "--team-secondary": team.secondary } as React.CSSProperties}>
     <header className="management-navbar">
       {historyControls}
-      <div className="management-identity"><TeamLink id={team.id} name={team.shortName} className="management-team-badge">{team.shortName.slice(0,3).toUpperCase()}</TeamLink><span><button className="management-brand" onClick={()=>onNavigate({section:"home",view:"overview"})} aria-label="Open headquarters"><strong>F1 MANAGER</strong></button><small>{career.season.year} · <TeamLink id={team.id} name={team.shortName}/></small></span></div>
       <nav className="management-mainnav" aria-label="Main navigation">
-        {MANAGEMENT_SECTIONS.filter((item) => item.id !== "settings").map((item) => <button key={item.id} aria-current={section.id === item.id ? "page" : undefined} onClick={() => onNavigate({ section: item.id, view: item.views[0].id })}><Icon name={item.icon}/><span>{item.label}</span>{item.id === "home" && unread > 0 && <span className="management-count">{unread}</span>}</button>)}
+        {MANAGEMENT_SECTIONS.filter((item) => item.id !== "settings").map((item) => <button key={item.id} aria-current={section.id === item.id ? "page" : undefined} onClick={() => onNavigate({ section: item.id, view: item.views[0].id })}><span>{item.label}</span>{item.id === "home" && unread > 0 && <span className="management-count">{unread}</span>}</button>)}
       </nav>
       <button className="management-settings" aria-label="Open settings" aria-current={section.id === "settings" ? "page" : undefined} onClick={() => onNavigate({ section: "settings", view: "appearance" })}><Icon name="settings"/></button>
-    </header>
-    <div className="management-statusbar"><span><i/><TeamLink id={team.id} name={team.name}/></span><span>{career.season.phase.replace("preseason", "Pre-season").replace("offseason", "Off-season")}<b>·</b><time dateTime={career.clock.date}>{formatDate(career.clock.date)}</time><b>·</b>{String(Math.floor(career.clock.minuteOfDay / 60)).padStart(2, "0")}:{String(career.clock.minuteOfDay % 60).padStart(2, "0")}</span></div>
-    <div className="management-subnav">
-      <nav aria-label={`${section.label} subsections`}>{section.views.map((item) => <button key={item.id} aria-current={view.id === item.id ? "page" : undefined} onClick={() => onNavigate({ section: section.id, view: item.id })}>{item.label}{item.id === "inbox" && unread > 0 && <span className="management-count">{unread}</span>}</button>)}</nav>
       {controls}
+    </header>
+    <div className="management-subnav">
+      <nav aria-label={`${section.label} subsections`}>{section.views.filter(item=>section.id!=="finances"||["overview","payments","ledger","forecast","cost_cap"].includes(item.id)).map((item) => <button key={item.id} aria-current={view.id === item.id ? "page" : undefined} onClick={() => onNavigate({ section: section.id, view: item.id })}>{item.label}{item.id === "inbox" && unread > 0 && <span className="management-count">{unread}</span>}</button>)}</nav>
     </div>
+    <div className="management-statusbar"><div className="management-status-location"><span className="management-status-team"><i/><TeamLink id={team.id} name={team.name}/></span><span className="management-breadcrumb" aria-label="Current page">{section.label} <b>/</b> {view.label}</span></div><span>{career.season.phase.replace("preseason", "Pre-season").replace("offseason", "Off-season")}<b>·</b><time dateTime={career.clock.date}>{formatDate(career.clock.date)}</time><b>·</b>{String(Math.floor(career.clock.minuteOfDay / 60)).padStart(2, "0")}:{String(career.clock.minuteOfDay % 60).padStart(2, "0")}</span></div>
     <section ref={contentRef} className="management-content" aria-label={profileKey?"Full profile":`${section.label}: ${view.label}`}>{children}</section>
-    <footer className="management-footer"><span>{section.label} <b>/</b> {view.label}</span><span>{career.clock.status === "blocked" ? "● Decision required" : "● Career active"}<b>·</b>{career.season.year} season</span></footer>
   </main>;
 }
 
@@ -151,7 +162,7 @@ export function ManagementOverview({ team, career, onNavigate }: { team: Team; c
     <div className="management-page-heading"><div><small>TEAM PRINCIPAL'S OFFICE</small><h1>Headquarters</h1><p>Your team, your decisions, your season.</p></div><span className="management-season-pill">{career.season.year} championship</span></div>
     <div className="management-summary-grid">
       <article className="management-card management-club-card"><div className="management-card-label">Constructor profile <span>01</span></div><div className="management-club-identity"><span>{team.shortName.slice(0, 3).toUpperCase()}</span><h2><TeamLink id={team.id} name={team.name}/></h2><p>{team.base}</p></div><dl className="management-profile-facts"><div><dt>Power unit</dt><dd>{team.powerUnit}</dd></div><div><dt>Team principal</dt><dd>{career.workforce.people.find((person) => person.id === lineup?.teamPrincipalId)?.name ?? team.principal}</dd></div></dl><button className="management-text-action" onClick={() => onNavigate({ section: "team", view: "drivers" })}>View your team <span>↗</span></button></article>
-      <article className="management-card management-next-race"><div className="management-card-label">Next race weekend <span>{next ? `R${String(next.round.roundNumber).padStart(2, "0")}` : "—"}</span></div><small className="management-kicker">{next?.round.location ?? "CHAMPIONSHIP"}</small><h2>{next?.round.grandPrixName ?? "Season complete"}</h2><p>{next ? `${next.round.location} · ${formatDate(next.round.weekendEndDate)}` : "Review the season in the race centre."}</p><div className="management-race-session"><span>Next session</span><strong>{next?.session.kind.replaceAll("_", " ") ?? "Season review"}</strong></div><button className="management-primary" onClick={() => onNavigate({ section: "season", view: "weekend" })}>Open race centre <span>→</span></button></article>
+      <article className="management-card management-next-race"><div className="management-card-label">Next race weekend <span>{next ? `R${String(next.round.roundNumber).padStart(2, "0")}` : "—"}</span></div><small className="management-kicker">{next?.round.location ?? "CHAMPIONSHIP"}</small><h2>{next?.round.grandPrixName ?? "Season complete"}</h2><p>{next ? `${next.round.location} · ${formatDate(next.round.weekendEndDate)}` : "Review the season in the race centre."}</p><div className="management-race-session"><span>Next session</span><strong>{next?.session.kind.replaceAll("_", " ") ?? "Season review"}</strong></div><button className="management-primary" onClick={() => onNavigate({ section: "home", view: "weekend" })}>Open race centre <span>→</span></button></article>
       <article className="management-card"><div className="management-card-label">Office summary <span>03</span></div><div className="management-big-number">{getUnreadEmailCount(career)}</div><p>Unread messages</p><div className="management-office-row"><span>Unread messages</span><b>{getUnreadEmailCount(career)}</b></div><div className="management-office-row"><span>Decisions waiting</span><b>{getPendingDecisionCount(career)}</b></div><button className="management-text-action" onClick={() => onNavigate({ section: "home", view: "inbox" })}>Open inbox <span>↗</span></button></article>
     </div>
     <div className="management-metrics">
@@ -160,6 +171,6 @@ export function ManagementOverview({ team, career, onNavigate }: { team: Team; c
 
 
     </div>
-    <div className="management-bottom-grid"><article className="management-card"><div className="management-card-label">Driver line-up <span>{career.season.year}</span></div>{drivers.map((driver, index) => <DriverLink className="management-driver-row" key={driver.id} id={driver.id} name={driver.name}><span>{String(driver.carNumber ?? index + 1).padStart(2, "0")}</span><div><small>Race driver · Seat {index + 1}</small><strong>{driver.name}</strong></div><b>↗</b></DriverLink>)}<button className="management-text-action" onClick={() => onNavigate({ section: "scouting", view: "grid_drivers" })}>Explore driver market <span>↗</span></button></article><article className="management-card"><div className="management-card-label">Upcoming calendar <span>{upcoming.length} weekends</span></div>{upcoming.length ? upcoming.map((round) => <button className="management-fixture-row" key={round.id} onClick={() => onNavigate({ section: "season", view: "races" })}><span>{String(round.roundNumber).padStart(2, "0")}</span><div><strong>{round.grandPrixName}</strong><small>{round.location} · {formatDate(round.weekendEndDate)}</small></div><b>→</b></button>) : <p>All race weekends have been completed.</p>}</article></div>
+    <div className="management-bottom-grid"><article className="management-card"><div className="management-card-label">Driver line-up <span>{career.season.year}</span></div>{drivers.map((driver, index) => <DriverLink className="management-driver-row" key={driver.id} id={driver.id} name={driver.name}><span>{String(driver.carNumber ?? index + 1).padStart(2, "0")}</span><div><small>Race driver · Seat {index + 1}</small><strong>{driver.name}</strong></div><b>↗</b></DriverLink>)}<button className="management-text-action" onClick={() => onNavigate({ section: "scouting", view: "grid_drivers" })}>Explore driver market <span>↗</span></button></article><article className="management-card"><div className="management-card-label">Upcoming calendar <span>{upcoming.length} weekends</span></div>{upcoming.length ? upcoming.map((round) => <button className="management-fixture-row" key={round.id} onClick={() => onNavigate({ section: "home", view: "races" })}><span>{String(round.roundNumber).padStart(2, "0")}</span><div><strong>{round.grandPrixName}</strong><small>{round.location} · {formatDate(round.weekendEndDate)}</small></div><b>→</b></button>) : <p>All race weekends have been completed.</p>}</article></div>
   </div>;
 }
